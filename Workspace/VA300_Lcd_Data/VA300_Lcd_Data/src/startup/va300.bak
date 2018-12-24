@@ -1,0 +1,682 @@
+//=============================================================================
+/**
+ *	VA-300プログラム
+ *
+ *	@file va300.c
+ *	@version 1.00
+ *
+ *	@author OYO Electric Co.Ltd F.Saeki
+ *	@date   2012/05/11
+ *	@brief  メインモジュール
+ *
+ * #define _SCI1_USE_	SCI1で稼動
+ * #define _ROM_DUMMY_	EEPROMのダミーで起動
+ * #define _DEBUG_		デバッグ情報をSCI1に出力
+ * #define _OTHER_		デバッグ用に作成したボード用
+ *	Copyright (C) 2010, OYO Electric Corporation
+ */
+//=============================================================================
+#ifndef NOFILE_VER          /* 1: NORTiサンプル付属ファイルシステム */
+#define NOFILE_VER  1       /* 2: HTTPd for NORTi付属ファイルシステム */
+#endif                      /* 4: 製品版 NORTi File System Ver.4 */
+
+#ifndef NFTP                /* FTPサーバーに同時接続可能なクライアント数 */
+#define NFTP        1       /* 旧 nonftpd.c では、1に固定のこと */
+#endif                      /* 新 nofftpd.c では、2以上を定義可能 */
+
+#ifndef POL                 /* LANドライバデバッグ用 */
+#define POL         0       /* 割込みを使う(0), ポーリングでテスト(1) */
+                            /*
+                               注意:
+                                 ポーリング(POL=1)の場合、ポーリングを開始する
+                                 まで、ネットワークは動作しない。
+                            */
+#endif
+
+#ifndef SH4
+#define SH4                 /* SH4 を定義してkernel.hをincludeしてください */
+#endif
+
+#define	_MAIN_
+#include <stdio.h>
+#include <string.h>
+#include <kernel.h>
+#include "sh7750.h"
+#include "nonet.h"
+#include "nonitod.h"
+#include "nonethw.h"
+#if (NOFILE_VER == 4)
+#include "nofile.h"
+#include "nofftp.h"
+#include "nofchkd.h"
+#else
+#include "nonfile.h"
+#include "nonftp.h"
+#endif
+#include "nonteln.h"
+#include "net_prm.h"
+#include "drv_led.h"
+#include "id.h"
+#include "udp.h"
+#include "net_prm.h"
+//#include "message.h"
+#include "va300.h"
+#include "err_ctrl.h"
+#include "drv_eep.h"
+//#include "drv_rtc.h"
+#include "mon.h"
+#include "drv_dsw.h"
+#include "lan9118.h"
+#include "drv_tim.h"
+#include "drv_buz.h"
+#pragma section VER
+#include "version.h"
+#pragma section
+
+
+/* サイクリックハンドラ ID */
+const ID ID_CYC_TIM      = 1;   		///< タイマ用
+
+/* UDP 通信端点 ID */
+
+const ID ID_UDP_OYOCMD   = 1;			///< UDP レスポンス用
+const ID ID_UDP_CLIENT   = 2;   		///< UDP クライアント用
+
+/* TCP 通信端点 ID */
+
+const ID ID_TELNETD_CEP  = 1;			///< TELNET デーモン
+
+/* TCP 受付口 ID */
+
+const ID ID_TELNETD_REP  = 1;			///< TELNET デーモン
+
+/* TCP/IP コンフィグレーション */
+
+#define TCP_REPID_MAX	4				///< TCP受付口最大個数
+#define TCP_CEPID_MAX	4				///< TCP通信端点最大個数
+#define UDP_CEPID_MAX	2				///< UDP通信端点最大個数
+#define TCP_TSKID_TOP	TSK_MAX			///< TCP/IP用タスクID先頭
+#define TCP_SEMID_TOP	SEM_MAX			///< TCP/IP用セマフォID先頭
+#define TCP_MBXID_TOP	MBX_MAX			///< TCP/IP用メイルボックスID先頭
+#define TCP_MPFID_TOP	MPF_MAX			///< TCP/IP用固定長メモリプールID先頭
+#define ETH_QCNT		16
+#define REP_QCNT		2
+#define TCP_QCNT		4
+#define UDP_QCNT		2
+
+#include "nonetc.h"
+
+/* System configuration */
+
+#define TSKID_MAX   (TSK_MAX + TCP_TSKID_CNT)	///< タスクID上限
+#define SEMID_MAX	(SEM_MAX + TCP_SEMID_CNT)	///< セマフォID上限
+#define FLGID_MAX	FLG_MAX						///< イベントフラグID上限
+#define MBXID_MAX	(MBX_MAX + TCP_MBXID_CNT)	///< メイルボックスID上限
+#define	MBFID_MAX	MBF_MAX						///< Maximum ID for MESSAGE BUFFER
+#define	PORID_MAX	1							///< Maximum ID for RENDEVOUZ PORT
+#define	MPLID_MAX	1							///< Maximum ID for VALIABLE LENGTH MEMORY POOL
+#define MPFID_MAX	(MPF_MAX + TCP_MPFID_CNT)	///< 固定長メモリプールID上限
+#define	CYCNO_MAX	CYC_MAX						///< Maximum ID for CYCRIC HANDLER
+#define	ALMNO_MAX	ALH_MAX						///< Maximum ID for ALARM HANDLER
+
+#define TPRI_MAX	9		///<☆タスク優先度最大値
+
+#define ISTKSZ      2048	//☆Stack size for Interval timer interrupt
+#define TSTKSZ		512		//☆タイマハンドラスタックサイズ
+
+
+#include "nocfg4.h"
+#include "nosio.h"
+
+#ifndef NFILE
+#define NFILE       8       /* 同時オープン可能なファイル数 */
+#endif
+
+/* 制御ブロック */
+
+T_FTP ftp[ NFTP ];						///< FTP Server 制御ブロック
+T_FILE file[ NFILE ];					///< ファイル制御ブロック
+T_DISK disk[ 1 ];						///< ディスクドライブ制御ブロック
+
+T_TELNETD telnetd;						///< TELNETD 制御ブロック
+
+/* RAM Diskで使用するアドレスとサイズ */
+
+#define RAMDISK_ADDR     0           /* address of RAM disk area */
+#define RAMDISK_SIZE     0x100000    /* size of RAM disk area */
+
+#if (RAMDISK_ADDR == 0)              /* define as array if macro value is 0 */
+UW RAMDISK[(RAMDISK_SIZE)/4];        /* UW is for long word alignment */
+#undef RAMDISK_ADDR
+#define RAMDISK_ADDR     (UW)RAMDISK
+#endif
+
+/* Information for creating task */
+TASK MainTask(void);
+TASK RcvTask(INT);
+//TASK UdpRcvTask(INT);
+TASK SndTask(INT);
+TASK UdpSndTask(INT);
+extern BOOL terminal_sendbin(T_TERMINAL *t, const B *s, INT len);
+
+const T_CTSK ctsk_main    = { TA_HLNG, NULL, MainTask,       8, 4096, NULL, (B *)"main" };
+const T_CTSK ctsk_disp    = { TA_HLNG, NULL, DispTask,       6, 2048, NULL, (B *)"display" };	// 256 -->1024
+
+const T_CTSK ctsk_rcv1    = { TA_HLNG, NULL, RcvTask,     3, 4096, NULL, (B *)"rcvtask" };
+const T_CTSK ctsk_urcv    = { TA_HLNG, NULL, UdpRcvTask,  5, 4096, NULL, (B *)"udprcvtask" };
+const T_CTSK ctsk_snd1    = { TA_HLNG, NULL, SndTask,     3, 2172, NULL, (B *)"sndtask" };
+const T_CTSK ctsk_usnd    = { TA_HLNG, NULL, UdpSndTask,  5, 2172, NULL, (B *)"udpsndtask" };
+const T_CTSK ctsk_lancmd  = { TA_HLNG, NULL, LanCmdTask,     5, 40960, NULL, (B *)"lan_cmd" };
+const T_CTSK ctsk_io      = { TA_HLNG, NULL, IoTask, 2, 2048, NULL, (B *)"I/O task" };//
+
+const T_CMBX cmbx_lancmd  = { TA_TFIFO|TA_MFIFO, 0, NULL, (B *)"mbx_lancmd" };
+const T_CMBX cmbx_ressnd  = { TA_TFIFO|TA_MPRI, 2, NULL, (B *)"mbx_ressnd" };
+const T_CMBX cmbx_snd     = { TA_TFIFO|TA_MPRI, 2, NULL, (B *)"mbx_snd" };
+const T_CMBX cmbx_disp    = { TA_TFIFO|TA_MFIFO, 2, NULL, (B *)"mbx_disp" };
+const T_CMBX cmbx_mode    = { TA_TFIFO|TA_MFIFO, 10, NULL, (B *)"mbx_mode" };
+
+const T_CMPF cmpf_com   = { TA_TFIFO, 32, sizeof (T_COMMSG), NULL, (B *)"mpf_com" };
+const T_CMPF cmpf_lres  = { TA_TFIFO,  8, sizeof (T_LANRESMSG), NULL, (B *)"mpf_lres" };
+const T_CMPF cmpf_disp  = { TA_TFIFO,  8, sizeof (ST_DISPMSG), NULL, (B *)"mpf_disp" };
+
+const T_CFLG cflg_io    = { TA_WMUL, 0, (B *)"io_flag" };
+
+const T_CSEM csem_rtc   = { TA_TFIFO, 1, 1, (B *)"sem_rtc" };
+const T_CSEM csem_err   = { TA_TFIFO, 1, 1, (B *)"sem_err" };
+const T_CSEM csem_fpga  = { TA_TFIFO, 1, 1, (B *)"sem_fpga" };
+const T_CSEM csem_spf   = { TA_TFIFO, 1, 1, (B *)"sem_sprintf" };
+const T_CSEM csem_stkn  = { TA_TFIFO, 1, 1, (B *)"sem_strtok" };
+const T_CSEM csem_stl   = { TA_TFIFO, 1, 1, (B *)"sem_strtol" };
+
+static BOOL read_ethernet_addr(void);
+static BOOL read_ip_addr(void);
+static void ini_intr(void);
+static char *ftp_passwd_check(T_FTP *ftp, const char *user, const char *pass);
+static B *telnet_passwd_check(T_TELNETD *t, const B *name, const B *passwd);
+
+// 受信データ領域
+#define	RCV_BUF_SIZE	1024
+static char cSioRcvBuf[ RCV_BUF_SIZE ];	// シリアル受信データバッファ
+static unsigned short usSioRcvCount;	// シリアル受信データ数
+
+static BOOL s_bMonRs485;				// モニタはRS485フラグ
+
+#if defined(_DRV_TEST_)
+// ドライバテスト
+extern BOOL drvTest();
+
+#endif
+
+/*****************************************************************************
+* TELNET のパスワードチェック
+*
+******************************************************************************/
+
+static B *telnet_passwd_check(T_TELNETD *t, const B *name, const B *passwd)
+{
+	if( !strcmp(name, LOGIN_ID) && !strcmp(passwd, LOGIN_PASS))
+	    return (B *)">";
+	else 
+		return (B *)NULL;
+}
+
+/*****************************************************************************
+* TELNET のコマンド処理
+*
+******************************************************************************/
+
+BOOL telnetd_callback(T_TERMINAL *t, B *s)
+{
+    return GetCmd( s );
+}
+
+/**
+ * TELNET送信
+ */
+ 
+void telnetd_send(B *s)
+{
+	terminal_print((T_TERMINAL *)&telnetd, s);
+}
+
+/**
+ * TELNETバイナリ送信
+ */
+ 
+void telnetd_send_bin(B *s, INT len)
+{
+	terminal_sendbin((T_TERMINAL *)&telnetd, s, len);
+}
+
+/**
+ * FTPd のパスワードチェック
+ * 
+ * @param ftp 
+ * @param user ユーザー名
+ * @param pass パスワード
+ * @return 結果文字列
+ */
+
+static char *ftp_passwd_check(T_FTP *ftp, const char *user, const char *pass)
+{
+  #if 0
+    if ((strcmp(user, "mispo") == 0)
+     && (strcmp(pass, "12345") == 0))
+        return "230 Logged in\r\n";
+    else
+        return NULL;
+  #else
+    return "230 Logged in\r\n";
+  #endif
+}
+
+/**
+ * Ethernet Address の入力
+ *
+ * @retval TRUE 読出し成功
+ * @retval FALSE 読出し失敗
+ */
+
+static BOOL read_ethernet_addr(void)
+{
+	static const UB no_mac_addr[] = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+	if( lan_get_mac( ethernet_addr ) != E_OK ||
+		!memcmp( ethernet_addr, no_mac_addr, sizeof ethernet_addr)) {
+		ethernet_addr[0] = ini_mac_addr[0];	/* 暫定的に即値!! */
+		ethernet_addr[1] = ini_mac_addr[1];
+		ethernet_addr[2] = ini_mac_addr[2];
+		ethernet_addr[3] = ini_mac_addr[3];
+		ethernet_addr[4] = ini_mac_addr[4];
+		ethernet_addr[5] = ini_mac_addr[5];
+	}
+	return TRUE;
+}
+
+/**
+ * IP Address の入力
+ *
+ * @retval TRUE 読出し成功
+ * @retval FALSE 読出し失敗
+ */
+
+static BOOL read_ip_addr(void)
+{
+	BOOL flg;
+//	UH serial_no;
+	
+	flg = TRUE;
+	
+	default_gateway[0] = 0;
+	default_gateway[1] = 0;
+	default_gateway[2] = 0;
+	default_gateway[3] = 0;
+	telnet_portno = default_telnet_port;
+	
+	if( lan_get_ip( default_ipaddr) != E_OK) flg = FALSE;
+	if( lan_get_mask( subnet_mask) != E_OK)  flg = FALSE;
+	if( lan_get_port( &udp_portno) != E_OK) flg = FALSE;
+	
+//	if (flg == FALSE) {
+		default_ipaddr[0] = ini_ipaddr[0];	/* 別ファイルで定義 */
+		default_ipaddr[1] = ini_ipaddr[1];
+		default_ipaddr[2] = ini_ipaddr[2];
+		default_ipaddr[3] = ini_ipaddr[3];
+		
+	if (flg == FALSE) {
+#if 0
+		if (EepGetSNo( &serial_no) == E_OK) {
+			if (serial_no && serial_no != 0xff) {	// シリアル番号読み出せたときはIPアドレスの最下位を変更する。
+				default_ipaddr[3] = (UB)(serial_no & 0xff);
+			}
+		}
+#endif
+
+		subnet_mask[0] = ini_mask[0];		/* 暫定的に即値!! */
+		subnet_mask[1] = ini_mask[1];
+		subnet_mask[2] = ini_mask[2];
+		subnet_mask[3] = ini_mask[3];
+		
+		udp_portno = default_udp_port;
+	}
+	
+	return TRUE;
+}
+
+/**
+ * クロック初期化の例
+ *
+ * ハードウェアに合わせてカスタマイズしてください。
+ */
+void ini_clk(void)
+{
+
+}
+
+
+/**
+ * Initialize peripherals on evaluation board（★ Please customize !!）
+ *
+ */
+void init_peripheral(void)
+{
+	
+}
+
+/**
+ * Initialize port（★ Please customize !!）
+ *
+ */
+
+void ini_pio(void)
+{
+	sfr_outw(BSC_GPIOIC,0x0000);
+	sfr_outw(BSC_PDTRB, 0x0000);		// 
+	sfr_outl(BSC_PCTRB, 0x00000014);	// PORT17,18(TEST Pin1,2)出力
+	
+	TP_CLR(1);							// テストピン1初期化
+	TP_CLR(2);							// テストピン2初期化
+	
+}
+
+/**
+ * Initialize interrupt（★ Please customize !!）
+ *
+ */
+
+static void ini_intr(void)
+{
+	FpgaInit();							// FPGA関連初期化
+
+	sfr_outw(INTC_IPRD, 0x0000);
+	sfr_setw(INTC_ICR,  0x0000);
+}
+
+/**
+ * Main task
+ *
+ */
+
+TASK MainTask(void)
+{
+	ER ercd;
+	int n;
+	INT iMonCh, iLBusCh;
+	
+	ErrStatusInit();					// エラーステータス初期化
+
+	rtcInit();							// RTC初期化
+	TplInit( SEM_TPL );					// タッチパネルコントローラ初期化
+	CmrInit( SEM_CMR, TSK_CMD_MON);		// カメラ初期化(応答受信時はモニタタスク起床)
+	IrLedInit( SEM_IRLED );				// 赤外線LED初期化
+	BuzInit( SEM_BUZ );					// ブザー初期化
+	LcdTaskInit( TSK_LCD );				// LCD表示タスク初期化
+	SoundInit( TSK_BUZ, FLG_BUZ );		// ブザーテストタスク初期化
+	TsTaskInit( TSK_TS );				// 生態検知センサタスク初期化
+	ExKeyTaskInit( TSK_EXKEY );			// 10キータスク初期化
+	
+	// IP & Ethernet Address の読み出し
+	read_ip_addr();
+	read_ethernet_addr();
+
+	ercd = tcp_ini();					// プロトコルスタック初期化 
+	if( ercd != E_OK) {
+	    ErrCodeSet( ercd );
+		goto LAN_INI_END;
+	}
+	
+	// UDP 通信初期化
+	ercd = udp_ini( TSK_UDPRCV, ID_UDP_OYOCMD, udp_portno);	
+//	ercd = udp_ini( 0, ID_UDP_OYOCMD, udp_portno);	
+	if( ercd != E_OK) {
+	    ErrCodeSet( ercd );
+	    goto LAN_INI_END;
+	}
+	
+	/* ファイルシステムの初期化 */
+	ercd = file_ini(file, NFILE, 0, 0);
+	if (ercd != E_OK) {
+		ErrCodeSet( ercd );
+		goto LAN_INI_END;
+	}
+
+	/* RAMディスクドライバの初期化 */
+	#if (NOFILE_VER >= 2)
+	  ercd = disk_ini(disk, "A:", ramdisk, RAMDISK_ADDR, RAMDISK_SIZE, NULL, 0, 0);
+	#else /* NOFILE_VER == 1 */
+	  ercd = disk_ini(disk, "A:", ramdisk, RAMDISK_ADDR, RAMDISK_SIZE);
+	#endif
+	if (ercd != E_OK) {
+	  #if (NOFILE_VER >= 2)
+		ercd = dformat("A:", 0);
+	  #else
+		ercd = dformat("A:");
+	  #endif
+		if (ercd != 0) {
+		  ErrCodeSet( ercd );
+		  goto LAN_INI_END;
+		}
+	}
+	
+	/* FTPサーバー初期化 */
+	for (n = 0; n < NFTP; n++) {
+		ercd = ftp_cre_srv(&ftp[n], 0, 0, 0, 0, ftp_passwd_check);
+		if (ercd != E_OK) {
+			ErrCodeSet( ercd );
+			goto LAN_INI_END;
+			break;
+		}
+		ercd = ftp_sta_srv(&ftp[n]);
+		if (ercd != E_OK) {
+			ErrCodeSet( ercd );
+			goto LAN_INI_END;
+			break;
+		}
+	}
+
+LAN_INI_END:
+	sta_tsk(TSK_DISP,    0);			// 表示タスク起動
+	sta_tsk(TSK_IO, 0);					// I/O検知タスク起動
+	sta_tsk(TSK_COMMUNICATE, 0);		// UDP電文処理タスク
+	sta_tsk(TSK_UDP_SEND, 0);			// UDP送信タスク
+	sta_tsk(TSK_CMD_LAN,  0);			// コマンド処理タスク起動
+	
+	TmInit(CYC_TMO);					// タイムアウト監視用周期起動ハンドラ起動
+
+	ExKeyTaskInit( TSK_EXKEY );			// キー入力タスク起動
+
+	// チャンネル切替
+	iMonCh  = 0;
+	iLBusCh = 1;
+	s_bMonRs485 = FALSE;
+	if (DswGet() & DSW1_7) {
+		iMonCh  = 1;
+		iLBusCh = 0;
+		s_bMonRs485 = TRUE;
+	}
+
+	ercd = Mon_ini( iMonCh );			// モニタコマンドタスク初期化
+
+	sta_tsk(TSK_SND1, iMonCh);			// (デバッグ用)シリアル送信タスク起動
+
+	/* TELNET デーモン初期化 */
+//	ercd = telnetd_ini(&telnetd, TSK_TELNETD, MBF_TELNETD, ID_TELNETD_CEP, ID_TELNETD_REP);
+	ercd = telnetd_ini(&telnetd, 0, 0, 0, 0);
+	if (ercd == E_OK) {
+//		ercd = shell_ini(&telnetd, TSK_SHELL1, MBF_SHELL1, telnet_passwd_check);
+		ercd = shell_ini(&telnetd, 0, 0, telnet_passwd_check);
+	}
+	
+	if (ercd != E_OK) {
+		ErrCodeSet( ercd );
+	}
+	
+#if defined(_DRV_TEST_)
+	drvTest();
+#endif
+	for (;;) {
+		
+		
+		
+		slp_tsk();
+	}
+}
+
+/**
+ * Receive task
+ *
+ *	変更履歴
+ *		04/08/23	OYOモニタプログラムに変更
+ *
+ */
+TASK RcvTask(INT ch)
+{
+	char	code;
+	BOOL	stx_flag;
+
+	/* initialize */
+
+
+//	ini_sio(ch, (B *)"115200 B8 PN S1");		//☆モニタプログラム用
+	ini_sio(ch, (B *)"38400 B8 PN S1");		//☆モニタプログラム用
+	
+	ctl_sio(ch, TSIO_RXE|TSIO_TXE|TSIO_RTSON);
+	memset( cSioRcvBuf, 0, RCV_BUF_SIZE);		// 受信バッファクリア
+	usSioRcvCount = 0;							// シリアル受信でー多数クリア
+
+	for (;;)
+	{
+		stx_flag = FALSE;						// STX受信フラグクリア
+		
+		for(;;) {
+			get_sio( ch, (UB*)&code, TMO_FEVR);	// 受信データ待ち
+
+			if( code == 0x08) {
+				if( usSioRcvCount ) cSioRcvBuf[ --usSioRcvCount ] = 0;
+					continue;
+			}
+			if( code == STX) {
+				usSioRcvCount = 0;
+				memset( cSioRcvBuf, 0, RCV_BUF_SIZE);
+				cSioRcvBuf[ usSioRcvCount++ ] = code;
+				stx_flag = TRUE;
+				continue;
+			}
+			if(( code == ETX) && ( stx_flag == TRUE)) {
+				cSioRcvBuf[ usSioRcvCount++ ] = 0;
+				break;
+			}
+			if(( stx_flag == TRUE) && ( usSioRcvCount < (RCV_BUF_SIZE - 1))) {
+				cSioRcvBuf[ usSioRcvCount++ ] = code;
+			}
+		}
+	}
+}
+
+/**
+ * Send Task
+ *
+ * @param ch チャンネル番号
+ */
+TASK SndTask(INT ch)
+{
+	T_COMMSG *msg;
+	UINT i;
+	UB c;
+	ER	ercd;
+
+	for (;;)
+	{
+		/* Wait message */
+
+//		ercd = rcv_mbx(MBX_SND+ch, &msg);
+		ercd = rcv_mbx(MBX_SND, &msg);
+		
+		if( ercd == E_OK) {
+	        
+	        /* Send 1 line */
+			for (i = 0;i < msg->cnt;) {
+				c = msg->buf[i++];
+				put_sio(ch, c, TMO_FEVR);
+			}
+
+			/* Release memory block */
+			rel_mpf(MPF_COM, msg);
+
+			/* Wait completion */
+			fls_sio(ch, TMO_FEVR);
+			
+    	} else {							/* コーディングエラー */
+	    	ErrCodeSet( ercd );
+    	}
+    }
+}
+
+/**
+ * main
+ *
+ */
+
+int main(void)
+{
+    /* Initialize processor（★ Please customize !!）*/
+
+	init_peripheral();
+
+	
+	/* Initialize system */
+
+    sysini();
+
+	ini_clk();
+
+	ini_pio();
+
+	/* Create tasks */
+
+	cre_tsk(TSK_MAIN,      &ctsk_main);
+	cre_tsk(TSK_CMD_LAN,   &ctsk_lancmd);
+	cre_tsk(TSK_SND1,      &ctsk_snd1);
+	cre_tsk(TSK_COMMUNICATE,  &ctsk_urcv);//電文処理
+	cre_tsk(TSK_UDP_SEND,    &ctsk_usnd);//UDP送信
+
+	cre_tsk(TSK_DISP,      &ctsk_disp);
+	cre_tsk(TSK_IO,        &ctsk_io);
+
+	/* create objects */
+
+	cre_mpf(MPF_COM,   &cmpf_com);		/* Create fixed memory pool */
+	cre_mpf(MPF_DISP,  &cmpf_disp);		/* Create fixed memory pool */
+	cre_mpf(MPF_LRES,  &cmpf_lres);		/* Create fixed memory pool */
+
+	cre_mbx(MBX_CMD_LAN, &cmbx_lancmd);	/* Create mail box */
+	cre_mbx(MBX_RESSND,&cmbx_ressnd);	/* Create mail box */
+	cre_mbx(MBX_SND,   &cmbx_snd);		/* Create mail box */
+	cre_mbx(MBX_DISP,    &cmbx_disp);	/* Create mail box */
+	cre_mbx(MBX_MODE,    &cmbx_mode);	/* Create mail box */
+	
+	cre_flg(ID_FLG_IO,  &cflg_io);	/* Create flag */	
+
+//	cre_sem(SEM_LOG,    &csem_log);		/* Create semaphore */	
+	cre_sem(SEM_RTC,    &csem_rtc);		/* Create semaphore */	
+	cre_sem(SEM_ERR,    &csem_err);		/* Create semaphore */	
+//	cre_sem(SEM_LED,    &csem_led);		/* Create semaphore */	
+//	cre_sem(SEM_7SEG,   &csem_seg);		/* Create semaphore */	
+	cre_sem(SEM_FPGA,   &csem_fpga);	/* Create semaphore */	
+	cre_sem(SEM_SPF,    &csem_spf);		/* Create semaphore */	
+	cre_sem(SEM_STKN,   &csem_stkn);	/* Create semaphore */	
+	cre_sem(SEM_STL,    &csem_stl);		/* Create semaphore */	
+
+	ini_intr();
+
+	/* Start task */
+
+	sta_tsk(TSK_MAIN, 0);
+
+	/* Start multitask system */
+
+	intsta();                   /* Start interval timer interrupt */
+	syssta();                   /* enter into multi task */
+}
+
+/* end */

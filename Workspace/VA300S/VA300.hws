@@ -1,0 +1,47 @@
+[HIMDBVersion]
+2.0
+[DATABASE_VERSION]
+"11.0" 
+[WORKSPACE_DETAILS]
+"VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300.hws" "SuperH RISC engine" "Renesas SuperH Standard" 
+[SHARED_WORKSPACE_CONTROL_STATUS]
+"" "" "" 
+"" "" "" 
+[PROJECTS]
+"VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\VA300.hwp" 0 
+"VA300_Lcd_Data" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300_Lcd_Data\VA300_Lcd_Data" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300_Lcd_Data\VA300_Lcd_Data\VA300_Lcd_Data.hwp" 0 
+[INFORMATION]
+"ワークスペース情報がありません" 
+[SCRAP]
+[PROJECT_DEPENDENCY]
+[WORKSPACE_PROPERTIES]
+[HELP_FILES]
+"c:\hew3\tools\renesas\sh\9_4_1\hew\stdlib.chm" "C/C++ Standard Library Help" 0 
+"c:\program files (x86)\renesas\hew\tools\renesas\sh\9_4_1\hew\stdlib.chm" "C/C++ Standard Library Help" 1 
+"c:\program files\renesas\hew\tools\renesas\sh\9_3_2\hew\stdlib.chm" "C/C++ Standard Library Help" 0 
+"c:\program files\renesas\hew\tools\renesas\sh\9_4_1\hew\stdlib.chm" "C/C++ Standard Library Help" 0 
+"c:\program files\renesas\hew_001\tools\renesas\sh\9_3_2\hew\stdlib.chm" "C/C++ Standard Library Help" 0 
+[GENERAL_DATA_PROJECT]
+[USERMENUTOOLS]
+[CUSTOMPLACEHOLDERS]
+"NORTI" "NORTi" "C:\NORTi" 
+[MAKEFILE_BUILD_INFO]
+"$(WORKSPDIR)\make\$(PROJECTNAME)_$(CONFIGNAME).mak" "" "$(WORKSPDIR)\make" 0 0 0 
+[VD_CONFIGURATION_OPTIONS]
+"ACTIVE_DESKTOP" "0" 
+[VD_CONFIGURATIONS]
+"0" "Default1" "1" 
+"1" "Default2" "1" 
+"2" "Default3" "1" 
+"3" "Default4" "1" 
+[OPTIONS_DEBUG_TAB]
+0 0 0 0 0 
+[VCS]
+"" "" "" 0 
+[VCS_PROJECT]
+[MAKEFILE_ENV_STRINGS]
+[MAKEFILE_ENV_FLAGS]
+1 0 0 
+[MAKEFILE_CLEAN_INFO]
+"" 
+[END]

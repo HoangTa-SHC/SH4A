@@ -1,0 +1,12 @@
+"D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\fmtool.src"
+-cpu=sh3dsp
+-endian=big
+-round=nearest
+-denormalize=on
+-nodebug
+-object="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.obj"
+-literal=pool,branch,jump,return
+-nolist
+-nologo
+-chgincpath
+-errorpath

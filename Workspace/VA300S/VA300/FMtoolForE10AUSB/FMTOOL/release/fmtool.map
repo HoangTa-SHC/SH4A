@@ -1,0 +1,170 @@
+Optimizing Linkage Editor (V.9.00.03.001)         18-Apr-2018 22:52:02
+
+*** Options ***
+
+-subcommand=D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.hlk
+-noprelink
+-nodebug
+-nomessage
+-list="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.map"
+-show=symbol,reference
+-nooptimize
+-start=P/00
+-nologo
+-input="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.obj"
+-output="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.abs"
+-end
+
+*** Error information ***
+
+*** Mapping List ***
+
+SECTION                            START      END         SIZE   ALIGN
+
+P
+                                  00000000  00000000         0   4
+fm_erase
+                                  8c001000  8c00103f        40   0
+fm_write
+                                  8c001100  8c0014eb       3ec   0
+
+*** Symbol List ***
+
+SECTION=
+FILE=                               START        END    SIZE
+  SYMBOL                            ADDR        SIZE    INFO      COUNTS  OPT
+
+SECTION=fm_erase
+FILE=D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.obj
+                                  8c001000  8c00103f        40
+  FM_TOOL_ERASE
+                                  8c001000         0   none ,l         0
+  FM_ERASE_BYTE
+                                  8c001014         0   none ,l         0
+  FM_ERASE_WORD
+                                  8c00101c         0   none ,l         0
+  FM_ERASE_LONG
+                                  8c00102c         0   none ,l         0
+  FM_ERASE_END
+                                  8c001038         0   none ,l         0
+
+SECTION=fm_write
+FILE=D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.obj
+                                  8c001100  8c0014eb       3ec
+  FM_TOOL_WRITE
+                                  8c001100         0   none ,l         0
+  FM_WRITE_BYTE
+                                  8c00111c         0   none ,l         0
+  FM_WRITE_WORD
+                                  8c00112c         0   none ,l         0
+  FM_WRITE_END_WORD
+                                  8c001142         0   none ,l         0
+  FM_WRITE_LONG
+                                  8c00114a         0   none ,l         0
+  FM_WRITE_END_LONG
+                                  8c00115e         0   none ,l         0
+  FM_WRITE_END
+                                  8c001166         0   none ,l         0
+  FmEraseWord
+                                  8c001176         0   none ,l         0
+  FmEraseWord_Main
+                                  8c001186         0   none ,l         0
+  FmEraseWord_Loop
+                                  8c0011a4         0   none ,l         0
+  FmEraseWord_Loop_Next
+                                  8c0011d8         0   none ,l         0
+  FmEraseWord_End
+                                  8c0011da         0   none ,l         0
+  FmEraseLong
+                                  8c0011ec         0   none ,l         0
+  FmEraseLong_Main
+                                  8c0011fc         0   none ,l         0
+  FmEraseLong_Loop
+                                  8c001220         0   none ,l         0
+  FmEraseLong_Loop_u
+                                  8c00126c         0   none ,l         0
+  FmEraseLong_Loop_Next
+                                  8c001294         0   none ,l         0
+  FmEraseLong_End
+                                  8c001296         0   none ,l         0
+  FmWriteWord
+                                  8c0012a8         0   none ,l         0
+  FmWriteWord_Main
+                                  8c0012ba         0   none ,l         0
+  FmWriteWord_Write
+                                  8c0012d8         0   none ,l         0
+  FmWriteWord_Loop
+                                  8c0012de         0   none ,l         0
+  FmWriteWord_Loop_Next
+                                  8c001310         0   none ,l         0
+  FmWriteWord_End
+                                  8c001312         0   none ,l         0
+  FmWriteLong
+                                  8c001328         0   none ,l         0
+  FmWriteLong_Main
+                                  8c00133a         0   none ,l         0
+  FmWriteLong_Write
+                                  8c001360         0   none ,l         0
+  FmWriteLong_Loop
+                                  8c00136c         0   none ,l         0
+  FmWriteLong_Loop_u
+                                  8c0013c0         0   none ,l         0
+  FmWriteLong_Loop_Next
+                                  8c0013f4         0   none ,l         0
+  FmWriteLong_End
+                                  8c0013f6         0   none ,l         0
+  CheckVerifyWord
+                                  8c00140c         0   none ,l         0
+  CheckVeriW_OK
+                                  8c001420         0   none ,l         0
+  CheckVeriW_End
+                                  8c001422         0   none ,l         0
+  CheckVerifyLong
+                                  8c001428         0   none ,l         0
+  CheckVeriL_OK
+                                  8c001438         0   none ,l         0
+  CheckVeriL_End
+                                  8c00143a         0   none ,l         0
+  ClearAllStatusWord
+                                  8c001440         0   none ,l         0
+  ClearAllStatusLong
+                                  8c001468         0   none ,l         0
+  FM_ERASE_DATA
+                                  8c001494         0   none ,l         0
+  FM_WRITE_DATA
+                                  8c0014cc         0   none ,l         0
+
+Absolute value symbols
+FILE=D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.obj
+  FM_TOOL_STACK
+                                  8c002000         0   none ,l         0
+  FM_BT
+                                  00004254         0   none ,l         0
+  FM_TOP_ADDRESS
+                                  a0000000         0   none ,l         0
+  O_FMWrite
+                                  8c001100         0   none ,l         0
+  FM_CMD_RESET
+                                  000000f0         0   none ,l         0
+  O_FMErase
+                                  8c001000         0   none ,l         0
+  FM_CHK_DQ5
+                                  00000020         0   none ,l         0
+  FM_CHK_DQ7
+                                  00000080         0   none ,l         0
+
+*** Delete Symbols ***
+
+SYMBOL                                SIZE    INFO
+
+*** Variable Accessible with Abs8 ***
+
+SYMBOL                                SIZE    COUNTS  OPTIMIZE
+
+*** Variable Accessible with Abs16 ***
+
+SYMBOL                                SIZE    COUNTS  OPTIMIZE
+
+*** Function Call ***
+
+SYMBOL                              COUNTS  OPTIMIZE

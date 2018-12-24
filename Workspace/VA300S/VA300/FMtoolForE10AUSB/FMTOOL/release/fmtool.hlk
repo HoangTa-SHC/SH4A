@@ -1,0 +1,15 @@
+-noprelink
+-nodebug
+-nomessage
+-list="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.map"
+-show=symbol,reference
+-nooptimize
+-start=P/00
+-nologo
+-input="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.obj"
+-output="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.abs"
+-end
+-input="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.abs"
+-form=stype
+-output="D:\Working\Bionics\SH4AFlashTask\fm_fujitsu_w\FM_FUJITSU_W\FM_FUJITSU_W\fmtool\release\fmtool.mot"
+-exit

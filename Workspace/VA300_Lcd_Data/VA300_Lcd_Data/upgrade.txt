@@ -1,0 +1,4 @@
+Project name : VA300
+
+Renesas SuperH RISC engine Standard Toolchain was upgraded 9.3.2.0 -> 9.4.1.0.
+

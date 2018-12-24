@@ -1,0 +1,774 @@
+;+==============================================================================+
+;|																				|
+;|	Flash memory tool program sample											|
+;|		SuperH Family Flash memory load is supported							|
+;|		Copyright (C) 2004 Renesas Technology Corp. All rights reserved. 		|
+;|		Licensed Material of Renesas Technology Corp.							|
+;|																				|
+;|		Erasing flash memory routine top address : O_FMErase					|
+;|		Writing flash memory routine top address : O_FMWrite					|
+;|		Stack pointer address                    : FM_TOOL_STACK				|
+;|		Flash memory top address                 : FM_TOP_ADDRESS				|
+;|																				|
+;|	Target flash memory : FUJITSU [Word mode]									|
+;|																				|
+;+==============================================================================+
+;
+;+===================================================================+
+;|       EQU                                                         |
+;+===================================================================+
+;
+O_FMErase		.equ	H'8c001000
+O_FMWrite		.equ	H'8c001100
+FM_TOOL_STACK	.equ	H'8c002000
+FM_TOP_ADDRESS	.equ	H'a0000000
+;
+FM_CMD_RESET	.equ	H'000000F0
+FM_CHK_DQ7		.equ	H'00000080
+FM_CHK_DQ5		.equ	H'00000020
+;
+FM_OK			.equ	H'0000
+FM_BT			.equ	H'4254
+;
+TYPE_BYTE		.equ	H'4220
+TYPE_WORD		.equ	H'5720
+TYPE_LONG		.equ	H'4c20
+;
+;
+;
+	.align	4
+;====================================================================
+;
+; NAME = FM_TOOL_ERASE;
+; FUNC = The routine of erasing all flash memories.
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = R4.L	: access size	= 0x4220("B ");
+;								= 0x5720("W ");
+;								= 0x4C20("L ");
+; OUTP = R0.L	: status		= 0 (OK);
+;								!=0 (ERROR);
+;
+;====================================================================
+;	.org		O_FMErase
+	.section	fm_erase,CODE,LOCATE=O_FMErase
+;
+FM_TOOL_ERASE:
+	mov.l	#FM_TOOL_STACK,r15		; Set stack address to R15 register
+	sts.l	pr,@-r15				;
+	mov.l	r3,@-r15				;
+;
+	mov		r4,r0					; Check an argument
+	shlr8	r0						;
+	cmp/eq	#H'42,r0				; 'B' ? -> Illegal
+	bt		FM_ERASE_BYTE			;
+	cmp/eq	#H'57,r0				; 'W' ?
+	bt		FM_ERASE_WORD			;
+	bf		FM_ERASE_LONG			; 'L' jump
+;
+;
+;>>> Call a module for the bus width of 8 bits  --> Illegal call
+FM_ERASE_BYTE:
+;
+	bra		FM_ERASE_END			;
+	nop								;
+;
+;
+;>>> Call a module for the bus width of 16 bits
+FM_ERASE_WORD:
+;
+	bsr		ClearAllStatusWord		; Clear the status of flash memory
+	nop								;
+;
+	bsr		FmEraseWord				; Erase flash memory
+	nop								; .. The routine has no parameter
+;
+	bsr		ClearAllStatusWord		; Clear the status of flash memory
+	nop								;
+;
+	bra		FM_ERASE_END			;
+	nop								;
+;
+;
+;>>> Call a module for the bus width of 32 bits
+FM_ERASE_LONG:
+;
+	bsr		ClearAllStatusLong		; Clear the status of flash memory
+	nop								;
+;
+	bsr		FmEraseLong				; Erase flash memory
+	nop								; .. The routine has no parameter
+;
+	bsr		ClearAllStatusLong		; Clear the status of flash memory
+	nop								;
+;
+FM_ERASE_END:
+	mov.l	@r15+,r3				;
+	lds.l	@r15+,pr				;
+	rts								;
+	nop								;
+;
+;
+;====================================================================
+;
+; NAME = FM_TOOL_WRITE;
+; FUNC = The routine of writing data in flash memory.
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = R4.L	: write address;
+; 		 R5.L	: access size	= 0x4220("B ");
+;								= 0x5720("W ");
+;								= 0x4c20("L ");
+;		 R6.L	: write data;
+;		 R7.L	: verify flag	= 0 (non verify);
+;								= 1 (verify);
+; OUTP = R0.L	: status		= 0 (OK);
+;								!=0 (ERROR);
+;
+;====================================================================
+;	.org	O_FMWrite
+	.section fm_write,CODE,LOCATE=O_FMWrite
+;
+FM_TOOL_WRITE:
+	mov.l	#FM_TOOL_STACK,r15		; Set stack address to R15 register
+	sts.l	pr,@-r15				;
+	mov.l	r1,@-r15				;
+	mov.l	r4,@-r15				;
+	mov.l	r5,@-r15				;
+	mov.l	r6,@-r15				;
+	mov.l	r7,@-r15				;
+;
+	mov		r5,r0					; Check an argument
+	shlr8	r0						;
+	cmp/eq	#H'42,r0				; 'B' ? Illegal
+	bt		FM_WRITE_BYTE			;
+	cmp/eq	#H'57,r0				; 'W' ?
+	bt		FM_WRITE_WORD			;
+	bf		FM_WRITE_LONG			; 'L' jump
+;
+;
+;>>> Call a module for the bus width of 8 bits  --> Illegal call
+FM_WRITE_BYTE:
+;
+	mov.l	#1,r0					; Error
+	bra		FM_WRITE_END			;
+	nop								;
+;
+;
+;>>> Call a module for the bus width of 16 bits
+FM_WRITE_WORD:
+	bsr		ClearAllStatusWord		; Clear the status of flash memory
+	nop								;
+;
+	extu.w	r6,r6					;
+;
+	bsr		FmWriteWord				; Write a data to flash memory
+	nop								; .. The routine has R4 and R6(address and data) parameters
+;
+	cmp/eq	#0,r0					; if return == NG
+	bf		FM_WRITE_END_WORD		; then End
+;
+	cmp/pl	r7						; if verify flag is OFF
+	bf		FM_WRITE_END_WORD		; then end
+;
+	bsr		CheckVerifyWord			; Call a verify routine
+	nop								;
+;
+FM_WRITE_END_WORD:
+	bsr		ClearAllStatusWord		; Clear the status of flash memory
+	nop								;
+;
+	bra		FM_WRITE_END			;
+	nop								;
+;
+;
+;>>> Call a module for the bus width of 32 bits
+FM_WRITE_LONG:
+	bsr		ClearAllStatusLong		; Clear the status of flash memory
+	nop								;
+;
+	bsr		FmWriteLong				; Write a data to flash memory
+	nop								; .. The routine has R4 and R6(address and data) parameters
+;
+	cmp/eq	#0,r0					; if return == NG
+	bf		FM_WRITE_END_LONG		; then End
+;
+	cmp/pl	r7						; if verify flag is OFF
+	bf		FM_WRITE_END_LONG		; then end
+;
+	bsr		CheckVerifyLong			; Call a verify routine
+	nop								;
+;
+FM_WRITE_END_LONG:
+	bsr		ClearAllStatusLong		; Clear the status of flash memory
+	nop								;
+;
+	bra		FM_WRITE_END			;
+	nop								;
+;
+FM_WRITE_END:
+
+	mov.l	@r15+,r7				;
+	mov.l	@r15+,r6				;
+	mov.l	@r15+,r5				;
+	mov.l	@r15+,r4				;
+	mov.l	@r15+,r1				;
+	lds.l	@r15+,pr				;
+	rts								;
+	nop								;
+;
+;
+;
+;====================================================================
+;
+; NAME = FmEraseWord;
+; FUNC = The routine of erasing flash memory(Bus width is 16 bits).
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = none;
+; OUTP = R0.L	= status;
+;
+;====================================================================
+;
+FmEraseWord:
+	mov.l	r1,@-r15				;
+	mov.l	r2,@-r15				;
+	mov.l	r4,@-r15				;
+	mov.l	r5,@-r15				;
+	mov.l	r8,@-r15				;
+;
+	mov.l	#FM_TOP_ADDRESS,r5		; R5 <- Top address of Flash memory 
+	mov.l	#FM_ERASE_DATA,r4		; R4 <- Table of flash memory command data
+	mov.l	#H'FFFFFFFF,r0			; R0 <- Table end code
+;
+FmEraseWord_Main:
+	mov.l	@r4+,r8					; R8 <- command address
+	add		r5,r8					; R8 <- add flash top address (offset)
+	mov.l	@r4+,r1					; R1 <- command data
+	cmp/eq	r0,r1					; if Table end code
+	bt		FmEraseWord_Loop		; then next
+;
+	mov.w	r1,@r8					; Write the Erase command to flash memory
+	bra		FmEraseWord_Main		; loop
+	nop								;
+;
+FmEraseWord_Loop:
+	mov.w	@r8,r0					; Read status
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bt		FmEraseWord_Loop_Next	; then exit
+	nop	
+;
+	mov		r2,r0					;
+	mov.l	#FM_CHK_DQ5,r1			;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ5 == 0 (0 = OK / 1 = Fail)
+	bf		FmEraseWord_Loop		; then loop
+;
+	mov.w	@r8,r0					; Read status
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bt		FmEraseWord_Loop_Next	; then exit
+	nop	
+;
+	bra		FmEraseWord_End			; error end
+	nop								;
+;
+FmEraseWord_Loop_Next:
+	mov.l	#0,r0					; set OK
+;
+FmEraseWord_End:
+	mov.l	@r15+,r8				;
+	mov.l	@r15+,r5				;
+	mov.l	@r15+,r4				;
+	mov.l	@r15+,r2				;
+	mov.l	@r15+,r1				;
+	rts								;
+	nop								;
+;
+;
+;
+;
+;====================================================================
+;
+; NAME = FmEraseLong;
+; FUNC = The routine of erasing flash memory(Bus width is 32 bits).
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = none;
+; OUTP = R0.L	= status;
+;
+;====================================================================
+;
+FmEraseLong:
+	mov.l	r1,@-r15				;
+	mov.l	r2,@-r15				;
+	mov.l	r4,@-r15				;
+	mov.l	r5,@-r15				;
+	mov.l	r8,@-r15				;
+;
+	mov.l	#FM_TOP_ADDRESS,r5		; R5 <- Top address of Flash memory 
+	mov.l	#FM_ERASE_DATA,r4		; R4 <- Table of flash memory command data
+	mov.l	#H'FFFFFFFF,r0			; R0 <- Table end code
+;
+FmEraseLong_Main:
+	mov.l	@r4+,r8					; R8 <- command address
+	shll	r8						; adjust address
+	add		r5,r8					; R8 <- add flash top address (offset)
+	mov.l	@r4+,r1					; R1 <- command data
+	cmp/eq	r0,r1					; if Table end code
+	bt		FmEraseLong_Loop		; then next
+	mov		r1,r2					;
+	shll16	r2						; command for upper word
+	or		r2,r1					; R1 <- 32bit command 
+;
+	mov.l	r1,@r8					; Write the Erase command to flash memory
+	bra		FmEraseLong_Main		; loop
+	nop								;
+;
+FmEraseLong_Loop:
+	mov.l	@r8,r0					; Read status
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	shll16	r1						;
+	mov.l	#FM_CHK_DQ7,r5			;
+	or		r5,r1					; R1 <- 32bit Status
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bt		FmEraseLong_Loop_Next	; then exit
+;
+	mov		r2,r0
+	and		r5,r0					;
+	cmp/eq	#H'0,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bf		FmEraseLong_Loop_u		; then next
+
+	mov		r2,r0					;
+	mov.l	#FM_CHK_DQ5,r1			;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ5 == 0 (0 = OK / 1 = Fail)
+	bf		FmEraseLong_Loop_u		; then next
+;
+	mov.l	@r8,r0					; Read status
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	shll16	r1						;
+	mov.l	#FM_CHK_DQ7,r5			;
+	or		r5,r1					; R1 <- 32bit Status
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bt		FmEraseLong_Loop_Next	; then exit
+;
+	mov		r2,r0
+	and		r5,r0					;
+	cmp/eq	#H'0,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bf		FmEraseLong_Loop_u		; then next
+;
+	bra		FmEraseLong_End			; error end
+	nop								;
+;
+FmEraseLong_Loop_u:
+	mov		r2,r0					;
+	shlr16	r0						;
+	and		r5,r0					;
+	cmp/eq	#H'0,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bf		FmEraseLong_Loop		; then loop
+;
+	mov		r2,r0					;
+	mov.l	#FM_CHK_DQ5,r1			;
+	shll16	r1						;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ5 == 0 (0 = OK / 1 = Fail)
+	bf		FmEraseLong_Loop		; then loop
+;
+	mov		r2,r0					;
+	shlr16	r0						;
+	and		r5,r0					;
+	cmp/eq	#H'0,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bf		FmEraseLong_Loop		; then loop
+;
+	bra		FmEraseLong_End			; error end
+	nop								;
+;
+FmEraseLong_Loop_Next:
+	mov.l	#0,r0					; set OK
+;
+FmEraseLong_End:
+	mov.l	@r15+,r8				;
+	mov.l	@r15+,r5				;
+	mov.l	@r15+,r4				;
+	mov.l	@r15+,r2				;
+	mov.l	@r15+,r1				;
+	rts								;
+	nop								;
+;
+;
+;
+;====================================================================
+;
+; NAME = FmWriteWord
+; FUNC = The routine of writing data to flash memory
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = R4.L	= write address;
+;	 R6.L	= write data;
+; OUTP = R0.L	= status;
+;
+;====================================================================
+FmWriteWord:
+	mov.l	r1,@-r15				;
+	mov.l	r2,@-r15				;
+	mov.l	r5,@-r15				;
+	mov.l	r6,@-r15				;
+	mov.l	r7,@-r15				;
+	mov.l	r8,@-r15				;
+;
+	mov.l	#FM_TOP_ADDRESS,r7		; R7 <- Top address of Flash memory 
+	mov.l	#FM_WRITE_DATA,r5		; R5 <- Table of flash memory command data
+	mov.l	#H'FFFFFFFF,r0			; R0 <- Table end code
+;
+FmWriteWord_Main:
+	mov.l	@r5+,r8					; R8 <- command address
+	add		r7,r8					; R8 <- add flash top address (offset)
+	mov.l	@r5+,r1					; R1 <- command data
+	cmp/eq	r0,r1					; if Table end code
+	bt		FmWriteWord_Write		;
+;
+	mov.w	r1,@r8					; Write the Write command to flash memory
+	bra		FmWriteWord_Main		; loop
+	nop								;
+;
+FmWriteWord_Write:
+	mov.w	r6,@r4					; Write data to flash memory
+	mov.l	#FM_CHK_DQ7,r7			;
+	and		r6,r7					;
+;
+FmWriteWord_Loop:
+	mov.w	@r4,r0					; Read memory
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	and		r1,r0					;
+	cmp/eq	r7,r0					; if end the write
+	bt		FmWriteWord_Loop_Next	; then exit
+	nop
+;
+	mov		r2,r0					;
+	mov.l	#FM_CHK_DQ5,r1			;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ5 == 0 (0 = OK / 1 = Fail)
+	bf		FmWriteWord_Loop		; then loop
+;
+	mov.w	@r4,r0					; Read memory
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	and		r1,r0					;
+	cmp/eq	r7,r0					; if end the write
+	bt		FmWriteWord_Loop_Next	; then exit
+	nop
+;
+	bra		FmWriteWord_End			; error end
+	nop								;
+;
+FmWriteWord_Loop_Next:
+	mov.l	#0,r0					;
+;
+FmWriteWord_End:
+	mov.l	@r15+,r8				;
+	mov.l	@r15+,r7				;
+	mov.l	@r15+,r6				;
+	mov.l	@r15+,r5				;
+	mov.l	@r15+,r2				;
+	mov.l	@r15+,r1				;
+	rts								;
+	nop								;
+;
+;
+;
+;====================================================================
+;
+; NAME = FmWriteLong
+; FUNC = The routine of writing data to flash memory
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = R4.L	= write address;
+;	 R6.L	= write data;
+; OUTP = R0.L	= status;
+;
+;====================================================================
+FmWriteLong:
+	mov.l	r1,@-r15				;
+	mov.l	r2,@-r15				;
+	mov.l	r5,@-r15				;
+	mov.l	r6,@-r15				;
+	mov.l	r7,@-r15				;
+	mov.l	r8,@-r15				;
+;
+	mov.l	#FM_TOP_ADDRESS,r7		; R7 <- Top address of Flash memory 
+	mov.l	#FM_WRITE_DATA,r5		; R5 <- Table of flash memory command data
+	mov.l	#H'FFFFFFFF,r0			; R0 <- Table end code
+;
+FmWriteLong_Main:
+	mov.l	@r5+,r8					; R8 <- command address
+	shll	r8						; adjust address (address singanl connecting A2)
+	add		r7,r8					; R8 <- add flash top address (offset)
+	mov.l	@r5+,r1					; R1 <- command data
+	mov		r1,r2					;
+	shll16	r2						;
+	or		r2,r1					;
+	cmp/eq	r0,r1					; if Table end code
+	bt		FmWriteLong_Write		; then next
+;
+	mov.l	r1,@r8					; Write the Write command to flash memory
+	bra		FmWriteLong_Main		; loop
+	nop								;
+;
+FmWriteLong_Write:
+	mov.l	r6,@r4					; Write data to flash memory
+	mov.l	#FM_CHK_DQ7,r7			;
+	shll16	r7						;
+	mov.l	#FM_CHK_DQ7,r5			;
+	or		r5,r7					;
+	and		r6,r7					;
+;
+FmWriteLong_Loop:
+	mov.l	@r4,r0					; Read memory
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	shll16	r1						;
+	mov.l	#FM_CHK_DQ7,r5			;
+	or		r5,r1					;
+	and		r1,r0					;
+	cmp/eq	r7,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bt		FmWriteLong_Loop_Next	; then exit
+;
+	mov		r7,r1					;
+	and		r5,r1					;
+	mov		r2,r0					;
+	and		r5,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == write data
+	bt		FmWriteLong_Loop_u		; then next
+;
+	mov		r2,r0					;
+	mov.l	#FM_CHK_DQ5,r1			;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ5 == 0 (0 = OK / 1 = Fail)
+	bf		FmWriteLong_Loop_u		; then next
+;
+	mov.l	@r4,r0					; Read memory
+	mov		r0,r2					;
+	mov.l	#FM_CHK_DQ7,r1			;
+	shll16	r1						;
+	mov.l	#FM_CHK_DQ7,r5			;
+	or		r5,r1					;
+	and		r1,r0					;
+	cmp/eq	r7,r0					; if status.DQ7 == 1 (0 = Busy / 1 = End)
+	bt		FmWriteLong_Loop_Next	; then exit
+;
+	mov		r7,r1					;
+	and		r5,r1					;
+	mov		r2,r0					;
+	and		r5,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == write data
+	bt		FmWriteLong_Loop_u		; then next
+;
+	bra		FmWriteLong_End			; error end
+	nop								;
+;
+FmWriteLong_Loop_u:
+	shll16	r5						;
+	mov		r7,r1					;
+	and		r5,r1					;
+	mov		r2,r0					;
+	and		r5,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == write data
+	bt		FmWriteLong_Loop		; then loop
+	nop								;
+;
+	mov		r2,r0					;
+	mov.l	#FM_CHK_DQ5,r1			;
+	shll16	r1						;
+	and		r1,r0					;
+	cmp/eq	r1,r0					; if status.DQ5 == 0 (0 = OK / 1 = Fail)
+	bf		FmWriteLong_Loop		; then loop
+;
+	shll16	r5						;
+	mov		r7,r1					;
+	and		r5,r1					;
+	mov		r2,r0					;
+	and		r5,r0					;
+	cmp/eq	r1,r0					; if status.DQ7 == write data
+	bt		FmWriteLong_Loop		; then loop
+	nop								;
+;
+	bra		FmWriteLong_End			; error end
+	nop								;
+;
+FmWriteLong_Loop_Next:
+	mov.l	#0,r0					;
+;
+FmWriteLong_End:
+	mov.l	@r15+,r8				;
+	mov.l	@r15+,r7				;
+	mov.l	@r15+,r6				;
+	mov.l	@r15+,r5				;
+	mov.l	@r15+,r2				;
+	mov.l	@r15+,r1				;
+	rts								;
+	nop								;
+;
+;
+;
+;====================================================================
+;
+; NAME = CheckVerifyWord
+; FUNC = The routine of checking the written data
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = R4.L	= check data address;
+;		 R6.L	= write data
+;
+;====================================================================
+CheckVerifyWord:
+	mov.l	r1,@-r15				;
+;
+	extu.w	r6,r6					; Verify check
+	mov.w	@r4,r1					;
+	extu.w	r1,r1					;
+	cmp/eq	r6,r1					; if read == write data
+	bt		CheckVeriW_OK			; then OK
+;
+	mov.w	#FM_BT,r0				; Set an error code
+	bra		CheckVeriW_End			;
+	nop								;
+;
+CheckVeriW_OK:
+	mov		#0,r0					; Set the OK code
+CheckVeriW_End:
+	mov.l	@r15+,r1				;
+	rts								;
+	nop								;
+;
+;
+;
+;
+;====================================================================
+;
+; NAME = CheckVerifyLong
+; FUNC = The routine of checking the written data
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = R4.L	= check data address;
+;		 R6.L	= write data
+;
+;====================================================================
+CheckVerifyLong:
+	mov.l	r1,@-r15				;
+;
+	mov.l	@r4,r1					; Verify check
+	cmp/eq	r6,r1					; if read == write data
+	bt		CheckVeriL_OK			; then OK
+	mov.w	#FM_BT,r0				; Set an error code
+	bra		CheckVeriL_End			;
+	nop								;
+;
+CheckVeriL_OK:
+	mov		#0,r0					; Set the OK code
+CheckVeriL_End:
+	mov.l	@r15+,r1				;
+	rts								;
+	nop								;
+;
+;
+;
+;
+;====================================================================
+;
+; NAME = ClearAllStatusWord
+; FUNC = The routine which clears the status of the flash memory.
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = none;
+;
+;====================================================================
+ClearAllStatusWord:
+	mov.l	r0,@-r15				;
+	mov.l	r1,@-r15				;
+;
+	mov.l	#FM_CMD_RESET,r1		; R1 <- Status clear command
+	mov.l	#FM_TOP_ADDRESS,r0		; R0 <- Flash memory top address
+	mov.w	r1,@r0					;
+	nop								;
+	nop								;
+	nop								;
+	nop								;
+	nop								;
+	nop								;
+;
+	mov.l	@r15+,r1				;
+	mov.l	@r15+,r0				;
+	rts								;
+	nop								;
+;
+;
+;
+;====================================================================
+;
+; NAME = ClearAllStatusLong
+; FUNC = The routine which clears the status of the flash memory.
+; NOTE = NEW;
+; HIST = 2004.09.01;
+; INPU = none;
+;
+;====================================================================
+ClearAllStatusLong:
+	mov.l	r0,@-r15				;
+	mov.l	r1,@-r15				;
+;
+	mov.l	#FM_CMD_RESET,r0		;
+	mov.l	#FM_CMD_RESET,r1		;
+	shll16  r1						;
+	or		r0,r1					; R1 <- 32bit status clear command
+	mov.l	#FM_TOP_ADDRESS,r0		; R0 <- Flash memory top address
+	mov.l	r1,@r0					;
+	nop								;
+	nop								;
+	nop								;
+	nop								;
+	nop								;
+	nop								;
+;
+	mov.l	@r15+,r1				;
+	mov.l	@r15+,r0				;
+	rts								;
+	nop								;
+;
+;
+;
+;+===================================================================+
+;|       FM DATA TABLE                                               |
+;+===================================================================+
+	.align	4
+;
+;	      [ADDRESS(W)],[DATA(W)]
+FM_ERASE_DATA:
+	.data.l	H'00000AAA,H'000000AA	; 1
+	.data.l	H'00000554,H'00000055	; 2
+	.data.l	H'00000AAA,H'00000080	; 3
+	.data.l	H'00000AAA,H'000000AA	; 4
+	.data.l	H'00000554,H'00000055	; 5
+	.data.l	H'00000AAA,H'00000010	; 6
+	.data.l	H'00000000,H'FFFFFFFF	; .. END ID.
+;
+;
+;	      [ADDRESS(W)],[DATA(W)]
+FM_WRITE_DATA:
+	.data.l	H'00000AAA,H'000000AA	; 1
+	.data.l	H'00000554,H'00000055	; 2
+	.data.l	H'00000AAA,H'000000A0	; 3
+	.data.l	H'00000000,H'FFFFFFFF	; .. END ID.
+;
+;
+	.end

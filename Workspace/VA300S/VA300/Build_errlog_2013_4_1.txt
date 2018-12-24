@@ -1,0 +1,294 @@
+Building All - VA300 - Debug
+
+Phase SH C/C++ Library Generator starting
+Ctype compiling
+Mathf compiling
+Stdio compiling
+Stdlib compiling
+String compiling
+New compiling
+Runtime compiling
+Phase SH C/C++ Library Generator finished
+
+Phase SH C/C++ Compiler starting
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\data\testAlphablending00.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\data\testDisplay00.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\data\testImage00.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\data\testPIP00.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\data\testWord00.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_7seg.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_PC28F00B.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_buz.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_cmr.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_cmr.c(68) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_cmr.c(69) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_cmr.c(70) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_dsw.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_eep.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_exkey.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_exkey.c(41) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_flash.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_fpga.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_irled.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_led.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_rtc.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_tim.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_tim.c(21) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_tpl.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_tpl.c(51) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_tpl.c(52) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_ts.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_ts.c(36) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_tsc2004.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\net\lan9118.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\net\nonethw.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\net\nonethw.c(213) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\net\nonethw.c(214) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\net\udp.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\net\udp.c(35) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\sio\nos7750.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\sio\nos7750.c(1216) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\sio\nos7750.c(1217) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\sio\nos7750.c(1219) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\sio\nosio.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_CNS.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Chck.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Dump.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Edit.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_IDS.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_MAC.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\lan9118.h(78) :  C5047 (W) Incompatible redefinition of macro "RX_DATA" (declared at line 45 of "C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\mon.h")
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_NR.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\lan9118.h(78) :  C5047 (W) Incompatible redefinition of macro "RX_DATA" (declared at line 45 of "C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\mon.h")
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_NS.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(54) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(55) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(56) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(57) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(58) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(59) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(60) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(61) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(62) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(63) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(64) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(65) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(66) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(67) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(68) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(69) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(70) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(71) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(72) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(73) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(74) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(75) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(76) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(77) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(78) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(79) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(80) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(81) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(82) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(83) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(84) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(85) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(86) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(87) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(88) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(89) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(90) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(91) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(92) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(93) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(94) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(95) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(96) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(97) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(98) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(99) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(100) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(101) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(102) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(103) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(104) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(105) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(106) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(107) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(108) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(109) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(110) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(111) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(112) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(113) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(114) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(115) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(116) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(117) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(118) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(119) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(120) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(121) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(122) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(123) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(124) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(125) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(126) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(127) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(128) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(129) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(130) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(131) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(132) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(133) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(134) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(135) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(136) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(137) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(138) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(139) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(140) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(141) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(142) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(143) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(144) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(145) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(146) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(147) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(148) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(149) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(150) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(151) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(152) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(153) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(154) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(155) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(156) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(157) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(158) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(159) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(160) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(161) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(162) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(163) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(164) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(165) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(166) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(167) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(168) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(169) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(170) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(171) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(172) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(173) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(174) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(175) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(176) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(177) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(178) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(179) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(180) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(181) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(182) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(183) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(184) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(185) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(186) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(187) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(188) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(189) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(190) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(191) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(192) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(193) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(194) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(195) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_dasm.c(196) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_ver.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\dbg_out.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(45) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(46) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(47) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(48) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(49) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(50) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(51) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(52) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(53) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\err_ctrl.c(54) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonfile.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonftpd.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonftpd.c(54) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonramd.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonshel.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonshel.c(36) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonteld.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonteld.c(417) :  C5014 (W) Extra text after expected end of preprocessing directive
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\net\nonteld.c(43) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\prm_func.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\prm_func.c(169) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\sub_func.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\initsh.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\n4i7750.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\n4i7750.c(389) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\lan9118.h(78) :  C5047 (W) Incompatible redefinition of macro "RX_DATA" (declared at line 45 of "C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\mon.h")
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(162) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(163) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(165) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(166) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(167) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(168) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(169) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\va300.c(170) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_buz.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_buz.c(63) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_buz.c(65) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_disp.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_exkey.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_exkey.c(42) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_io.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_io.c(30) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_lcd.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_lcd.c(32) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_lcmd.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_lrcv.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_ts.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_ts.c(31) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_io.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_io.c(36) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\driver\drv_lcd.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_mon.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_mon.c(70) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\tasks\tsk_mon.c(71) :  C1003 (W) Illegal pointer initialization
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\lan9118.h(78) :  C5047 (W) Incompatible redefinition of macro "RX_DATA" (declared at line 45 of "C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include\mon.h")
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(695) :  C5054 (W) Too few arguments in macro invocation
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(186) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(462) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(505) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(523) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(615) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(651) :  C2202 (E) Number of parameters mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(653) :  C2201 (E) Cannot convert parameter "5"
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(653) :  C2202 (E) Number of parameters mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(657) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(678) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(695) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(695) :  C2208 (E) Pointer required for "*"
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(723) :  C1016 (W) Argument mismatch
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(748) :  C2201 (E) Cannot convert parameter "5"
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\function\Monitor\Mon_Test.c(748) :  C2202 (E) Number of parameters mismatch
+Phase SH C/C++ Compiler finished
+
+Phase SH Assembler starting
+C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\startUp\vec7750h.asm
+Phase SH Assembler finished
+
+Phase OptLinker starting
+L3300 (F) Cannot open file : "C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Debug\Mon_Test.obj"
+Build Stopped - Fatal Error
+7 Errors, 204 Warnings
+

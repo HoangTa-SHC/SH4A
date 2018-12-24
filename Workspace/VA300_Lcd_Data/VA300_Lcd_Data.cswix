@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Settings CompactMode="1">
+	<NormalLayout>
+		<CommandBars Schema="36">
+			<CommandBars>
+				<CommandBar Class="CXTPMenuBar" Type="0" BarID="1" Flags="95" Style="4194304" Title="メニューバー" MRUWidth="32767" Closeable="0" ResourceId="128">
+					<Controls OriginalControls="1">
+						<Control Class="CXTPControlPopup" Type="2" Caption="ファイル(&amp;F)" CommandBarId="16777216"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="編集(&amp;E)" CommandBarId="16777222"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="表示(&amp;V)" CommandBarId="16777225"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="デバッグ(&amp;D)" CommandBarId="16777228"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="ツール(&amp;T)" CommandBarId="16777231"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="ウィンドウ(&amp;W)" CommandBarId="16777234"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="メンテナンス(&amp;M)" CommandBarId="16777235"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="ヘルプ(&amp;H)" CommandBarId="16777236"/>
+						<OriginalControls>
+							<Control Class="CXTPControlPopup" Type="2" Caption="ファイル(&amp;F)" CommandBarId="16777237"/>
+							<Control Class="CXTPControlPopup" Type="2" Caption="編集(&amp;E)" CommandBarId="16777243"/>
+							<Control Class="CXTPControlPopup" Type="2" Caption="表示(&amp;V)" CommandBarId="16777246"/>
+							<Control Class="CXTPControlPopup" Type="2" Caption="デバッグ(&amp;D)" CommandBarId="16777249"/>
+							<Control Class="CXTPControlPopup" Type="2" Caption="ツール(&amp;T)" CommandBarId="16777252"/>
+							<Control Class="CXTPControlPopup" Type="2" Caption="ウィンドウ(&amp;W)" CommandBarId="16777255"/>
+							<Control Class="CXTPControlPopup" Type="2" Caption="メンテナンス(&amp;M)" CommandBarId="16777256"/>
+							<Control Class="CXTPControlPopup" Type="2" Caption="ヘルプ(&amp;H)" CommandBarId="16777257"/>
+						</OriginalControls>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777216" Style="4194304" Title="ファイル(F)">
+					<Controls>
+						<Control Class="CXTPControlPopup" Type="2" Caption="新規作成(&amp;N)" CommandBarId="16777217"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="開く(&amp;O)" CommandBarId="16777218"/>
+						<Control Class="CXTPControlButton" Id="1005" Caption="ワークスペースの編集(&amp;R)..."/>
+						<Control Class="CXTPControlButton" Id="1008" Caption="保存(&amp;S)" TooltipText="ファイルに保存"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="名前を付けて保存(&amp;A)" CommandBarId="16777219"/>
+						<Control Class="CXTPControlButton" Id="1011" BeginGroup="1" Caption="ダウンロード(&amp;D)..." TooltipText="ユーザープログラムを読み込む"/>
+						<Control Class="CXTPControlButton" Id="2673" Caption="SPIへのダウンロード(&amp;L)..."/>
+						<Control Class="CXTPControlButton" Id="2672" Caption="マルチダウンロード(&amp;M)"/>
+						<Control Class="CXTPControlButton" Id="1014" Caption="ベリファイ(&amp;V)..."/>
+						<Control Class="CXTPControlButton" Id="1012" Caption="ファイルへの書き出し(&amp;W)..." TooltipText="メモリ内容の書き込み"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="最近開いたファイル(&amp;F)" CommandBarId="16777220"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="最近読み込んだファイル(&amp;A)" CommandBarId="16777221"/>
+						<Control Class="CXTPControlButton" Id="1031" BeginGroup="1" Caption="JOB登録開始(&amp;J)..."/>
+						<Control Class="CXTPControlButton" Id="1032" Caption="JOBの実行(&amp;E)..." TooltipText="JOBの実行"/>
+						<Control Class="CXTPControlButton" Id="57607" BeginGroup="1" HideFlags="32" Caption="印刷(&amp;P)..." TooltipText="印刷"/>
+						<Control Class="CXTPControlButton" Id="1041" HideFlags="32" Caption="テキストファイルに出力(&amp;T)..."/>
+						<Control Class="CXTPControlButton" Id="57665" BeginGroup="1" Caption="終了(&amp;Q)" TooltipText="CodeStageの終了"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777217" Style="4194304" Title="新規作成(N)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1001" Caption="ソースファイル(&amp;F)" TooltipText="ファイルの新規作成"/>
+						<Control Class="CXTPControlButton" Id="1002" Caption="ワークスペース(&amp;W)..." TooltipText="ワークスペースの新規作成"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777218" Style="4194304" Title="開く(O)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1003" Caption="ソースファイル(&amp;F)" TooltipText="ファイルを開く"/>
+						<Control Class="CXTPControlButton" Id="1004" Caption="ワークスペース(&amp;W)" TooltipText="ワークスペースを開く"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777219" Style="4194304" Title="名前を付けて保存(A)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1009" Caption="ワークスペース(&amp;W)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777220" Style="4194304" Title="最近開いたファイル(F)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1021" Caption="(なし)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777221" Style="4194304" Title="最近読み込んだファイル(A)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1022" Caption="(なし)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777222" Style="4194304" Title="編集(E)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1101" Caption="元に戻す(&amp;U)"/>
+						<Control Class="CXTPControlButton" Id="1102" Caption="やり直し(&amp;R)"/>
+						<Control Class="CXTPControlButton" Id="1103" BeginGroup="1" Caption="コピー(&amp;C)" ShortcutTextAuto="Ctrl+C"/>
+						<Control Class="CXTPControlButton" Id="1104" Caption="貼り付け(&amp;P)" TooltipText="文字の貼り付け" ShortcutTextAuto="Ctrl+V"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="検索(&amp;F)" CommandBarId="16777223"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="ジャンプ(&amp;J)" CommandBarId="16777224"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777223" Style="4194304" Title="検索(F)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1113" Caption="ウィンドウ内検索(&amp;W)" TooltipText="ウィンドウ内検索"/>
+						<Control Class="CXTPControlButton" Id="1116" Caption="ファイル内検索(&amp;F)" TooltipText="ファイル内検索"/>
+						<Control Class="CXTPControlButton" Id="1117" Caption="登録変数を検索(&amp;D)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777224" Style="4194304" Title="ジャンプ(J)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1118" Caption="アドレスへジャンプ(&amp;A)" TooltipText="指定のアドレスへジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1119" Caption="現在のPCへジャンプ(&amp;P)" TooltipText="現在のPCへジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1120" Caption="指定行へジャンプ(&amp;L)..." TooltipText="指定行へジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1121" Caption="先頭へジャンプ(&amp;E)" TooltipText="ファイルの先頭へジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1122" Caption="後方へジャンプ(&amp;T)" TooltipText="ファイルの後方へジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1123" Caption="行マーク・ジャンプ(&amp;M)..." TooltipText="行マーク・ジャンプ"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777225" Style="4194304" Title="表示(V)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1200" Caption="逆アセンブル(&amp;U)" TooltipText="逆アセンブル ウィンドウ"/>
+						<Control Class="CXTPControlButton" Id="2001" Caption="ファイルリスト(&amp;F)" TooltipText="ファイルリスト" DescriptionText="ファイルリスト"/>
+						<Control Class="CXTPControlButton" Id="2021" Caption="関数リスト(&amp;P)" TooltipText="関数リスト" DescriptionText="関数リスト"/>
+						<Control Class="CXTPControlButton" Id="2621" Caption="コア選択バー(&amp;R)" TooltipText="コア選択バー" DescriptionText="コア選択バー"/>
+						<Control Class="CXTPControlButton" Id="2181" Caption="コマンド(&amp;C)" TooltipText="コマンド ウィンドウ" DescriptionText="コマンド ウィンドウ"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="ダンプ(&amp;D)" CommandBarId="16777226"/>
+						<Control Class="CXTPControlButton" Id="2061" Caption="レジスタ(&amp;R)" TooltipText="レジスタ" DescriptionText="レジスタ"/>
+						<Control Class="CXTPControlButton" Id="2081" Caption="ウォッチ(&amp;W)" TooltipText="ウォッチ" DescriptionText="ウォッチ"/>
+						<Control Class="CXTPControlButton" Id="2101" Caption="ローカル(&amp;L)" TooltipText="ローカル" DescriptionText="ローカル"/>
+						<Control Class="CXTPControlButton" Id="2121" Caption="トレース(&amp;T)" TooltipText="トレース" DescriptionText="トレース"/>
+						<Control Class="CXTPControlButton" Id="2141" Caption="スタック(&amp;K)" TooltipText="スタック" DescriptionText="スタック"/>
+						<Control Class="CXTPControlButton" Id="2161" Caption="ペリフェラル(&amp;P)" TooltipText="ペリフェラル" DescriptionText="ペリフェラル"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="ツールバー(&amp;O)" CommandBarId="16777227"/>
+						<Control Class="CXTPControlButton" Id="1251" BeginGroup="1" Caption="ソース・アセンブラの表示切替(&amp;S)" TooltipText="ソース・アセンブラの表示切替"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777226" Style="4194304" Title="ダンプ(D)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="2041" Caption="ダンプ 1" TooltipText="ダンプ 1" DescriptionText="ダンプ 1"/>
+						<Control Class="CXTPControlButton" Id="2042" Caption="ダンプ 2" TooltipText="ダンプ 2" DescriptionText="ダンプ 2"/>
+						<Control Class="CXTPControlButton" Id="2043" Caption="ダンプ 3" TooltipText="ダンプ 3" DescriptionText="ダンプ 3"/>
+						<Control Class="CXTPControlButton" Id="2044" Caption="ダンプ 4" TooltipText="ダンプ 4" DescriptionText="ダンプ 4"/>
+						<Control Class="CXTPControlButton" Id="2045" Caption="ダンプ 5" TooltipText="ダンプ 5" DescriptionText="ダンプ 5"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777227" Style="4194304" Title="ツールバー(O)">
+					<Controls>
+						<Control Class="CXTPControlToolbars" Id="59392" Caption="&amp;Toolbar"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777228" Style="4194304" Title="デバッグ(D)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1300" Caption="設定(&amp;E)..." TooltipText="デバッグの設定"/>
+						<Control Class="CXTPControlButton" Id="1301" BeginGroup="1" Caption="実行(&amp;G)" TooltipText="プログラムの実行"/>
+						<Control Class="CXTPControlButton" Id="1302" Caption="カーソル位置まで実行(&amp;C)" TooltipText="カーソル位置まで実行"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="条件実行(&amp;N)" CommandBarId="16777229"/>
+						<Control Class="CXTPControlButton" Id="1306" BeginGroup="1" Caption="ステップ・イン(&amp;S)" TooltipText="ステップ・イン"/>
+						<Control Class="CXTPControlButton" Id="1307" Caption="ステップ・オーバー(&amp;O)" TooltipText="ステップ・オーバー"/>
+						<Control Class="CXTPControlButton" Id="1309" Caption="強制ブレーク(&amp;B)" TooltipText="強制ブレーク"/>
+						<Control Class="CXTPControlButton" Id="1310" Caption="ステップ・アウト(&amp;U)" TooltipText="ステップ・アウト"/>
+						<Control Class="CXTPControlButton" Id="1311" BeginGroup="1" Caption="PCを変更(&amp;H)" TooltipText="PCの変更"/>
+						<Control Class="CXTPControlButton" Id="1312" Caption="リセット(&amp;R)" TooltipText="プログラムのリセット"/>
+						<Control Class="CXTPControlButton" Id="1333" BeginGroup="1" Caption="シンボル参照(&amp;Q)..." TooltipText="シンボル参照"/>
+						<Control Class="CXTPControlButton" Id="1331" Caption="ブレークポイントの追加/編集(&amp;B)..." TooltipText="ブレークポイントの追加/編集"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="メモリ・I/O操作(&amp;M)" CommandBarId="16777230"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777229" Style="4194304" Title="条件実行(N)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1303" Caption="関数実行時ブレーク(&amp;F)" TooltipText="関数実行時ブレーク"/>
+						<Control Class="CXTPControlButton" Id="1304" Caption="ステータスブレーク(&amp;S)" TooltipText="ステータスブレーク"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777230" Style="4194304" Title="メモリ・I/O操作(M)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1340" Caption="フィル(&amp;F)..." TooltipText="メモリを任意値で埋める"/>
+						<Control Class="CXTPControlButton" Id="1341" Caption="コピー(&amp;C)" TooltipText="メモリ間のコピー"/>
+						<Control Class="CXTPControlButton" Id="1342" Caption="比較(&amp;O)" TooltipText="メモリ間の比較"/>
+						<Control Class="CXTPControlButton" Id="1343" Caption="検索(&amp;S)" TooltipText="メモリデータの検索"/>
+						<Control Class="CXTPControlButton" Id="1344" Caption="メモリ・テスト(&amp;M)" TooltipText="RAMメモリの書き込みテスト"/>
+						<Control Class="CXTPControlButton" Id="1345" Caption="I/O・テスト" TooltipText="I/Oポートテスト"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777231" Style="4194304" Title="ツール(T)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1402" Caption="2点間計測(&amp;2)" TooltipText="２点間の実行時間を計測"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="&amp;RTOS" CommandBarId="16777232"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="&amp;CASE" CommandBarId="16777233"/>
+						<Control Class="CXTPControlButton" Id="2641" Caption="RAMモニタ(&amp;M)" TooltipText="RAMモニタ" DescriptionText="RAMモニタ"/>
+						<Control Class="CXTPControlButton" Id="2661" Caption="トレースビュー(&amp;T)" TooltipText="トレース ビュー" DescriptionText="トレース ビュー"/>
+						<Control Class="CXTPControlButton" Id="1408" BeginGroup="1" Caption="オプション(&amp;O)..." TooltipText="オプション" DescriptionText="オプション"/>
+						<Control Class="CXTPControlButton" Id="1407" Caption="カスタマイズ(&amp;U)..." TooltipText="カスタマイズ"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777232" Style="4194304" Title="RTOS">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="2226" Caption="オブジェクト(&amp;O)" TooltipText="オブジェクト" DescriptionText="オブジェクト"/>
+						<Control Class="CXTPControlButton" Id="2247" Caption="トレース(&amp;T)" TooltipText="システムコールトレース" DescriptionText="システムコールトレース"/>
+						<Control Class="CXTPControlButton" Id="2665" Caption="プロファイル(&amp;P)" TooltipText="プロファイル" DescriptionText="プロファイル"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777233" Style="4194304" Title="CASE">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1405" Caption="起動(&amp;S)..." TooltipText="ZIPCの起動"/>
+						<Control Class="CXTPControlButton" Id="1406" Caption="接続(&amp;C)" TooltipText="ZIPC Emuratorと接続する"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777234" Style="4194304" Title="ウィンドウ(W)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="57602" Caption="閉じる(&amp;O)" TooltipText="アクティブなファイルを閉じる"/>
+						<Control Class="CXTPControlButton" Id="1500" Caption="全て閉じる(&amp;S)" TooltipText="全てのウィンドウを閉じる"/>
+						<Control Class="CXTPControlButton" Id="1501" BeginGroup="1" Caption="次のウィンドウ(&amp;N)" TooltipText="次のウィンドウに移動する"/>
+						<Control Class="CXTPControlButton" Id="1502" BeginGroup="1" Caption="自動的に隠す"/>
+						<Control Class="CXTPControlWindowList" Id="35000" BeginGroup="1" Caption="Windows List"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777235" Style="4194304" Title="メンテナンス(M)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1600" Caption="通信のテスト(&amp;C)"/>
+						<Control Class="CXTPControlButton" Id="1601" BeginGroup="1" Caption="本体ROMのアップデート(&amp;U)..."/>
+						<Control Class="CXTPControlButton" Id="1602" Caption="本体のネットワークIPを変更(&amp;I)..."/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777236" Style="4194304" Title="ヘルプ(H)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1700" Caption="目次(&amp;I)..." TooltipText="ヘルプの目次を開く"/>
+						<Control Class="CXTPControlButton" Id="1994" Caption="トピックスの表示(&amp;T)" TooltipText="ヘルプトピックスを開く"/>
+						<Control Class="CXTPControlButton" Id="1807" BeginGroup="1" Caption="サポートについて(&amp;S)..."/>
+						<Control Class="CXTPControlButton" Id="57664" BeginGroup="1" Caption="バージョン情報(&amp;A)..."/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777237" Style="4194304" Title="ファイル(F)">
+					<Controls>
+						<Control Class="CXTPControlPopup" Type="2" Caption="新規作成(&amp;N)" CommandBarId="16777238"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="開く(&amp;O)" CommandBarId="16777239"/>
+						<Control Class="CXTPControlButton" Id="1005" Caption="ワークスペースの編集(&amp;R)..."/>
+						<Control Class="CXTPControlButton" Id="1008" Caption="保存(&amp;S)" TooltipText="ファイルに保存" ShortcutTextAuto="Ctrl+S"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="名前を付けて保存(&amp;A)" CommandBarId="16777240"/>
+						<Control Class="CXTPControlButton" Id="1011" BeginGroup="1" Caption="ダウンロード(&amp;D)..." TooltipText="ユーザープログラムを読み込む"/>
+						<Control Class="CXTPControlButton" Id="2673" Caption="SPIへのダウンロード(&amp;L)..."/>
+						<Control Class="CXTPControlButton" Id="2672" Caption="マルチダウンロード(&amp;M)"/>
+						<Control Class="CXTPControlButton" Id="1014" Caption="ベリファイ(&amp;V)..."/>
+						<Control Class="CXTPControlButton" Id="1012" Caption="ファイルへの書き出し(&amp;W)..." TooltipText="メモリ内容の書き込み"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="最近開いたファイル(&amp;F)" CommandBarId="16777241"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="最近読み込んだファイル(&amp;A)" CommandBarId="16777242"/>
+						<Control Class="CXTPControlButton" Id="1031" BeginGroup="1" Caption="JOB登録開始(&amp;J)"/>
+						<Control Class="CXTPControlButton" Id="1032" Caption="JOBの実行(&amp;E)..." TooltipText="JOBの実行"/>
+						<Control Class="CXTPControlButton" Id="57607" BeginGroup="1" Caption="印刷(&amp;P)..." TooltipText="印刷"/>
+						<Control Class="CXTPControlButton" Id="1041" Caption="テキストファイルに出力(&amp;T)..."/>
+						<Control Class="CXTPControlButton" Id="57665" BeginGroup="1" Caption="終了(&amp;Q)" TooltipText="CodeStageの終了"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777238" Style="4194304" Title="新規作成(N)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1001" Caption="ソースファイル(&amp;F)" TooltipText="ファイルの新規作成"/>
+						<Control Class="CXTPControlButton" Id="1002" Caption="ワークスペース(&amp;W)..." TooltipText="ワークスペースの新規作成"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777239" Style="4194304" Title="開く(O)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1003" Caption="ソースファイル(&amp;F)" TooltipText="ファイルを開く"/>
+						<Control Class="CXTPControlButton" Id="1004" Caption="ワークスペース(&amp;W)" TooltipText="ワークスペースを開く"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777240" Style="4194304" Title="名前を付けて保存(A)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1009" Caption="ワークスペース(&amp;W)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777241" Style="4194304" Title="最近開いたファイル(F)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1021" Caption="(なし)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777242" Style="4194304" Title="最近読み込んだファイル(A)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1022" Caption="(なし)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777243" Style="4194304" Title="編集(E)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1101" Caption="元に戻す(&amp;U)"/>
+						<Control Class="CXTPControlButton" Id="1102" Caption="やり直し(&amp;R)"/>
+						<Control Class="CXTPControlButton" Id="1103" BeginGroup="1" Caption="コピー(&amp;C)" ShortcutTextAuto="Ctrl+C"/>
+						<Control Class="CXTPControlButton" Id="1104" Caption="貼り付け(&amp;P)" TooltipText="文字の貼り付け" ShortcutTextAuto="Ctrl+V"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="検索(&amp;F)" CommandBarId="16777244"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="ジャンプ(&amp;J)" CommandBarId="16777245"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777244" Style="4194304" Title="検索(F)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1113" Caption="ウィンドウ内検索(&amp;W)" TooltipText="ウィンドウ内検索"/>
+						<Control Class="CXTPControlButton" Id="1116" Caption="ファイル内検索(&amp;F)" TooltipText="ファイル内検索"/>
+						<Control Class="CXTPControlButton" Id="1117" Caption="登録変数を検索(&amp;D)"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777245" Style="4194304" Title="ジャンプ(J)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1118" Caption="アドレスへジャンプ(&amp;A)" TooltipText="指定のアドレスへジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1119" Caption="現在のPCへジャンプ(&amp;P)" TooltipText="現在のPCへジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1120" Caption="指定行へジャンプ(&amp;L)..." TooltipText="指定行へジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1121" Caption="先頭へジャンプ(&amp;E)" TooltipText="ファイルの先頭へジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1122" Caption="後方へジャンプ(&amp;T)" TooltipText="ファイルの後方へジャンプ"/>
+						<Control Class="CXTPControlButton" Id="1123" Caption="行マーク・ジャンプ(&amp;M)..." TooltipText="行マーク・ジャンプ"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777246" Style="4194304" Title="表示(V)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1200" Caption="逆アセンブル(&amp;U)" TooltipText="逆アセンブル ウィンドウ"/>
+						<Control Class="CXTPControlButton" Id="2001" Caption="ファイルリスト(&amp;F)" TooltipText="ファイルリスト" DescriptionText="ファイルリスト"/>
+						<Control Class="CXTPControlButton" Id="2021" Caption="関数リスト(&amp;P)" TooltipText="関数リスト" DescriptionText="関数リスト"/>
+						<Control Class="CXTPControlButton" Id="2621" Caption="コア選択バー(&amp;R)" TooltipText="コア選択バー" DescriptionText="コア選択バー"/>
+						<Control Class="CXTPControlButton" Id="2181" Caption="コマンド(&amp;C)" TooltipText="コマンド ウィンドウ" DescriptionText="コマンド ウィンドウ"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="ダンプ(&amp;D)" CommandBarId="16777247"/>
+						<Control Class="CXTPControlButton" Id="2061" Caption="レジスタ(&amp;R)" TooltipText="レジスタ" DescriptionText="レジスタ"/>
+						<Control Class="CXTPControlButton" Id="2081" Caption="ウォッチ(&amp;W)" TooltipText="ウォッチ" DescriptionText="ウォッチ"/>
+						<Control Class="CXTPControlButton" Id="2101" Caption="ローカル(&amp;L)" TooltipText="ローカル" DescriptionText="ローカル"/>
+						<Control Class="CXTPControlButton" Id="2121" Caption="トレース(&amp;T)" TooltipText="トレース" DescriptionText="トレース"/>
+						<Control Class="CXTPControlButton" Id="2141" Caption="スタック(&amp;K)" TooltipText="スタック" DescriptionText="スタック"/>
+						<Control Class="CXTPControlButton" Id="2161" Caption="ペリフェラル(&amp;P)" TooltipText="ペリフェラル" DescriptionText="ペリフェラル"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="ツールバー(&amp;O)" CommandBarId="16777248"/>
+						<Control Class="CXTPControlButton" Id="1251" BeginGroup="1" Caption="ソース・アセンブラの表示切替(&amp;S)" TooltipText="ソース・アセンブラの表示切替"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777247" Style="4194304" Title="ダンプ(D)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="2041" Caption="ダンプ 1" TooltipText="ダンプ 1" DescriptionText="ダンプ 1"/>
+						<Control Class="CXTPControlButton" Id="2042" Caption="ダンプ 2" TooltipText="ダンプ 2" DescriptionText="ダンプ 2"/>
+						<Control Class="CXTPControlButton" Id="2043" Caption="ダンプ 3" TooltipText="ダンプ 3" DescriptionText="ダンプ 3"/>
+						<Control Class="CXTPControlButton" Id="2044" Caption="ダンプ 4" TooltipText="ダンプ 4" DescriptionText="ダンプ 4"/>
+						<Control Class="CXTPControlButton" Id="2045" Caption="ダンプ 5" TooltipText="ダンプ 5" DescriptionText="ダンプ 5"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777248" Style="4194304" Title="ツールバー(O)">
+					<Controls>
+						<Control Class="CXTPControlToolbars" Id="59392" Caption="&amp;Toolbar"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777249" Style="4194304" Title="デバッグ(D)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1300" Caption="設定(&amp;E)..." TooltipText="デバッグの設定"/>
+						<Control Class="CXTPControlButton" Id="1301" BeginGroup="1" Caption="実行(&amp;G)" TooltipText="プログラムの実行"/>
+						<Control Class="CXTPControlButton" Id="1302" Caption="カーソル位置まで実行(&amp;C)" TooltipText="カーソル位置まで実行"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="条件実行(&amp;N)" CommandBarId="16777250"/>
+						<Control Class="CXTPControlButton" Id="1306" BeginGroup="1" Caption="ステップ・イン(&amp;S)" TooltipText="ステップ・イン"/>
+						<Control Class="CXTPControlButton" Id="1307" Caption="ステップ・オーバー(&amp;O)" TooltipText="ステップ・オーバー"/>
+						<Control Class="CXTPControlButton" Id="1309" Caption="強制ブレーク(&amp;B)" TooltipText="強制ブレーク"/>
+						<Control Class="CXTPControlButton" Id="1310" Caption="ステップ・アウト(&amp;U)" TooltipText="ステップ・アウト"/>
+						<Control Class="CXTPControlButton" Id="1311" BeginGroup="1" Caption="PCを変更(&amp;H)" TooltipText="PCの変更"/>
+						<Control Class="CXTPControlButton" Id="1312" Caption="リセット(&amp;R)" TooltipText="プログラムのリセット"/>
+						<Control Class="CXTPControlButton" Id="1333" BeginGroup="1" Caption="シンボル参照(&amp;Q)..." TooltipText="シンボル参照"/>
+						<Control Class="CXTPControlButton" Id="1331" Caption="ブレークポイントの追加/編集(&amp;B)..." TooltipText="ブレークポイントの追加/編集"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="メモリ・I/O操作(&amp;M)" CommandBarId="16777251"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777250" Style="4194304" Title="条件実行(N)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1303" Caption="関数実行時ブレーク(&amp;F)" TooltipText="関数実行時ブレーク"/>
+						<Control Class="CXTPControlButton" Id="1304" Caption="ステータスブレーク(&amp;S)" TooltipText="ステータスブレーク"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777251" Style="4194304" Title="メモリ・I/O操作(M)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1340" Caption="フィル(&amp;F)..." TooltipText="メモリを任意値で埋める"/>
+						<Control Class="CXTPControlButton" Id="1341" Caption="コピー(&amp;C)" TooltipText="メモリ間のコピー"/>
+						<Control Class="CXTPControlButton" Id="1342" Caption="比較(&amp;O)" TooltipText="メモリ間の比較"/>
+						<Control Class="CXTPControlButton" Id="1343" Caption="検索(&amp;S)" TooltipText="メモリデータの検索"/>
+						<Control Class="CXTPControlButton" Id="1344" Caption="メモリ・テスト(&amp;M)" TooltipText="RAMメモリの書き込みテスト"/>
+						<Control Class="CXTPControlButton" Id="1345" Caption="I/O・テスト" TooltipText="I/Oポートテスト"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777252" Style="4194304" Title="ツール(T)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1402" Caption="2点間計測(&amp;2)" TooltipText="２点間の実行時間を計測"/>
+						<Control Class="CXTPControlPopup" Type="2" BeginGroup="1" Caption="&amp;RTOS" CommandBarId="16777253"/>
+						<Control Class="CXTPControlPopup" Type="2" Caption="&amp;CASE" CommandBarId="16777254"/>
+						<Control Class="CXTPControlButton" Id="2641" Caption="RAMモニタ(&amp;M)" TooltipText="RAMモニタ" DescriptionText="RAMモニタ"/>
+						<Control Class="CXTPControlButton" Id="2661" Caption="トレースビュー(&amp;T)" TooltipText="トレース ビュー" DescriptionText="トレース ビュー"/>
+						<Control Class="CXTPControlButton" Id="1408" BeginGroup="1" Caption="オプション(&amp;O)..." TooltipText="オプション" DescriptionText="オプション"/>
+						<Control Class="CXTPControlButton" Id="1407" Caption="カスタマイズ(&amp;U)..." TooltipText="カスタマイズ"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777253" Style="4194304" Title="RTOS">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="2226" Caption="オブジェクト(&amp;O)" TooltipText="オブジェクト" DescriptionText="オブジェクト"/>
+						<Control Class="CXTPControlButton" Id="2247" Caption="トレース(&amp;T)" TooltipText="システムコールトレース" DescriptionText="システムコールトレース"/>
+						<Control Class="CXTPControlButton" Id="2665" Caption="プロファイル(&amp;P)" TooltipText="プロファイル" DescriptionText="プロファイル"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777254" Style="4194304" Title="CASE">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1405" Caption="起動(&amp;S)..." TooltipText="ZIPCの起動"/>
+						<Control Class="CXTPControlButton" Id="1406" Caption="接続(&amp;C)" TooltipText="ZIPC Emuratorと接続する"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777255" Style="4194304" Title="ウィンドウ(W)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="57602" Caption="閉じる(&amp;O)" TooltipText="アクティブなファイルを閉じる"/>
+						<Control Class="CXTPControlButton" Id="1500" Caption="全て閉じる(&amp;S)" TooltipText="全てのウィンドウを閉じる"/>
+						<Control Class="CXTPControlButton" Id="1501" BeginGroup="1" Caption="次のウィンドウ(&amp;N)" TooltipText="次のウィンドウに移動する"/>
+						<Control Class="CXTPControlButton" Id="1502" BeginGroup="1" Caption="自動的に隠す"/>
+						<Control Class="CXTPControlWindowList" Id="35000" BeginGroup="1" Caption="Windows List"/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777256" Style="4194304" Title="メンテナンス(M)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1600" Caption="通信のテスト(&amp;C)"/>
+						<Control Class="CXTPControlButton" Id="1601" BeginGroup="1" Caption="本体ROMのアップデート(&amp;U)..."/>
+						<Control Class="CXTPControlButton" Id="1602" Caption="本体のネットワークIPを変更(&amp;I)..."/>
+					</Controls>
+				</CommandBar>
+				<CommandBar Class="CXTPPopupBar" Type="2" Position="5" BarID="16777257" Style="4194304" Title="ヘルプ(H)">
+					<Controls>
+						<Control Class="CXTPControlButton" Id="1700" Caption="目次(&amp;I)..." TooltipText="ヘルプの目次を開く"/>
+						<Control Class="CXTPControlButton" Id="1994" Caption="トピックスの表示(&amp;T)" TooltipText="ヘルプトピックスを開く"/>
+						<Control Class="CXTPControlButton" Id="1807" BeginGroup="1" Caption="サポートについて(&amp;S)..."/>
+						<Control Class="CXTPControlButton" Id="57664" BeginGroup="1" Caption="バージョン情報(&amp;A)..."/>
+					</Controls>
+				</CommandBar>
+			</CommandBars>
+			<Layout>
+				<DockState Version="36" ScreenSize="1280, 1024" Count="4">
+					<BarInfo0 BarId="1" MRUWidth="32767"/>
+					<BarInfo1 BarId="151" MRUWidth="32767" PointPos="0, 22"/>
+					<BarInfo2 BarId="152" Visible="0" MRUWidth="32767"/>
+					<BarInfo3 BarId="153" Visible="0" MRUWidth="32767"/>
+				</DockState>
+				<DockBars>
+					<DockBar0 Count="9" Id1="1" Id3="151" Id5="152" Id7="153"/>
+				</DockBars>
+			</Layout>
+		</CommandBars>
+		<Shortcuts Schema="36"/>
+		<Options Schema="36" AlwaysShowFullMenus="0" ShowFullAfterDelay="1" ToolBarScreenTips="1" ToolBarAccelTips="0" LargeIcons="0" Animation="0"/>
+		<DockingPane>
+			<Summary Panes="7" TopContainer="3" Client="6"/>
+			<Pane-1 Type="0" DockingCX="200" DockingCY="120" Title="ファイルリスト\nファイルリスト\n" ID="2001" DockingHolder="5" LastHolder="5"/>
+			<Pane-2 Type="0" DockingCX="200" DockingCY="120" Title="コマンド ウィンドウ\nコマンド ウィンドウ\n" ID="2181" DockingHolder="7" LastHolder="7"/>
+			<Pane-3 Type="2" Panes="2" Pane-1="4" Pane-2="7"/>
+			<Pane-4 Type="2" DockingCY="784" Horiz="1" Panes="2" Pane-1="5" Pane-2="6"/>
+			<Pane-5 Type="1" DockingCX="200" DockingCY="120" Panes="1" Selected="1" Pane-1="1"/>
+			<Pane-6 Type="4" DockingCX="1076"/>
+			<Pane-7 Type="1" DockingCX="200" DockingCY="120" Panes="1" Selected="2" Pane-1="2"/>
+		</DockingPane>
+	</NormalLayout>
+</Settings>

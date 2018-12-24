@@ -1,0 +1,511 @@
+[HIMDBVersion]
+2.0
+[DATABASE_VERSION]
+"2.8" 
+[PROJECT_DETAILS]
+"VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\VA300.hwp" "SuperH RISC engine" "Renesas SuperH Standard" "Application" "SH-4" "SH7750R" 
+[INFORMATION]
+"プロジェクト情報がありません" 
+[TOOL_CHAIN]
+"Renesas SuperH RISC engine Standard Toolchain" "9.4.1.0" 
+[CONFIGURATIONS]
+"Debug" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Debug" 
+"Release" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Release" 
+"SimDebug_SH7750R_Func" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\SimDebug_SH7750R_Func" 
+[BUILD_PHASES]
+"Renesas OptLinker" 1 
+"Renesas SH Assembler" 1 
+"Renesas SH C/C++ Compiler" 1 
+"Renesas SH C/C++ Library Generator" 1 
+[TOOL_ENVIRONMENT]
+[EXTENSIONS]
+"Absolute file" "ABS" 
+"Assembly include file" "INC" 
+"Assembly list file" "LIS" 
+"Assembly source file" "ASM" 
+"Assembly source file" "SRC" 
+"Binary file" "BIN" 
+"C header file" "H" 
+"C list file" "LST" 
+"C source file" "C" 
+"C++ header file" "HPP" 
+"C++ list file" "LPP" 
+"C++ source file" "CC" 
+"C++ source file" "CP" 
+"C++ source file" "CPP" 
+"CPU information file" "CPU" 
+"Calling information file" "CAL" 
+"Debug information file" "DBG" 
+"Expanded assembly source file" "EXP" 
+"Hex file" "HEX" 
+"Library file" "LIB" 
+"Library information file" "LBP" 
+"Linkage map file" "MAP" 
+"Linkage symbol file" "FSY" 
+"Object file" "OBJ" 
+"Optimize map file" "bls" 
+"Preprocessed C source file" "P" 
+"Preprocessed C++ source file" "PP" 
+"Profile file" "PRO" 
+"Relocatable file" "REL" 
+"Rts information file" "RTS" 
+"S-Record file" "MOT" 
+"Stack information file" "SNI" 
+"TD include object file" "RTI" 
+[FILE_GROUPS]
+"Absolute file" "BIN" "NONE" "" 
+"Assembly include file" "TEXT" "EDITOR" "" 
+"Assembly list file" "TEXT" "EDITOR" "" 
+"Assembly source file" "TEXT" "EDITOR" "" 
+"Binary file" "BIN" "NONE" "" 
+"C header file" "TEXT" "EDITOR" "" 
+"C list file" "TEXT" "EDITOR" "" 
+"C source file" "TEXT" "EDITOR" "" 
+"C++ header file" "TEXT" "EDITOR" "" 
+"C++ list file" "TEXT" "EDITOR" "" 
+"C++ source file" "TEXT" "EDITOR" "" 
+"CPU information file" "BIN" "NONE" "" 
+"Calling information file" "BIN" "NONE" "" 
+"Debug information file" "BIN" "NONE" "" 
+"Expanded assembly source file" "TEXT" "EDITOR" "" 
+"Hex file" "TEXT" "EDITOR" "" 
+"Library file" "BIN" "NONE" "" 
+"Library information file" "TEXT" "EDITOR" "" 
+"Linkage map file" "TEXT" "EDITOR" "" 
+"Linkage symbol file" "TEXT" "EDITOR" "" 
+"Object file" "BIN" "NONE" "" 
+"Optimize map file" "BIN" "NONE" "" 
+"Preprocessed C source file" "TEXT" "EDITOR" "" 
+"Preprocessed C++ source file" "TEXT" "EDITOR" "" 
+"Profile file" "BIN" "NONE" "" 
+"Relocatable file" "BIN" "NONE" "" 
+"Rts information file" "BIN" "NONE" "" 
+"S-Record file" "TEXT" "EDITOR" "" 
+"Stack information file" "BIN" "NONE" "" 
+"TD include object file" "BIN" "NONE" "" 
+[ASSOCIATED_APPLICATIONS]
+[TOOLCHAIN_PHASE]
+"Renesas OptLinker" 
+"Renesas SH Assembler" 
+"Renesas SH C/C++ Compiler" 
+"Renesas SH C/C++ Library Generator" 
+[UTILITY_PHASE]
+[CUSTOM_PHASES]
+[CUSTOM_PHASE_INPUT_GROUP]
+[CUSTOM_PHASE_OUTPUT_SYNTAX]
+[BUILD_ORDER]
+"Renesas SH C/C++ Library Generator" 1 
+"Renesas SH C/C++ Compiler" 1 
+"Renesas SH Assembler" 1 
+"Renesas OptLinker" 1 
+[BUILD_PHASE_DETAILS]
+"Renesas OptLinker" "Object file|Library file|Relocatable file" 0 
+"Renesas SH Assembler" "Assembly source file|Linkage symbol file" 1 
+"Renesas SH C/C++ Compiler" "C source file|C++ source file" 1 
+"Renesas SH C/C++ Library Generator" "" 0 
+[BUILD_FILE_ORDER_Assembly source file]
+"Renesas SH Assembler" 1 
+[BUILD_FILE_ORDER_C source file]
+"Renesas SH C/C++ Compiler" 1 
+[BUILD_FILE_ORDER_C++ source file]
+"Renesas SH C/C++ Compiler" 1 
+[BUILD_FILE_ORDER_Linkage symbol file]
+"Renesas SH Assembler" 1 
+[SCRAP]
+"Project Generator Setup File" "$(PROJDIR)\VA300.pgs" 
+[MAPPINGS]
+"Assembly source file" "Renesas SH Assembler" "Renesas SH C/C++ Compiler" 
+"Library file" "Renesas OptLinker" "Renesas SH C/C++ Library Generator" 
+"Object file" "Renesas OptLinker" "Renesas SH Assembler" 
+"Object file" "Renesas OptLinker" "Renesas SH C/C++ Compiler" 
+[PROJECT_FILES]
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_7seg.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_PC28F00B.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_buz.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_cmr.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_dsw.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_eep.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_exkey.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_flash.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_fpga.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_io.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_irled.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_lcd.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_led.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_rtc.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tim.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tpl.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_ts.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tsc2004.c" "User" "driver" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\lan9118.c" "User" "driver|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\nonethw.c" "User" "driver|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\udp.c" "User" "driver|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nos7750.c" "User" "driver|sio" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nosio.c" "User" "driver|sio" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Next_screen_ctrl.c" "User" "function" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\dbg_out.c" "User" "function" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\err_ctrl.c" "User" "function" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\ldata_os.c" "User" "function|learnData" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\learnData.c" "User" "function|learnData" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\memInterface.c" "User" "function|learnData" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonfile.c" "User" "function|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonftpd.c" "User" "function|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonramd.c" "User" "function|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonshel.c" "User" "function|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonteld.c" "User" "function|net" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\prm_func.c" "User" "function" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\sub_func.c" "User" "function" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\initsh.c" "User" "startUp" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\n4i7750.c" "User" "startUp" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\va300.c" "User" "startUp" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\vec7750h.asm" "User" "startUp" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_buz.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_camera.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_disp.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_exkey.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_io.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcd.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcmd.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_learnData.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_log.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lrcv.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_mon.c" "User" "function|Monitor" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ninshou.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ts.c" "User" "tasks" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "User" "Linkage symbol file" 2 
+[FOLDER]
+"Assembly source file" "Assembly source file" 
+"C header file" "C header file" 
+"C source file" "C source file" 
+"Linkage symbol file" "Linkage symbol file" 
+"data" "data" 
+"driver" "driver" 
+"driver|net" "" 
+"driver|sio" "" 
+"function" "function" 
+"function|Monitor" "" 
+"function|learnData" "" 
+"function|net" "" 
+"startUp" "startUp" 
+"tasks" "tasks" 
+[GENERAL_DATA_PROJECT]
+"USE_CUSTOM_LINKAGE_ORDER" "0" 
+[ON_DEMAND_COMPONENTS_LOADED]
+[SYNC_SESSION_NAMES]
+[SESSIONS]
+"DefaultSession" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\DefaultSession.hsf" 0 
+"SimSessionSH7750R_Func" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\SimSessionSH7750R_Func.hsf" 0 
+[GENERAL_DATA_SESSION_DefaultSession]
+[GENERAL_DATA_SESSION_SimSessionSH7750R_Func]
+[OPTIONS_Debug_Renesas OptLinker]
+"Single Shot" "01f212439ce44d10" 12 
+[OPTIONS_Debug_Renesas SH Assembler]
+"Assembly source file" "07598bda5cb2ec10" 10 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\vec7750h.asm" "09fbe6031de2ec10" 11 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 10 
+"Linkage symbol file" "07598bda5cb2ec10" 10 
+[OPTIONS_Debug_Renesas SH C/C++ Compiler]
+"C source file" "0e450f085e53ec10" 2 
+"C++ source file" "0e450f085e53ec10" 4 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_7seg.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_PC28F00B.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_buz.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_cmr.c" "0714550a4683ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_dsw.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_eep.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_exkey.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_flash.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_fpga.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_io.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_irled.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_lcd.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_led.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_rtc.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tim.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tpl.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_ts.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tsc2004.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\lan9118.c" "0e450f085e53ec10" 6 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\nonethw.c" "0e450f085e53ec10" 9 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\udp.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nos7750.c" "0e450f085e53ec10" 5 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nosio.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0067b56da7e9ec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\dbg_out.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\err_ctrl.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonfile.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonftpd.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonramd.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonshel.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonteld.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\prm_func.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\sub_func.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\initsh.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\n4i7750.c" "0e450f085e53ec10" 8 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\va300.c" "0bd3c8c76e93ec10" 7 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_buz.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_camera.c" "093f095f0ae3ec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_disp.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_exkey.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_io.c" "0e450f085e53ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcd.c" "0bf50f5ce3f3ec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcmd.c" "0e2919543484ec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lrcv.c" "01f5d192d504ec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ninshou.c" "07af9d6a16b9fc10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "09daf9befb9cec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "09daf9befb9cec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ts.c" "0d75f6a121a3ec10" 3 
+[OPTIONS_Debug_Renesas SH C/C++ Library Generator]
+"Single Shot" "0df71ccc2d3f1d10" 1 
+[OPTIONS_Debug]
+"" 0 
+"[V|VERSION|1] [S|DEFINE|_INIT_STACK=H'8F000000] [B|DEBUG|1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [S|LITERAL|POOL|BRANCH|JUMP|RETURN] [S|DISPSIZE|12] [I|TAB|8] [B|ERRORPATH|1] [B|CHGINCPATH|1] [S|CPU|SH4] [S|ENDIAN|BIG] [S|ROUND|ZERO] [B|DENORMALIZE|0]
+" 11 
+"[V|VERSION|6] [B|DEBUG|1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|LIST|0] [B|CHGINCPATH|1] [B|ERRORPATH|1] [S|CPU|SH4] [S|ENDIAN|BIG] [S|ROUND|ZERO] [B|DENORMALIZE|0]" 10 
+"[V|VERSION|6] [S|INPUTLIBRARY|^"$(NORTI)\Lib\Sh\Shc9\n4esh4b.lib^"|^"$(NORTI)\Lib\Sh\Shc9\n4dsh4b.lib^"] [S|FORM|STYPE] [S|BYTE_COUNT_VALUE|FF] [B|DEBUG|1] [S|ROM|(D,R)|(PFL,XFL)|(CFL,YFL)] [S|CRC|NONE|00000000] [B|LIST|1] [S|LIST|^"$(CONFIGDIR)\$(PROJECTNAME).map^"] [S|SHOW|METHODCUSTOM|SYMBOL] [S|OUTPUT|^"$(CONFIGDIR)\$(PROJECTNAME).mot^"] [I|SPACE|^"FF^"] [B|OPTIMIZE|0] [I|CACHESIZE|000000008] [I|CACHELINE|000000020] [S|START|BHI_SPD(07C000000)|P,C,D,CVER,PFL,CFL,DFL(080081000)|B,R,BFL,XFL,YFL,RFL,BPARAM,STACK(08C400000)|S(08CFFFBFC)|VECT(0A0080000)] [B|STACK|1] [S|MEMORY|HIGH]
+" 12 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|NORTI_USE] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [B|OPTIMIZE|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [B|GLOBAL_VOLATILE|1] [B|NOSCOPE|1] [B|STRUCT_ALLOC|0] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 7 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|NORTI_USE] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [B|OPTIMIZE|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 3 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|NORTI_USE] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 2 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|NORTI_USE] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|LANG|CPP] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 4 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|NORTI_USE|DMA_BURST=0|CH=0|DMA_CH=0|NO_DMA=1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 9 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|NORTI_USE|NOFLOW|NOXON] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 5 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|NORTI_USE|NO_DMA=1|IRQ_BUFF=1|CH=0|BIG_ENDIAN] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 6 
+"[V|VERSION|7] [S|INCLUDE|^"$(NORTI)\INC^"|^"$(NORTI)\NETSMP\INC^"|^"$(PROJDIR)\Src\include^"|^"C:\NORTi\INC\Dummy^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|DEFINE|V4|MSEC=1|CLK=60000000|REBOOT|NORTI_USE|INTVEC=0x80080000] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 8 
+"[V|VERSION|7] [S|MODE|BUILD/CHANGED] [S|EXISTOUTPUTPATH|^"$(CONFIGDIR)\$(PROJECTNAME).lib^"] [B|RUNTIME|1] [B|NEW|1] [B|CTYPE|1] [B|MATH|1] [B|MATHF|1] [B|STDARG|1] [B|STDIO|1] [B|STDLIB|1] [B|STRING|1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(PROJECTNAME).lib^"] [S|ALIGN4|ALL] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [B|SAVE_CONT_REG|1] [S|CPU|SH4]
+" 1 
+[EXCLUDED_FILES_Debug]
+[LINKAGE_ORDER_Debug]
+[GENERAL_DATA_CONFIGURATION_Debug]
+[OPTIONS_Release_Renesas OptLinker]
+"Single Shot" "01f212439ce44d10" 5 
+[OPTIONS_Release_Renesas SH Assembler]
+"Assembly source file" "0760bbda5cb2ec10" 4 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\vec7750h.asm" "0760bbda5cb2ec10" 4 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 4 
+"Linkage symbol file" "0760bbda5cb2ec10" 4 
+[OPTIONS_Release_Renesas SH C/C++ Compiler]
+"C source file" "0bf6864fb9a3ec10" 2 
+"C++ source file" "03d9265d26c2ec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_7seg.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_PC28F00B.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_buz.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_cmr.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_dsw.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_eep.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_exkey.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_flash.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_fpga.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_io.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_irled.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_lcd.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_led.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_rtc.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tim.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tpl.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_ts.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tsc2004.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\lan9118.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\nonethw.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\udp.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nos7750.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nosio.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0b687d6fcd89ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\dbg_out.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\err_ctrl.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonfile.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonftpd.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonramd.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonshel.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonteld.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\prm_func.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\sub_func.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\initsh.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\n4i7750.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\va300.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_buz.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_camera.c" "08b4b93528e3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_disp.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_exkey.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_io.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcd.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcmd.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lrcv.c" "0bf6864fb9a3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ninshou.c" "0d9cf89e78dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "053a2e35c11cec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "053a2e35c11cec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ts.c" "0bf6864fb9a3ec10" 2 
+[OPTIONS_Release_Renesas SH C/C++ Library Generator]
+"Single Shot" "0760bbda5cb2ec10" 1 
+[OPTIONS_Release]
+"" 0 
+"[B|CTYPE|1] [B|MATH|0] [B|IOS|0] [B|NEW|1] [B|CPPSTRING|0] [S|ENDIAN|BIG] [B|COMPLEX|0] [V|VERSION|7] [B|SPEED|0] [S|ROUND|ZERO] [B|STDIO|1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(PROJECTNAME).lib^"] [B|RUNTIME|1] [S|CPU|SH4] [B|STDLIB|1] [B|STRING|1] [B|DENORMALIZE|0] [B|MATHF|0] [B|STDARG|1] " 1 
+"[V|VERSION|6] [B|DEBUG|0] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|LIST|0] [B|CHGINCPATH|1] [B|ERRORPATH|1] [S|CPU|SH4] [S|ENDIAN|BIG] [S|ROUND|ZERO] [B|DENORMALIZE|0]" 4 
+"[V|VERSION|6] [B|OPTIMIZE|0] [S|OUTPUT|^"$(CONFIGDIR)\$(PROJECTNAME).abs^"] [S|ROM|(D,R)] [B|LIST|1] [S|LIST|^"$(CONFIGDIR)\$(PROJECTNAME).map^"] [B|ALIGN_SECTION|1] [S|FORM|STYPE] [S|OUTPUT|^"$(CONFIGDIR)\$(PROJECTNAME).mot^"] [S|START|INTHandler,VECTTBL,INTTBL,IntPRG(000000800)|PResetPRG(000001000)|P,C,C$BSEC,C$DSEC,D(000002000)|B,R(070000000)|S(08CFFFBFC)|RSTHandler(0A0000000)] " 5 
+"[V|VERSION|7] [S|INCLUDE|^"C:\Documents and Settings\tech\My Documents\HEW\VA300\VA300\Src\include^"|^"C:\NORTi\INC^"|^"C:\NORTi\INC\Dummy^"|^"C:\NORTi\NETSMP\INC^"|^"C:\Documents and Settings\tech\My Documents\HEW\Boot7750R\Boot7750R\include^"] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 2 
+"[V|VERSION|7] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|LANG|CPP] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 3 
+[EXCLUDED_FILES_Release]
+[LINKAGE_ORDER_Release]
+[GENERAL_DATA_CONFIGURATION_Release]
+[OPTIONS_SimDebug_SH7750R_Func_Renesas OptLinker]
+"Single Shot" "01f212439ce44d10" 5 
+[OPTIONS_SimDebug_SH7750R_Func_Renesas SH Assembler]
+"Assembly source file" "07598bda5cb2ec10" 4 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\vec7750h.asm" "07598bda5cb2ec10" 4 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 4 
+"Linkage symbol file" "07598bda5cb2ec10" 4 
+[OPTIONS_SimDebug_SH7750R_Func_Renesas SH C/C++ Compiler]
+"C source file" "07598bda5cb2ec10" 2 
+"C++ source file" "03d9265d26c2ec10" 3 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_7seg.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_PC28F00B.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_buz.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_cmr.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_dsw.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_eep.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_exkey.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_flash.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_fpga.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_io.c" "042ad65daee2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_irled.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_lcd.c" "042ad65daee2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_led.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_rtc.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tim.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tpl.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_ts.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\drv_tsc2004.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\lan9118.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\nonethw.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\net\udp.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nos7750.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\driver\sio\nosio.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0b687d6fcd89ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\dbg_out.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\err_ctrl.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonfile.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonftpd.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonramd.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonshel.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\net\nonteld.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\prm_func.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\function\sub_func.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\initsh.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\n4i7750.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\startUp\va300.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_buz.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_camera.c" "08b4b93528e3ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_disp.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_exkey.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_io.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcd.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lcmd.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_lrcv.c" "07598bda5cb2ec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ninshou.c" "0d9cf89e78dfec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "053a2e35c11cec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "053a2e35c11cec10" 2 
+"D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Codee\VA300S\VA300\Src\tasks\tsk_ts.c" "07598bda5cb2ec10" 2 
+[OPTIONS_SimDebug_SH7750R_Func_Renesas SH C/C++ Library Generator]
+"Single Shot" "07598bda5cb2ec10" 1 
+[OPTIONS_SimDebug_SH7750R_Func]
+"" 0 
+"[B|CTYPE|1] [B|MATH|0] [B|IOS|0] [B|NEW|1] [B|CPPSTRING|0] [S|ENDIAN|BIG] [B|COMPLEX|0] [V|VERSION|7] [B|SPEED|0] [S|ROUND|ZERO] [B|STDIO|1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(PROJECTNAME).lib^"] [B|RUNTIME|1] [S|CPU|SH4] [B|STDLIB|1] [B|STRING|1] [B|DENORMALIZE|0] [B|MATHF|0] [B|STDARG|1] " 1 
+"[V|VERSION|6] [B|DEBUG|1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|LIST|0] [B|CHGINCPATH|1] [B|ERRORPATH|1] [S|CPU|SH4] [S|ENDIAN|BIG] [S|ROUND|ZERO] [B|DENORMALIZE|0]" 4 
+"[V|VERSION|6] [B|OPTIMIZE|0] [B|DEBUG|1] [S|OUTPUT|^"$(CONFIGDIR)\$(PROJECTNAME).abs^"] [S|ROM|(D,R)] [B|LIST|1] [S|LIST|^"$(CONFIGDIR)\$(PROJECTNAME).map^"] [B|ALIGN_SECTION|1] [S|FORM|STYPE] [S|OUTPUT|^"$(CONFIGDIR)\$(PROJECTNAME).mot^"] [S|START|INTHandler,VECTTBL,INTTBL,IntPRG(000000800)|PResetPRG(000001000)|P,C,C$BSEC,C$DSEC,D(000002000)|B,R(070000000)|S(08CFFFBFC)|RSTHandler(0A0000000)] " 5 
+"[V|VERSION|7] [B|DEBUG|1] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|LIST|0] [B|CHGINCPATH|1] [B|ERRORPATH|1] [S|CPU|SH4] [S|ENDIAN|BIG] [S|ROUND|ZERO] [B|DENORMALIZE|0]" 2 
+"[V|VERSION|7] [S|OUTPUTPATH|^"$(CONFIGDIR)\$(FILELEAF).obj^"] [B|DEBUG|1] [S|ALIGN4|ALL] [B|TBR|0] [B|STUFF|0] [S|BSS_ORDER|DECLARATION] [S|MXGEN_MEM0|00000000] [S|MXGEN_MEM1|00000000] [B|LIST|0] [S|GBR|AUTO] [S|INLINE|DEFAULT] [I|INLINE|20] [S|ALIAS|NOANSI] [S|MISRA2004_CHECK_RULE|ALL] [S|MISRA2004_RULE|1.1|3.4|4.1|5.2|5.3|5.4|5.5|5.6|5.7|6.1|6.2|6.3|6.4|6.5|7.1|8.1|8.2|8.3|8.5|8.6|8.7|8.8|8.11|8.12|9.2|9.3|10.1|10.2|10.3|10.4|10.5|10.6|11.1|11.2|11.3|11.4|11.5|12.1|12.2|12.3|12.4|12.5|12.6|12.7|12.8|12.9|12.10|12.11|12.12|12.13|13.1|13.2|13.3|13.4|13.7|14.1|14.2|14.3|14.4|14.5|14.6|14.7|14.8|14.9|14.10|15.1|15.2|15.3|15.4|15.5|16.1|16.2|16.3|16.4|16.5|16.6|16.8|16.9|17.3|17.4|17.5|17.6|18.1|18.2|18.4|19.1|20.2|20.4|20.5|20.7|20.8|20.9|20.10|20.11|20.12] [S|MISRA1998_CHECK_RULE|ALL] [S|MISRA1998_RULE|1|5|8|12|13|14|17|18|19|20|21|22|24|28|29|31|32|33|34|35|36|37|38|39|40|42|43|44|45|46|48|49|50|51|53|54|55|56|57|58|59|60|61|62|63|64|65|68|69|70|71|72|73|74|75|76|77|78|79|80|82|83|84|85|99|101|102|103|104|105|106|108|110|111|112|113|115|118|119|121|122|123|124|125|126|127] [S|MISRA_GROUP_FILE_PATH|^"$(PROJDIR)\$(PROJECTNAME).rde^"] [S|OPT_RANGE|ALL] [I|MAX_UNROLL|1] [S|LANG|CPP] [S|CPU|SH4] [B|CHGINCPATH|1]
+" 3 
+[EXCLUDED_FILES_SimDebug_SH7750R_Func]
+[LINKAGE_ORDER_SimDebug_SH7750R_Func]
+[GENERAL_DATA_CONFIGURATION_SimDebug_SH7750R_Func]
+[GENERAL_DATA_CONFIGURATION_SESSION_Debug_DefaultSession]
+[SESSION_DATA_CONFIGURATION_SESSION_Debug_DefaultSession]
+"MEMORY_MAPPING_OPTIONS" "" 
+[GENERAL_DATA_CONFIGURATION_SESSION_Debug_SimSessionSH7750R_Func]
+[SESSION_DATA_CONFIGURATION_SESSION_Debug_SimSessionSH7750R_Func]
+"MEMORY_MAPPING_OPTIONS" "[V|VERSION|1] [S|CPUTYPE|^"SH7750R (SH-4)^"] [S|MAP|^"0x00000000,0x03FFFFFF,NORMAL,64,0000 0x04000000,0x07FFFFFF,NORMAL,32,0000 0x08000000,0x0BFFFFFF,NORMAL,32,0000 0x0C000000,0x0FFFFFFF,NORMAL,32,0000 0x10000000,0x13FFFFFF,NORMAL,32,0000 0x14000000,0x17FFFFFF,NORMAL,32,0000 0x18000000,0x1BFFFFFF,NORMAL,32,0000 0x20000000,0x23FFFFFF,NORMAL,64,0000 0x24000000,0x27FFFFFF,NORMAL,32,0000 0x28000000,0x2BFFFFFF,NORMAL,32,0000 0x2C000000,0x2FFFFFFF,NORMAL,32,0000 0x30000000,0x33FFFFFF,NORMAL,32,0000 0x34000000,0x37FFFFFF,NORMAL,32,0000 0x38000000,0x3BFFFFFF,NORMAL,32,0000 0x40000000,0x43FFFFFF,NORMAL,64,0000 0x44000000,0x47FFFFFF,NORMAL,32,0000 0x48000000,0x4BFFFFFF,NORMAL,32,0000 0x4C000000,0x4FFFFFFF,NORMAL,32,0000 0x50000000,0x53FFFFFF,NORMAL,32,0000 0x54000000,0x57FFFFFF,NORMAL,32,0000 0x58000000,0x5BFFFFFF,NORMAL,32,0000 0x60000000,0x63FFFFFF,NORMAL,64,0000 0x64000000,0x67FFFFFF,NORMAL,32,0000 0x68000000,0x6BFFFFFF,NORMAL,32,0000 0x6C000000,0x6FFFFFFF,NORMAL,32,0000 0x70000000,0x73FFFFFF,NORMAL,32,0000 0x74000000,0x77FFFFFF,NORMAL,32,0000 0x78000000,0x7BFFFFFF,NORMAL,32,0000 0x80000000,0x83FFFFFF,NORMAL,64,0000 0x84000000,0x87FFFFFF,NORMAL,32,0000 0x88000000,0x8BFFFFFF,NORMAL,32,0000 0x8C000000,0x8FFFFFFF,NORMAL,32,0000 0x90000000,0x93FFFFFF,NORMAL,32,0000 0x94000000,0x97FFFFFF,NORMAL,32,0000 0x98000000,0x9BFFFFFF,NORMAL,32,0000 0xA0000000,0xA3FFFFFF,NORMAL,64,0000 0xA4000000,0xA7FFFFFF,NORMAL,32,0000 0xA8000000,0xABFFFFFF,NORMAL,32,0000 0xAC000000,0xAFFFFFFF,NORMAL,32,0000 0xB0000000,0xB3FFFFFF,NORMAL,32,0000 0xB4000000,0xB7FFFFFF,NORMAL,32,0000 0xB8000000,0xBBFFFFFF,NORMAL,32,0000 0xC0000000,0xC3FFFFFF,NORMAL,64,0000 0xC4000000,0xC7FFFFFF,NORMAL,32,0000 0xC8000000,0xCBFFFFFF,NORMAL,32,0000 0xCC000000,0xCFFFFFFF,NORMAL,32,0000 0xD0000000,0xD3FFFFFF,NORMAL,32,0000 0xD4000000,0xD7FFFFFF,NORMAL,32,0000 0xD8000000,0xDBFFFFFF,NORMAL,32,0000 0xE0000000,0xFFFFFFFF,I/O,32,0101^"] [S|RESOURCE|^"0x00000000,0x00007FFF,R/W 0x70000000,0x70007FFF,R/W 0x73FF8000,0x73FFFFFF,R/W 0xE0000000,0xE000003F,R/W 0xF0000000,0xF1FFFFFF,R/W 0xF4000000,0xF500FFFF,R/W 0xFE080000,0xFFFFFFFF,R/W ^"] [B|SIMIOF|0] [I|SIMIOADR|0x4] [I|BUS_MODE|0]" 
+[GENERAL_DATA_CONFIGURATION_SESSION_Release_DefaultSession]
+[SESSION_DATA_CONFIGURATION_SESSION_Release_DefaultSession]
+"MEMORY_MAPPING_OPTIONS" "" 
+[GENERAL_DATA_CONFIGURATION_SESSION_Release_SimSessionSH7750R_Func]
+[SESSION_DATA_CONFIGURATION_SESSION_Release_SimSessionSH7750R_Func]
+"MEMORY_MAPPING_OPTIONS" "[V|VERSION|1] [S|CPUTYPE|^"SH7750R (SH-4)^"] [S|MAP|^"0x00000000,0x03FFFFFF,NORMAL,64,0000 0x04000000,0x07FFFFFF,NORMAL,32,0000 0x08000000,0x0BFFFFFF,NORMAL,32,0000 0x0C000000,0x0FFFFFFF,NORMAL,32,0000 0x10000000,0x13FFFFFF,NORMAL,32,0000 0x14000000,0x17FFFFFF,NORMAL,32,0000 0x18000000,0x1BFFFFFF,NORMAL,32,0000 0x20000000,0x23FFFFFF,NORMAL,64,0000 0x24000000,0x27FFFFFF,NORMAL,32,0000 0x28000000,0x2BFFFFFF,NORMAL,32,0000 0x2C000000,0x2FFFFFFF,NORMAL,32,0000 0x30000000,0x33FFFFFF,NORMAL,32,0000 0x34000000,0x37FFFFFF,NORMAL,32,0000 0x38000000,0x3BFFFFFF,NORMAL,32,0000 0x40000000,0x43FFFFFF,NORMAL,64,0000 0x44000000,0x47FFFFFF,NORMAL,32,0000 0x48000000,0x4BFFFFFF,NORMAL,32,0000 0x4C000000,0x4FFFFFFF,NORMAL,32,0000 0x50000000,0x53FFFFFF,NORMAL,32,0000 0x54000000,0x57FFFFFF,NORMAL,32,0000 0x58000000,0x5BFFFFFF,NORMAL,32,0000 0x60000000,0x63FFFFFF,NORMAL,64,0000 0x64000000,0x67FFFFFF,NORMAL,32,0000 0x68000000,0x6BFFFFFF,NORMAL,32,0000 0x6C000000,0x6FFFFFFF,NORMAL,32,0000 0x70000000,0x73FFFFFF,NORMAL,32,0000 0x74000000,0x77FFFFFF,NORMAL,32,0000 0x78000000,0x7BFFFFFF,NORMAL,32,0000 0x80000000,0x83FFFFFF,NORMAL,64,0000 0x84000000,0x87FFFFFF,NORMAL,32,0000 0x88000000,0x8BFFFFFF,NORMAL,32,0000 0x8C000000,0x8FFFFFFF,NORMAL,32,0000 0x90000000,0x93FFFFFF,NORMAL,32,0000 0x94000000,0x97FFFFFF,NORMAL,32,0000 0x98000000,0x9BFFFFFF,NORMAL,32,0000 0xA0000000,0xA3FFFFFF,NORMAL,64,0000 0xA4000000,0xA7FFFFFF,NORMAL,32,0000 0xA8000000,0xABFFFFFF,NORMAL,32,0000 0xAC000000,0xAFFFFFFF,NORMAL,32,0000 0xB0000000,0xB3FFFFFF,NORMAL,32,0000 0xB4000000,0xB7FFFFFF,NORMAL,32,0000 0xB8000000,0xBBFFFFFF,NORMAL,32,0000 0xC0000000,0xC3FFFFFF,NORMAL,64,0000 0xC4000000,0xC7FFFFFF,NORMAL,32,0000 0xC8000000,0xCBFFFFFF,NORMAL,32,0000 0xCC000000,0xCFFFFFFF,NORMAL,32,0000 0xD0000000,0xD3FFFFFF,NORMAL,32,0000 0xD4000000,0xD7FFFFFF,NORMAL,32,0000 0xD8000000,0xDBFFFFFF,NORMAL,32,0000 0xE0000000,0xFFFFFFFF,I/O,32,0101^"] [S|RESOURCE|^"0x00000000,0x00007FFF,R/W 0x70000000,0x70007FFF,R/W 0x73FF8000,0x73FFFFFF,R/W 0xE0000000,0xE000003F,R/W 0xF0000000,0xF1FFFFFF,R/W 0xF4000000,0xF500FFFF,R/W 0xFE080000,0xFFFFFFFF,R/W ^"] [B|SIMIOF|0] [I|SIMIOADR|0x4] [I|BUS_MODE|0]" 
+[GENERAL_DATA_CONFIGURATION_SESSION_SimDebug_SH7750R_Func_DefaultSession]
+[SESSION_DATA_CONFIGURATION_SESSION_SimDebug_SH7750R_Func_DefaultSession]
+"MEMORY_MAPPING_OPTIONS" "" 
+[GENERAL_DATA_CONFIGURATION_SESSION_SimDebug_SH7750R_Func_SimSessionSH7750R_Func]
+[SESSION_DATA_CONFIGURATION_SESSION_SimDebug_SH7750R_Func_SimSessionSH7750R_Func]
+"MEMORY_MAPPING_OPTIONS" "[V|VERSION|1] [S|CPUTYPE|^"SH7750R (SH-4)^"] [S|MAP|^"0x00000000,0x03FFFFFF,NORMAL,64,0000 0x04000000,0x07FFFFFF,NORMAL,32,0000 0x08000000,0x0BFFFFFF,NORMAL,32,0000 0x0C000000,0x0FFFFFFF,NORMAL,32,0000 0x10000000,0x13FFFFFF,NORMAL,32,0000 0x14000000,0x17FFFFFF,NORMAL,32,0000 0x18000000,0x1BFFFFFF,NORMAL,32,0000 0x20000000,0x23FFFFFF,NORMAL,64,0000 0x24000000,0x27FFFFFF,NORMAL,32,0000 0x28000000,0x2BFFFFFF,NORMAL,32,0000 0x2C000000,0x2FFFFFFF,NORMAL,32,0000 0x30000000,0x33FFFFFF,NORMAL,32,0000 0x34000000,0x37FFFFFF,NORMAL,32,0000 0x38000000,0x3BFFFFFF,NORMAL,32,0000 0x40000000,0x43FFFFFF,NORMAL,64,0000 0x44000000,0x47FFFFFF,NORMAL,32,0000 0x48000000,0x4BFFFFFF,NORMAL,32,0000 0x4C000000,0x4FFFFFFF,NORMAL,32,0000 0x50000000,0x53FFFFFF,NORMAL,32,0000 0x54000000,0x57FFFFFF,NORMAL,32,0000 0x58000000,0x5BFFFFFF,NORMAL,32,0000 0x60000000,0x63FFFFFF,NORMAL,64,0000 0x64000000,0x67FFFFFF,NORMAL,32,0000 0x68000000,0x6BFFFFFF,NORMAL,32,0000 0x6C000000,0x6FFFFFFF,NORMAL,32,0000 0x70000000,0x73FFFFFF,NORMAL,32,0000 0x74000000,0x77FFFFFF,NORMAL,32,0000 0x78000000,0x7BFFFFFF,NORMAL,32,0000 0x80000000,0x83FFFFFF,NORMAL,64,0000 0x84000000,0x87FFFFFF,NORMAL,32,0000 0x88000000,0x8BFFFFFF,NORMAL,32,0000 0x8C000000,0x8FFFFFFF,NORMAL,32,0000 0x90000000,0x93FFFFFF,NORMAL,32,0000 0x94000000,0x97FFFFFF,NORMAL,32,0000 0x98000000,0x9BFFFFFF,NORMAL,32,0000 0xA0000000,0xA3FFFFFF,NORMAL,64,0000 0xA4000000,0xA7FFFFFF,NORMAL,32,0000 0xA8000000,0xABFFFFFF,NORMAL,32,0000 0xAC000000,0xAFFFFFFF,NORMAL,32,0000 0xB0000000,0xB3FFFFFF,NORMAL,32,0000 0xB4000000,0xB7FFFFFF,NORMAL,32,0000 0xB8000000,0xBBFFFFFF,NORMAL,32,0000 0xC0000000,0xC3FFFFFF,NORMAL,64,0000 0xC4000000,0xC7FFFFFF,NORMAL,32,0000 0xC8000000,0xCBFFFFFF,NORMAL,32,0000 0xCC000000,0xCFFFFFFF,NORMAL,32,0000 0xD0000000,0xD3FFFFFF,NORMAL,32,0000 0xD4000000,0xD7FFFFFF,NORMAL,32,0000 0xD8000000,0xDBFFFFFF,NORMAL,32,0000 0xE0000000,0xFFFFFFFF,I/O,32,0101^"] [S|RESOURCE|^"0x00000000,0x00007FFF,R/W 0x70000000,0x70007FFF,R/W 0x73FF8000,0x73FFFFFF,R/W 0xE0000000,0xE000003F,R/W 0xF0000000,0xF1FFFFFF,R/W 0xF4000000,0xF500FFFF,R/W 0xFE080000,0xFFFFFFFF,R/W ^"] [B|SIMIOF|0] [I|SIMIOADR|0x4] [I|BUS_MODE|0]" 
+[EXT_DEBUGGER_INFO]
+0 "" "" "" "" 
+[END]
