@@ -30,33 +30,50 @@
 /******************************************************************************/
 /*************************** Macro Definitions ********************************/
 /******************************************************************************/
-#define LDATA_TEST_ENABLE               FALSE    /* Set to TRUE for fast testing */
+// #define LDATA_TEST_ENABLE               FALSE    /* Set to TRUE for fast testing */
+#define FAST_TEST
+#define TEST_API
 
 #define LDATA_BIT(n)                    (1 << n)
 #define LDATA_ERROR_RETRY_NBR           4
 
-#if LDATA_TEST_ENABLE
-#define MI_FLASH_BASIC_ADDR             (0x08000000 - MI_BANK_SIZE)
-#define MI_SECTOR_SIZE                  (128 * 1024)
-#define MI_BANK_SIZE                    (4 * MI_SECTOR_SIZE)
-#define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
-#define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
-#else
+// #if LDATA_TEST_ENABLE
+// #define MI_FLASH_BASIC_ADDR             (0x02000000 - MI_BANK_SIZE)
+// #define MI_SECTOR_SIZE                  (128 * 1024)    //// 128kB = 0x2 0000
+// #define MI_BANK_SIZE                    (4 * MI_SECTOR_SIZE)    //// 4 Sectors
+// #define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
+// #define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
+// #else
+// #define MI_FLASH_BASIC_ADDR             (0)
+// #define MI_SECTOR_SIZE                  (128 * 1024)	//// 0x20000
+// #define MI_BANK_SIZE                    (256 * MI_SECTOR_SIZE)  //// 256 Sectors , 0x2000000
+// #define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
+// #define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
+// #endif
 #define MI_FLASH_BASIC_ADDR             (0)
-#define MI_SECTOR_SIZE                  (128 * 1024)
-#define MI_BANK_SIZE                    (256 * MI_SECTOR_SIZE)
-#define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
-#define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
-#endif
+#define MI_SECTOR_SIZE                  (0x00020000)  //(128k)	//// 0x20000
+#define MI_BANK_SIZE                    (0x02000000) //(256 * MI_SECTOR_SIZE)  //// 256 Sectors , 0x2000000
+#define MI_FLASH_START                  (0x06000000) // Bank3
+#define MI_FLASH_SIZE                   (0x10000000 - MI_FLASH_START)
 
-#define MI_NUM_SEC_IN_BANK              (MI_BANK_SIZE / MI_SECTOR_SIZE)
 
+#define MI_NUM_SEC_IN_BANK              10//(MI_BANK_SIZE / MI_SECTOR_SIZE) /// 256
+
+#ifdef TEST_API
+#define LDATA_DUMMY_NUM                 4
+#define LDATA_NORM_IMAGE_SIZE           8//3200	 fast test
+#define LDATA_MINI_IMAGE_NUM            2
+#define LDATA_MINI_IMAGE_SIZE           4//200		fast test
+#define LDATA_REG_NBR_MAX               480   //// No. rooms max
+#define LDATA_REG_FIGURE_NBR_MAX        20  //// No. figure max
+#else
 #define LDATA_DUMMY_NUM                 32
 #define LDATA_NORM_IMAGE_SIZE           3200
 #define LDATA_MINI_IMAGE_NUM            2
 #define LDATA_MINI_IMAGE_SIZE           200
 #define LDATA_REG_NBR_MAX               480
 #define LDATA_REG_FIGURE_NBR_MAX        20
+#endif
 
 #define BANK_MAX_NUM                    8
 #define BANK0                           (UB)LDATA_BIT(0)
@@ -75,25 +92,25 @@
 /************************ Enumerations Definitions ****************************/
 /******************************************************************************/
 typedef enum {
-    LDATA_NOT_YET_STS   = 0xFFFF,
-    LDATA_DUR_REG_STS   = 0xFFFE,
-    LDATA_REGISTERD_STS = 0xFFFC,
-    LDATA_NOT_LATEST_STS= 0xFFF8,
+    LDATA_NOT_YET_STS   = 0xFFFF,  //// Not yet
+    LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
+    LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data (Newest)
+    LDATA_NOT_LATEST_STS= 0xFFF8, //// Not latest data. Old register
     
     LDATA_UNKNOW_STS
-} ldataRegStatusType;
+} ldataRegStatusType;	//// Registraton status
 
 /******************************************************************************/
 /*************************** Structures Definitions ***************************/
 /******************************************************************************/
 typedef struct svLearnDataSt {
-    UH RegStatus;
-    UH RegRnum;
-    UH RegYnum;
+    UH RegStatus;   //// Registration status
+    UH RegRnum;    //// Registration room number
+    UH RegYnum;   //// Registration figure number for each room [0:19]
     UH Dummy1[LDATA_DUMMY_NUM];
-    UB RegImg1[LDATA_NORM_IMAGE_SIZE];
-    UB RegImg2[LDATA_NORM_IMAGE_SIZE];
-    UB MiniImg[LDATA_MINI_IMAGE_NUM][LDATA_MINI_IMAGE_SIZE];
+    UB RegImg1[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
+    UB RegImg2[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
+    UB MiniImg[LDATA_MINI_IMAGE_NUM][LDATA_MINI_IMAGE_SIZE];   //// MiniImg[2][200]	--> [2][20] fast test
 }SvLearnData;
 
 /******************************************************************************/
@@ -103,6 +120,10 @@ int InitBankArea(UB BankSw);
 int InitLearnInfo(UB BankSw, UB Spec);
 int AddSvLearnImg(SvLearnData *Data);
 int SearchLearnImg(UH SearchNum, UH* SearchResult[20][3]);
+
+#ifdef TEST_API
+void get_InfoLearnInBankM(int rNum, int yNum, UB* BankNum, UB* SectionNum, UB* FrameNum, UB* Num);
+#endif
 
 #endif /* FWK_CFG_LEARN_DATA_ENABLE */
 #endif /* LEARN_DATA_H */
