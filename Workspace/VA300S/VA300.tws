@@ -3,26 +3,13 @@
 [DATABASE_VERSION]
 "1.2" 
 [CURRENT_PROJECT]
-"VA300" 
+"VA300_Lcd_Data" 
 [GENERAL_DATA]
 "ECXLABEL_LAST_FINDS_DATA" "" 
 [BREAKPOINTS]
 [OPEN_WORKSPACE_FILES]
-"E:\SH4A\Source_Code_Sept20_2018\VA300_Lcd_Data\VA300_Lcd_Data.hws" 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_flash.c" 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_PC28F00B.c" 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\learnData.c" 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\memInterface.c" 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\vec7750h.asm" 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_learnData.c" 
 [WORKSPACE_FILE_STATES]
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_PC28F00B.c" 52 52 912 252 0 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_flash.c" 78 78 912 252 0 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\learnData.c" 0 0 1032 287 0 5 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\memInterface.c" 104 104 912 252 0 4 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\vec7750h.asm" 26 26 912 252 0 1 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_learnData.c" -8 -31 1253 356 1 0 
-"E:\SH4A\Source_Code_Sept20_2018\VA300_Lcd_Data\VA300_Lcd_Data.hws" 26 26 1133 213 0 6 
 [LOADED_PROJECTS]
 "VA300" 
+"VA300_Lcd_Data" 
 [END]

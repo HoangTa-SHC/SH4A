@@ -3,15 +3,15 @@
 [DATABASE_VERSION]
 "2.8" 
 [PROJECT_DETAILS]
-"VA300" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\VA300.hwp" "SuperH RISC engine" "Renesas SuperH Standard" "Application" "SH-4" "SH7750R" 
+"VA300" "E:\SH4A\git\SH4A\Workspace\VA300S\VA300" "E:\SH4A\git\SH4A\Workspace\VA300S\VA300\VA300.hwp" "SuperH RISC engine" "Renesas SuperH Standard" "Application" "SH-4" "SH7750R" 
 [INFORMATION]
 "プロジェクト情報がありません" 
 [TOOL_CHAIN]
 "Renesas SuperH RISC engine Standard Toolchain" "9.4.1.0" 
 [CONFIGURATIONS]
-"Debug" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Debug" 
-"Release" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Release" 
-"SimDebug_SH7750R_Func" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\SimDebug_SH7750R_Func" 
+"Debug" "E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Debug" 
+"Release" "E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Release" 
+"SimDebug_SH7750R_Func" "E:\SH4A\git\SH4A\Workspace\VA300S\VA300\SimDebug_SH7750R_Func" 
 [BUILD_PHASES]
 "Renesas OptLinker" 1 
 "Renesas SH Assembler" 1 
@@ -119,72 +119,72 @@
 "Object file" "Renesas OptLinker" "Renesas SH Assembler" 
 "Object file" "Renesas OptLinker" "Renesas SH C/C++ Compiler" 
 [PROJECT_FILES]
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_7seg.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_PC28F00B.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_buz.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_cmr.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_dsw.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_eep.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_exkey.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_flash.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_fpga.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_io.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_irled.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_lcd.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_led.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_rtc.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tim.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tpl.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_ts.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tsc2004.c" "User" "driver" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\lan9118.c" "User" "driver|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\nonethw.c" "User" "driver|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\udp.c" "User" "driver|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nos7750.c" "User" "driver|sio" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nosio.c" "User" "driver|sio" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Next_screen_ctrl.c" "User" "function" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\dbg_out.c" "User" "function" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\err_ctrl.c" "User" "function" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\ldata_os.c" "User" "function|learnData" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\learnData.c" "User" "function|learnData" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\memInterface.c" "User" "function|learnData" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonfile.c" "User" "function|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonftpd.c" "User" "function|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonramd.c" "User" "function|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonshel.c" "User" "function|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonteld.c" "User" "function|net" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\prm_func.c" "User" "function" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\sub_func.c" "User" "function" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\initsh.c" "User" "startUp" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\n4i7750.c" "User" "startUp" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\va300.c" "User" "startUp" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\vec7750h.asm" "User" "startUp" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_buz.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_camera.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_disp.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_exkey.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_io.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcd.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcmd.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_learnData.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_log.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lrcv.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_mon.c" "User" "function|Monitor" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ninshou.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ts.c" "User" "tasks" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "User" "Linkage symbol file" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_7seg.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_PC28F00B.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_buz.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_cmr.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_dsw.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_eep.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_exkey.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_flash.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_fpga.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_io.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_irled.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_lcd.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_led.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_rtc.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tim.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tpl.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_ts.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tsc2004.c" "User" "driver" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\lan9118.c" "User" "driver|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\nonethw.c" "User" "driver|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\udp.c" "User" "driver|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nos7750.c" "User" "driver|sio" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nosio.c" "User" "driver|sio" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Next_screen_ctrl.c" "User" "function" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\dbg_out.c" "User" "function" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\err_ctrl.c" "User" "function" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\ldata_os.c" "User" "function|learnData" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\learnData.c" "User" "function|learnData" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\memInterface.c" "User" "function|learnData" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonfile.c" "User" "function|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonftpd.c" "User" "function|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonramd.c" "User" "function|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonshel.c" "User" "function|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonteld.c" "User" "function|net" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\prm_func.c" "User" "function" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\sub_func.c" "User" "function" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\initsh.c" "User" "startUp" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\n4i7750.c" "User" "startUp" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\va300.c" "User" "startUp" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\vec7750h.asm" "User" "startUp" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_buz.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_camera.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_disp.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_exkey.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_io.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcd.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcmd.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_learnData.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_log.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lrcv.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_mon.c" "User" "function|Monitor" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ninshou.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ts.c" "User" "tasks" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "User" "Linkage symbol file" 2 
 [FOLDER]
 "Assembly source file" "Assembly source file" 
 "C header file" "C header file" 
@@ -205,84 +205,84 @@
 [ON_DEMAND_COMPONENTS_LOADED]
 [SYNC_SESSION_NAMES]
 [SESSIONS]
-"DefaultSession" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\DefaultSession.hsf" 0 
-"SimSessionSH7750R_Func" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\SimSessionSH7750R_Func.hsf" 0 
+"DefaultSession" "E:\SH4A\git\SH4A\Workspace\VA300S\VA300\DefaultSession.hsf" 0 
+"SimSessionSH7750R_Func" "E:\SH4A\git\SH4A\Workspace\VA300S\VA300\SimSessionSH7750R_Func.hsf" 0 
 [GENERAL_DATA_SESSION_DefaultSession]
 [GENERAL_DATA_SESSION_SimSessionSH7750R_Func]
 [OPTIONS_Debug_Renesas OptLinker]
 "Single Shot" "01f212439ce44d10" 12 
 [OPTIONS_Debug_Renesas SH Assembler]
 "Assembly source file" "07598bda5cb2ec10" 10 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\vec7750h.asm" "09fbe6031de2ec10" 11 
-"E:\SH4A\Source_Code_Sept20_2018\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 10 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\vec7750h.asm" "09fbe6031de2ec10" 11 
+"E:\SH4A\git\SH4A\Workspace\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 10 
 "Linkage symbol file" "07598bda5cb2ec10" 10 
 [OPTIONS_Debug_Renesas SH C/C++ Compiler]
 "C source file" "0e450f085e53ec10" 2 
 "C++ source file" "0e450f085e53ec10" 4 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_7seg.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_PC28F00B.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_buz.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_cmr.c" "0714550a4683ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_dsw.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_eep.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_exkey.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_flash.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_fpga.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_io.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_irled.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_lcd.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_led.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_rtc.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tim.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tpl.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_ts.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tsc2004.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\lan9118.c" "0e450f085e53ec10" 6 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\nonethw.c" "0e450f085e53ec10" 9 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\udp.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nos7750.c" "0e450f085e53ec10" 5 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nosio.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0067b56da7e9ec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\dbg_out.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\err_ctrl.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonfile.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonftpd.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonramd.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonshel.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonteld.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\prm_func.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\sub_func.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\initsh.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\n4i7750.c" "0e450f085e53ec10" 8 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\va300.c" "0bd3c8c76e93ec10" 7 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_buz.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_camera.c" "093f095f0ae3ec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_disp.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_exkey.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_io.c" "0e450f085e53ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcd.c" "0bf50f5ce3f3ec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcmd.c" "0e2919543484ec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lrcv.c" "01f5d192d504ec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ninshou.c" "07af9d6a16b9fc10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "09daf9befb9cec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "09daf9befb9cec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ts.c" "0d75f6a121a3ec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_7seg.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_PC28F00B.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_buz.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_cmr.c" "0714550a4683ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_dsw.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_eep.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_exkey.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_flash.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_fpga.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_io.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_irled.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_lcd.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_led.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_rtc.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tim.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tpl.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_ts.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tsc2004.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\lan9118.c" "0e450f085e53ec10" 6 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\nonethw.c" "0e450f085e53ec10" 9 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\udp.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nos7750.c" "0e450f085e53ec10" 5 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nosio.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0067b56da7e9ec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\dbg_out.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\err_ctrl.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonfile.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonftpd.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonramd.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonshel.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonteld.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\prm_func.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\sub_func.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\initsh.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\n4i7750.c" "0e450f085e53ec10" 8 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\va300.c" "0bd3c8c76e93ec10" 7 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_buz.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_camera.c" "093f095f0ae3ec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_disp.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_exkey.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_io.c" "0e450f085e53ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcd.c" "0bf50f5ce3f3ec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcmd.c" "0e2919543484ec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lrcv.c" "01f5d192d504ec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ninshou.c" "07af9d6a16b9fc10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "09daf9befb9cec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "09daf9befb9cec10" 3 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ts.c" "0d75f6a121a3ec10" 3 
 [OPTIONS_Debug_Renesas SH C/C++ Library Generator]
 "Single Shot" "0df71ccc2d3f1d10" 1 
 [OPTIONS_Debug]
@@ -317,76 +317,76 @@
 "Single Shot" "01f212439ce44d10" 5 
 [OPTIONS_Release_Renesas SH Assembler]
 "Assembly source file" "0760bbda5cb2ec10" 4 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\vec7750h.asm" "0760bbda5cb2ec10" 4 
-"E:\SH4A\Source_Code_Sept20_2018\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 4 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\vec7750h.asm" "0760bbda5cb2ec10" 4 
+"E:\SH4A\git\SH4A\Workspace\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 4 
 "Linkage symbol file" "0760bbda5cb2ec10" 4 
 [OPTIONS_Release_Renesas SH C/C++ Compiler]
 "C source file" "0bf6864fb9a3ec10" 2 
 "C++ source file" "03d9265d26c2ec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_7seg.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_PC28F00B.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_buz.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_cmr.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_dsw.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_eep.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_exkey.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_flash.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_fpga.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_io.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_irled.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_lcd.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_led.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_rtc.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tim.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tpl.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_ts.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tsc2004.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\lan9118.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\nonethw.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\udp.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nos7750.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nosio.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0b687d6fcd89ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\dbg_out.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\err_ctrl.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonfile.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonftpd.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonramd.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonshel.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonteld.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\prm_func.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\sub_func.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\initsh.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\n4i7750.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\va300.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_buz.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_camera.c" "08b4b93528e3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_disp.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_exkey.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_io.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcd.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcmd.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lrcv.c" "0bf6864fb9a3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ninshou.c" "0d9cf89e78dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "053a2e35c11cec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "053a2e35c11cec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ts.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_7seg.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_PC28F00B.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_buz.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_cmr.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_dsw.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_eep.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_exkey.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_flash.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_fpga.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_io.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_irled.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_lcd.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_led.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_rtc.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tim.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tpl.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_ts.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tsc2004.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\lan9118.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\nonethw.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\udp.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nos7750.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nosio.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0b687d6fcd89ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\dbg_out.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\err_ctrl.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonfile.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonftpd.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonramd.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonshel.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonteld.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\prm_func.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\sub_func.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\initsh.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\n4i7750.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\va300.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_buz.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_camera.c" "08b4b93528e3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_disp.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_exkey.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_io.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcd.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcmd.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lrcv.c" "0bf6864fb9a3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ninshou.c" "0d9cf89e78dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "053a2e35c11cec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "053a2e35c11cec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ts.c" "0bf6864fb9a3ec10" 2 
 [OPTIONS_Release_Renesas SH C/C++ Library Generator]
 "Single Shot" "0760bbda5cb2ec10" 1 
 [OPTIONS_Release]
@@ -405,76 +405,76 @@
 "Single Shot" "01f212439ce44d10" 5 
 [OPTIONS_SimDebug_SH7750R_Func_Renesas SH Assembler]
 "Assembly source file" "07598bda5cb2ec10" 4 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\vec7750h.asm" "07598bda5cb2ec10" 4 
-"E:\SH4A\Source_Code_Sept20_2018\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 4 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\vec7750h.asm" "07598bda5cb2ec10" 4 
+"E:\SH4A\git\SH4A\Workspace\VA300_Lcd_Data\VA300_Lcd_Data\Debug\VA300_Lcd_Data.fsy" "0e5f61439ce44d10" 4 
 "Linkage symbol file" "07598bda5cb2ec10" 4 
 [OPTIONS_SimDebug_SH7750R_Func_Renesas SH C/C++ Compiler]
 "C source file" "07598bda5cb2ec10" 2 
 "C++ source file" "03d9265d26c2ec10" 3 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_7seg.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_PC28F00B.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_buz.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_cmr.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_dsw.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_eep.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_exkey.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_flash.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_fpga.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_io.c" "042ad65daee2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_irled.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_lcd.c" "042ad65daee2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_led.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_rtc.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tim.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tpl.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_ts.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\drv_tsc2004.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\lan9118.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\nonethw.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\net\udp.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nos7750.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\driver\sio\nosio.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0b687d6fcd89ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\dbg_out.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\err_ctrl.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonfile.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonftpd.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonramd.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonshel.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\net\nonteld.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\prm_func.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\function\sub_func.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\initsh.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\n4i7750.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\startUp\va300.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_buz.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_camera.c" "08b4b93528e3ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_disp.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_exkey.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_io.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcd.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lcmd.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_lrcv.c" "07598bda5cb2ec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ninshou.c" "0d9cf89e78dfec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "053a2e35c11cec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "053a2e35c11cec10" 2 
-"E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\Src\tasks\tsk_ts.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_7seg.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_PC28F00B.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_buz.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_cmr.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_dsw.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_eep.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_exkey.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_flash.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_fpga.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_io.c" "042ad65daee2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_irled.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_lcd.c" "042ad65daee2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_led.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_rtc.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tim.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tpl.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_ts.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\drv_tsc2004.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\lan9118.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\nonethw.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\net\udp.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nos7750.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\driver\sio\nosio.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_CNS.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Chck.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Dump.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_Edit.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_IDS.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_MAC.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NR.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_NS.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_dasm.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Monitor\Mon_ver.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\Next_screen_ctrl.c" "0b687d6fcd89ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\dbg_out.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\err_ctrl.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\ldata_os.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\learnData.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\learningData\memInterface.c" "0ae51e52445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonfile.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonftpd.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonramd.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonshel.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\net\nonteld.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\prm_func.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\function\sub_func.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\initsh.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\n4i7750.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\startUp\va300.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_buz.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_camera.c" "08b4b93528e3ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_disp.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_exkey.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_io.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcd.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lcmd.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_learnData.c" "0d703a53445e3d10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_log.c" "0c24657888dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_lrcv.c" "07598bda5cb2ec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_mon.c" "040185a719dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ninshou.c" "0d9cf89e78dfec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_rcv_serial.c" "053a2e35c11cec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_snd_serial.c" "053a2e35c11cec10" 2 
+"E:\SH4A\git\SH4A\Workspace\VA300S\VA300\Src\tasks\tsk_ts.c" "07598bda5cb2ec10" 2 
 [OPTIONS_SimDebug_SH7750R_Func_Renesas SH C/C++ Library Generator]
 "Single Shot" "07598bda5cb2ec10" 1 
 [OPTIONS_SimDebug_SH7750R_Func]
