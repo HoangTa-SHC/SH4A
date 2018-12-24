@@ -3,13 +3,13 @@
 [DATABASE_VERSION]
 "11.0" 
 [WORKSPACE_DETAILS]
-"VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Code\VA300S" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Code\VA300S\VA300.hws" "SuperH RISC engine" "Renesas SuperH Standard" 
+"VA300" "E:\SH4A\Source_Code_Sept20_2018\VA300S" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300.hws" "SuperH RISC engine" "Renesas SuperH Standard" 
 [SHARED_WORKSPACE_CONTROL_STATUS]
 "" "" "" 
 "" "" "" 
 [PROJECTS]
-"VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Code\VA300S\VA300" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Code\VA300S\VA300\VA300.hwp" 0 
-"VA300_Lcd_Data" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Code\VA300_Lcd_Data\VA300_Lcd_Data" "D:\Working\VA300_Finger_Vein\Issue_pointer\Source_Code\VA300_Lcd_Data\VA300_Lcd_Data\VA300_Lcd_Data.hwp" 0 
+"VA300" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\VA300.hwp" 0 
+"VA300" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300" "E:\SH4A\Source_Code_Sept20_2018\VA300S\VA300\VA300.hwp" 0 
 [INFORMATION]
 "ワークスペース情報がありません" 
 [SCRAP]
