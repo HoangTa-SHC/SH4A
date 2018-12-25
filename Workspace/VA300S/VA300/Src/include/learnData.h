@@ -56,8 +56,14 @@
 #define MI_FLASH_START                  (0x06000000) // Bank3
 #define MI_FLASH_SIZE                   (0x10000000 - MI_FLASH_START)
 
-
-#define MI_NUM_SEC_IN_BANK              10//(MI_BANK_SIZE / MI_SECTOR_SIZE) /// 256
+#define LDATA_FRAME_DATA_SIZE           (sizeof(SvLearnData))
+#ifdef TEST_API
+#define MI_NUM_SEC_IN_BANK              10	// fast test
+#define LDATA_FRAME_NUM_IN_SECTOR       19  /* (MI_SECTOR_SIZE/LDATA_FRAME_DATA_SIZE) */
+#else
+#define MI_NUM_SEC_IN_BANK              256//(MI_BANK_SIZE / MI_SECTOR_SIZE)
+#define LDATA_FRAME_NUM_IN_SECTOR       19  /* (MI_SECTOR_SIZE/LDATA_FRAME_DATA_SIZE) */
+#endif
 
 #ifdef TEST_API
 #define LDATA_DUMMY_NUM                 4
@@ -67,13 +73,32 @@
 #define LDATA_REG_NBR_MAX               480   //// No. rooms max
 #define LDATA_REG_FIGURE_NBR_MAX        20  //// No. figure max
 #else
-#define LDATA_DUMMY_NUM                 32
+#define LDATA_DUMMY_NUM                 30
 #define LDATA_NORM_IMAGE_SIZE           3200
 #define LDATA_MINI_IMAGE_NUM            2
 #define LDATA_MINI_IMAGE_SIZE           200
 #define LDATA_REG_NBR_MAX               480
 #define LDATA_REG_FIGURE_NBR_MAX        20
 #endif
+
+#define LDATA_REG_STS_SIZE              (sizeof(UH))
+#define LDATA_REG_RNUM_SIZE             (sizeof(UH))
+#define LDATA_REG_YNUM_SIZE             (sizeof(UH))
+#define LDATA_REG_ID_SIZE               (sizeof(UH))
+#define LDATA_REG_DUMMY_SIZE            (LDATA_DUMMY_NUM*sizeof(UH))
+#define LDATA_ALL_MINI_IMAGE_SIZE		(LDATA_MINI_IMAGE_NUM*LDATA_MINI_IMAGE_SIZE)
+
+#define LDATA_FRAME_STS_OFFSET          (0)
+#define LDATA_FRAME_RNUM_OFFSET         (LDATA_FRAME_STS_OFFSET + LDATA_REG_STS_SIZE)
+#define LDATA_FRAME_YNUM_OFFSET         (LDATA_FRAME_RNUM_OFFSET + LDATA_REG_RNUM_SIZE)
+#define LDATA_FRAME_ID_OFFSET           (LDATA_FRAME_YNUM_OFFSET + LDATA_REG_YNUM_SIZE)
+#define LDATA_FRAME_DUMMY_OFFSET        (LDATA_FRAME_ID_OFFSET + LDATA_REG_ID_SIZE)
+#define LDATA_FRAME_IMG1_OFFSET         (LDATA_FRAME_DUMMY_OFFSET + LDATA_REG_DUMMY_SIZE)
+#define LDATA_FRAME_IMG2_OFFSET			(LDATA_FRAME_IMG1_OFFSET + LDATA_NORM_IMAGE_SIZE)
+#define LDATA_FRAME_MINI_IMG_OFFSET		(LDATA_FRAME_IMG2_OFFSET + LDATA_NORM_IMAGE_SIZE)
+										
+#define CTRL_FLAG_SIZE					(sizeof(UH))
+#define CTRL_FLAG_OFFSET				(MI_SECTOR_SIZE - CTRL_FLAG_SIZE)
 
 #define BANK_MAX_NUM                    8
 #define BANK0                           (UB)LDATA_BIT(0)
@@ -84,6 +109,23 @@
 #define BANK5                           (UB)LDATA_BIT(5)
 #define BANK6                           (UB)LDATA_BIT(6)
 #define BANK7                           (UB)LDATA_BIT(7)
+
+/* Bank selection */
+#define BANK3_3		(BANK3)
+#define BANK3_4		(BANK3 | BANK4)
+#define BANK3_5		(BANK3 | BANK4 | BANK5)
+#define BANK3_6		(BANK3 | BANK4 | BANK5 | BANK6)
+#define BANK3_7		(BANK3 | BANK4 | BANK5 | BANK6 | BANK7)
+#define BANK4_4		(BANK4)
+#define BANK4_5		(BANK4 | BANK5)
+#define BANK4_6		(BANK4 | BANK5 | BANK6)
+#define BANK4_7		(BANK4 | BANK5 | BANK6 | BANK7)
+#define BANK5_5		(BANK5)
+#define BANK5_6		(BANK5 | BANK6)
+#define BANK5_7		(BANK5 | BANK6 | BANK7)
+#define BANK6_6		(BANK6)
+#define BANK6_7		(BANK6 | BANK7)
+#define BANK7_7		(BANK7)
 
 #define APARTMENT_TYPE                  0
 #define COMPANY_TYPE                    1
@@ -107,11 +149,20 @@ typedef struct svLearnDataSt {
     UH RegStatus;   //// Registration status
     UH RegRnum;    //// Registration room number
     UH RegYnum;   //// Registration figure number for each room [0:19]
+	UW RegID;
     UH Dummy1[LDATA_DUMMY_NUM];
     UB RegImg1[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
     UB RegImg2[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
     UB MiniImg[LDATA_MINI_IMAGE_NUM][LDATA_MINI_IMAGE_SIZE];   //// MiniImg[2][200]	--> [2][20] fast test
 }SvLearnData;
+
+typedef struct InfoLearningBankTableSt {
+    UB BankNum[LDATA_REG_FIGURE_NBR_MAX];
+    UB SectionNum[LDATA_REG_FIGURE_NBR_MAX];
+    UB FrameNum[LDATA_REG_FIGURE_NBR_MAX];
+    UB Num[LDATA_REG_FIGURE_NBR_MAX];
+	UW ID[LDATA_REG_FIGURE_NBR_MAX];
+}InfoLearnInBankM;
 
 /******************************************************************************/
 /*************************** Export Functions *********************************/
