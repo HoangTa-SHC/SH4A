@@ -56,8 +56,15 @@
 #define MI_FLASH_START                  (0x06000000) // Bank3
 #define MI_FLASH_SIZE                   (0x10000000 - MI_FLASH_START)
 
+#define LDATA_FRAME_DATA_SIZE           (sizeof(SvLearnData))
+#ifdef TEST_API
+#define MI_NUM_SEC_IN_BANK              10	// fast test
+#define LDATA_FRAME_NUM_IN_SECTOR       19  /* (MI_SECTOR_SIZE/LDATA_FRAME_DATA_SIZE) */
+#else
+#define MI_NUM_SEC_IN_BANK              256//(MI_BANK_SIZE / MI_SECTOR_SIZE)
+#define LDATA_FRAME_NUM_IN_SECTOR       19  /* (MI_SECTOR_SIZE/LDATA_FRAME_DATA_SIZE) */
+#endif
 
-#define MI_NUM_SEC_IN_BANK              10//(MI_BANK_SIZE / MI_SECTOR_SIZE) /// 256
 
 #ifdef TEST_API
 #define LDATA_DUMMY_NUM                 4
@@ -84,6 +91,23 @@
 #define BANK5                           (UB)LDATA_BIT(5)
 #define BANK6                           (UB)LDATA_BIT(6)
 #define BANK7                           (UB)LDATA_BIT(7)
+
+/* Bank selection */
+#define BANK3_3		(BANK3)
+#define BANK3_4		(BANK3 | BANK4)
+#define BANK3_5		(BANK3 | BANK4 | BANK5)
+#define BANK3_6		(BANK3 | BANK4 | BANK5 | BANK6)
+#define BANK3_7		(BANK3 | BANK4 | BANK5 | BANK6 | BANK7)
+#define BANK4_4		(BANK4)
+#define BANK4_5		(BANK4 | BANK5)
+#define BANK4_6		(BANK4 | BANK5 | BANK6)
+#define BANK4_7		(BANK4 | BANK5 | BANK6 | BANK7)
+#define BANK5_5		(BANK5)
+#define BANK5_6		(BANK5 | BANK6)
+#define BANK5_7		(BANK5 | BANK6 | BANK7)
+#define BANK6_6		(BANK6)
+#define BANK6_7		(BANK6 | BANK7)
+#define BANK7_7		(BANK7)
 
 #define APARTMENT_TYPE                  0
 #define COMPANY_TYPE                    1
