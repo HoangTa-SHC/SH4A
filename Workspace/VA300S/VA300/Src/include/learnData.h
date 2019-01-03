@@ -99,6 +99,7 @@
 										
 #define CTRL_FLAG_SIZE					(sizeof(UH))
 #define CTRL_FLAG_OFFSET				(MI_SECTOR_SIZE - CTRL_FLAG_SIZE)
+#define THE_OLDEST_SECTION				(0x0001)
 
 #define BANK_MAX_NUM                    8
 #define BANK0                           (UB)LDATA_BIT(0)
@@ -130,6 +131,9 @@
 #define APARTMENT_TYPE                  0
 #define COMPANY_TYPE                    1
 
+/* Mapping information */
+#define CODE_MIN	(0)
+#define CODE_MAX	(9999)
 /******************************************************************************/
 /************************ Enumerations Definitions ****************************/
 /******************************************************************************/
@@ -149,7 +153,7 @@ typedef struct svLearnDataSt {
     UH RegStatus;   //// Registration status
     UH RegRnum;    //// Registration room number
     UH RegYnum;   //// Registration figure number for each room [0:19]
-	UW RegID;
+	UW RegID;		///// 0 --> 9999
     UH Dummy1[LDATA_DUMMY_NUM];
     UB RegImg1[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
     UB RegImg2[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
@@ -161,9 +165,13 @@ typedef struct InfoLearningBankTableSt {
     UB SectionNum[LDATA_REG_FIGURE_NBR_MAX];
     UB FrameNum[LDATA_REG_FIGURE_NBR_MAX];
     UB Num[LDATA_REG_FIGURE_NBR_MAX];
-	UW ID[LDATA_REG_FIGURE_NBR_MAX];
+	UW ID[LDATA_REG_FIGURE_NBR_MAX];	///// 0 --> 9999
 }InfoLearnInBankM;
 
+typedef struct EmployeeListSt {
+	UH code;		///// 0 --> 9999
+	UW cnt;
+}EmployeeList;
 /******************************************************************************/
 /*************************** Export Functions *********************************/
 /******************************************************************************/
@@ -172,6 +180,7 @@ int InitLearnInfo(UB BankSw, UB Spec);
 int AddSvLearnImg(SvLearnData *Data);
 int SearchLearnImg(UH SearchNum, UH* SearchResult[20][3]);
 
+int InitEmployeeList(void);
 #ifdef TEST_API
 void get_InfoLearnInBankM(int rNum, int yNum, UB* BankNum, UB* SectionNum, UB* FrameNum, UB* Num);
 #endif
