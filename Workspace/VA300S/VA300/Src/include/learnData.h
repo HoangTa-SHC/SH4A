@@ -153,7 +153,7 @@ typedef struct svLearnDataSt {
     UH RegStatus;   //// Registration status
     UH RegRnum;    //// Registration room number
     UH RegYnum;   //// Registration figure number for each room [0:19]
-	UW RegID;		///// 0 --> 9999
+	UH RegID;		///// 0 --> 9999
     UH Dummy1[LDATA_DUMMY_NUM];
     UB RegImg1[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
     UB RegImg2[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test

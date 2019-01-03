@@ -110,11 +110,15 @@ static void lwrite_CtrlFlg(UW secAddr, UH ctrl_flg);
 static void lwrite_CtrlFlgByIndex(UW bankIndex, UW secIndex, UH value);
 static void lset_OldestSection(UW bankIndex, UW secIndex);
 static void lclear_OldestSection(UW bankIndex, UW secIndex);
+static void lwrite_InfoLearnInBankM(UH rNum, UH yNum, UW bankIndex, UW secIndex, UW frmIndex, UW num, UH id);
+static void lread_InfoLearnInBankM(UH rNum, UH yNum, UW *bankIndex, UW *secIndex, UW *frmIndex, UW *num, UH *id);
+static void lupdate_NextFrameLocation(UW bankIndex, UW secIndex, UW frmIndex);
 static BOOL lcheck_IsNewID(UW code);
 static BOOL lget_IndexFromIDList(UW code, UH *index);
 static BOOL lupdate_flash_data_info(UW frmAddr);
 static void lscanRegIDInFlash(void);
-static UH lcount_NumOfRegID(UH id)
+static UH lcount_NumOfRegID(UH id);
+static void lupdate_InfoLearnInBankM(void);
 /******************************************************************************/
 /*************************** Local Constant Variables *************************/
 /******************************************************************************/
@@ -1314,7 +1318,7 @@ static UW ldataCountFingerPattern(UW id)
 	UW frmAddr;
 	UW cnt;
 	UH RegStatus;
-	UW RegID;
+	UH RegID;
 	SvLearnData* learnDataPtr;
 	
 	learnDataPtr = &g_learnData;
@@ -1341,15 +1345,16 @@ static UW ldataCountFingerPattern(UW id)
 	return cnt;
 }
 
-static void lwrite_InfoLearnInBankM(UH rNum, UH yNum, UW bankIndex, UW secIndex, UW frmIndex, UW num)
+static void lwrite_InfoLearnInBankM(UH rNum, UH yNum, UW bankIndex, UW secIndex, UW frmIndex, UW num, UH id)
 {
 	InfoLearningBankTable[rNum].BankNum[yNum]    = bankIndex;
 	InfoLearningBankTable[rNum].SectionNum[yNum] = secIndex;
 	InfoLearningBankTable[rNum].FrameNum[yNum]   = frmIndex;
 	InfoLearningBankTable[rNum].Num[yNum]        = num;
+	InfoLearningBankTable[rNum].ID[yNum]         = id;
 }
 
-static void lread_InfoLearnInBankM(UH rNum, UH yNum, UW *bankIndex, UW *secIndex, UW *frmIndex, UW *num, UW *id)
+static void lread_InfoLearnInBankM(UH rNum, UH yNum, UW *bankIndex, UW *secIndex, UW *frmIndex, UW *num, UH *id)
 {
 	*bankIndex = InfoLearningBankTable[rNum].BankNum[yNum];
 	*secIndex  = InfoLearningBankTable[rNum].SectionNum[yNum];
@@ -1513,7 +1518,8 @@ static void lscanRegIDInFlash(void)
 {
 	UW bankIndex, secIndex, frmIndex;
 	UW frmAddr;
-
+	int ret;
+	
 	for(bankIndex=g_start_bank_index; bankIndex<=g_end_bank_index bankIndex++)
 	{
 		for(secIndex=0; secIndex<MI_NUM_SEC_IN_BANK; secIndex++)
@@ -1521,7 +1527,9 @@ static void lscanRegIDInFlash(void)
 			for(frmIndex=0; frmIndex<LDATA_FRAME_NUM_IN_SECTOR ;bankIndex++)
 			{
 				frmAddr = lcalcFrameAddr(bankIndex, secIndex, frmIndex);
-				lupdate_flash_data_info(frmAddr);
+				ret = lupdate_flash_data_info(frmAddr);
+				if(ret == FALSE)
+					continue;
 			}
 		}
 	}
@@ -1551,24 +1559,42 @@ static UH lcount_NumOfRegID(UH id)
 	return 0;
 }
 
-static void lupdate_InfoLearnInBankM(void);
-static void lupdate_InfoLearnInBankM(void)
+/*
+ * Call lscanRegIDInFlash() before call this function
+ */
+static BOOL lupdate_InfoLearnInBankM(UW bankIndex, UW secIndex, UW frmIndex)
 {
-	UW bankIndex, secIndex, frmIndex;
+	BOOL ret;
+	UH regStatus;
+	UH id;
+	SvLearnData* learnDataPtr;
+	UH rNum, yNum;
 	UW frmAddr;
-	lscanRegIDInFlash();
-	
-	for(bankIndex=g_start_bank_index; bankIndex<=g_end_bank_index bankIndex++)
+
+	ret = FALSE;
+	id = 0xFFFF;
+	regStatus = 0xFFFF;
+	learnDataPtr = &g_learnData;
+	frmAddr = lcalcFrameAddr(bankIndex, secIndex, frmIndex);
+
+	// Read status
+	lread_RegStatus(frmAddr, &regStatus);
+	// Check status = 0xFFFC
+	ret = lcheck_RegStatus(regStatus, LDATA_REGISTERD_STS);
+	if(ret == FALSE)
 	{
-		for(secIndex=0; secIndex<MI_NUM_SEC_IN_BANK; secIndex++)
-		{
-			for(frmIndex=0; frmIndex<LDATA_FRAME_NUM_IN_SECTOR ;bankIndex++)
-			{
-				frmAddr = lcalcFrameAddr(bankIndex, secIndex, frmIndex);
-				lupdate_flash_data_info(frmAddr);
-			}
-		}
+		return FALSE;
 	}
+	
+	// Read latest Frame from Flash
+	ret = lread_Frame(frmAddr, learnDataPtr);
+	rNum = learnDataPtr->RegRnum;
+	yNum = learnDataPtr->RegYnum;
+	id = learnDataPtr->RegID;
+	cnt = lcount_NumOfRegID(id);
+	lwrite_InfoLearnInBankM(rNum, yNum, bankIndex, secIndex, frmIndex, cnt, id);
+	
+	return TRUE;
 }
 #endif /* FWK_CFG_LEARN_DATA_ENABLE */
 /*************************** The End ******************************************/
