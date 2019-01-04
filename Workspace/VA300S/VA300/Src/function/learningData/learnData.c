@@ -131,10 +131,12 @@ static void lupdate_NextFrameLocation(UW bankIndex, UW secIndex, UW frmIndex);
 static BOOL lget_IndexFromIDList(UW code, UH *index);
 static BOOL lsave_latest_data_to_mapping_info(UW bankIndex, UW secIndex, UW frmIndex);
 static BOOL lupdate_IDList(UW bankIndex, UW secIndex, UW frmIndex);
+static void lupdateLearnInfo(void); // --> UpdateLearnInfo()
 // static void lscanRegIDInFlash(void);
 static UH lget_CountFromIDList(UH id);
 static void lupdate_InfoLearnInBankM(void);
-static void lupdate_NotTheLatestFrame(SvLearnData* new_learnDataPtr)
+static void lupdate_NotTheLatestFrame(SvLearnData* new_learnDataPtr);
+
 /******************************************************************************/
 /*************************** Local Constant Variables *************************/
 /******************************************************************************/
