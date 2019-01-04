@@ -165,7 +165,7 @@ typedef struct InfoLearningBankTableSt {
     UB SectionNum[LDATA_REG_FIGURE_NBR_MAX];
     UB FrameNum[LDATA_REG_FIGURE_NBR_MAX];
     UB Num[LDATA_REG_FIGURE_NBR_MAX];
-	UW ID[LDATA_REG_FIGURE_NBR_MAX];	///// 0 --> 9999
+	UH ID[LDATA_REG_FIGURE_NBR_MAX];	///// 0 --> 9999
 }InfoLearnInBankM;
 
 typedef struct EmployeeListSt {
