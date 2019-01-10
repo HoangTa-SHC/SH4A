@@ -30,8 +30,8 @@
 /* Test Flash Memory */
 #define LDATA_WORD_SIZE                 (sizeof(UW))
 #define LDATA_FRAME_DATA_SIZE           (sizeof(SvLearnData))
-#define CTRL_FLAG_SIZE					(sizeof(char)*2) //// 2 bytes
-#define CTRL_FLAG_OFFSET				(MI_SECTOR_SIZE - CTRL_FLAG_SIZE)
+// #define CTRL_FLAG_SIZE					(sizeof(char)*2) //// 2 bytes
+// #define CTRL_FLAG_OFFSET				(MI_SECTOR_SIZE - CTRL_FLAG_SIZE)
 //////////////////////////////////////
 
 
@@ -268,20 +268,24 @@ static SvLearnData* lcreateLearnData(int pos)
 	{
 		learnDataPtr->RegRnum = 1;
 		learnDataPtr->RegYnum = i-LDATA_FINGER_GREEN_1_INDEX;
+		learnDataPtr->RegID = 4;	// GREEN ID
 	}
 	else if(i == LDATA_FINGER_YELLOW_1_INDEX || i == LDATA_FINGER_YELLOW_2_INDEX)
     {
     	learnDataPtr->RegRnum = 2;
     	learnDataPtr->RegYnum = i-LDATA_FINGER_YELLOW_1_INDEX;
+		learnDataPtr->RegID = 5;	// YELLOW ID
     }
     else if(i >= LDATA_FINGER_ORANGE_1_INDEX && i <= LDATA_FINGER_ORANGE_19_INDEX)
     {
     	learnDataPtr->RegRnum = 19;
     	learnDataPtr->RegYnum = i-LDATA_FINGER_ORANGE_1_INDEX;
+		learnDataPtr->RegID = 6;	// ORANGE ID
     }else // i == LDATA_FINGER_RED_1_INDEX
     {
     	learnDataPtr->RegRnum = 20;
     	learnDataPtr->RegYnum = (pos%20);
+		learnDataPtr->RegID = 7;	// RED ID
     }
     return learnDataPtr;
 }

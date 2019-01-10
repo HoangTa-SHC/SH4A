@@ -42,20 +42,18 @@
 /******************************************************************************/
 /*************************** Structures Definitions ***************************/
 /******************************************************************************/
-typedef struct Info_ST {
-	UB bankIndex;
-	UB secIndex;
-	UB frmIndex;
-	// UW bankAddr;
-	UW secAddr;
-	UW frmAddr;
-	UB num;
-} Info;
+
 /******************************************************************************/
 /*************************** Enum Definitions *********************************/
 /******************************************************************************/
-
-
+enum {
+	PROCESS_NORMAL = 0,
+	PROCESS_1ST_DATA,
+	PROCESS_NEW_SECTION,
+	PROCESS_ONLY_ONE_DATA_IN_NEXT_SECTION,
+	PROCESS_LATEST_DATA_IN_NEXT_SECTION,
+	PROCESS_UNIQUE_DATA_IN_NEXT_SECTION,
+};
 /******************************************************************************/
 /*************************** Extern Functions *********************************/
 /******************************************************************************/
@@ -81,19 +79,78 @@ static BOOL ldataFindCurLatestFinger(UH rNum, UH yNum, UW* curBankNum,
                                      UW* curSecNum, UW* curFrmNum);
 static BOOL ldataUpdateCurLatestToOld(UW curBankNum, UW curSecNum, UW curFrmNum);
 static BOOL ldataRemoveAllData(void);
-static BOOL ldataCheckFrameOnlyOneData(UW secAddr, UB* number, Info* learnDataInSection[]);
+static BOOL ldataCheckFrameOnlyOneData(UW secAddr, UB* number);
 static BOOL ldataMoveOnlyOneDataToTop(UB bankNum, UB sectorNum, UB frameNum);
 static BOOL ldataStoreFrameData(UW frmAddr, SvLearnData *lDataPtr);
 
-
+static int linitEmployeeList(void);
+static void linitInfoLearningBankTable(void);
+static int linitOldestSection(void);
+static BOOL linitBankArea(UB BankSw);
+static BOOL lcheck_BankIndex(UW bankIndex);
+static BOOL lcheck_SecIndex(UW secIndex);
+static BOOL lcheck_FrmIndex(UW frmIndex);
+static BOOL lcheck_RegStatus(UH checked_val, UH expected_val);
+static BOOL lcheck_RegRnum(UH checked_val);
+static BOOL lcheck_RegYnum(UH checked_val);
+static BOOL lcheck_ID(UW code);
+static UW lcalc_BankAddr(UW bankIndex);
+static UW lcalc_SectionAddr(UW bankIndex, UW secIndex);
+static UW lcalc_FrameAddr(UW bankIndex, UW secIndex, UW frmIndex);
+static void lcalc_nextSection(UW cur_bankIndex, UW cur_secIndex, UW *next_bankIndex, UW *next_secIndex);
+static BOOL lmem_rd_hw(UW uwFp, UH *puhBp);
+static UW lmem_wr_hw(UW uwFp, UH uhData);
+static UW lmem_rd_buf(UW uwFp, UH *puhBp, UW n);
+static UW lmem_wr_buf(UW uwFp, UH *puhBp, UW n);
+static BOOL lmem_rm_sec(UW secAddr);
+static BOOL lmem_rm_all(void);
+static BOOL ldat_rd_Frm(UW frmAddr, SvLearnData *learnDataPtr);
+static void ldat_wr_Frm(UW frmAddr, SvLearnData* learnDataPtr);
+static void ldat_rm_Frm(UW frmAddr);
+static void ldat_mv_Frm(UW frmAddr1, UW frmAddr2);
+static BOOL ldat_rd_RegStatus(UW frmAddr, UH *RegStatus);
+static void ldat_wr_RegStatus(UW frmAddr, UH RegStatus);
+static BOOL ldat_rd_RegRnum(UW frmAddr, UH *RegRnum);
+static void ldat_wr_RegRnum(UW frmAddr, UH RegRnum);
+static BOOL ldat_rd_RegYnum(UW frmAddr, UH *RegYnum);
+static void ldat_wr_RegYnum(UW frmAddr, UH RegYnum);
+static BOOL ldat_rd_RegID(UW frmAddr, UH *RegID);
+static void ldat_wr_RegID(UW frmAddr, UH RegID);
+static void ldat_wr_Dummy1(UW frmAddr, UH* Dummy1);
+static void ldat_wr_RegImg(UW frmAddr, UH* RegImg);
+static void ldat_wr_MiniImg(UW frmAddr, UH* MiniImg);
+static BOOL ldat_rd_CtrlFlg(UW secAddr, UH* ctrl_flg);
+static void ldat_wr_CtrlFlg(UW secAddr, UH ctrl_flg);
+static BOOL ldat_rd_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData *learnDataPtr);
+static BOOL ldat_wr_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData *learnDataPtr);
+static void ldat_rm_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex);
+static void ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankIndex2, UW secIndex2, UW frmIndex2);
+static BOOL ldat_rm_SecByIdx(UW bankIndex, UW secIndex);
+static BOOL ldat_rd_CtrlFlgByIdx(UW bankIndex, UW secIndex, UH* ctrl_flg);
+static void ldat_wr_CtrlFlgByIdx(UW bankIndex, UW secIndex, UH ctrl_flg);
+static void lmap_writeMapInfoTable(UH rNum, UH yNum, UW bankIndex, UW secIndex, UW frmIndex, UW num, UH id);
+static void lmap_readMapInfoTable(UH rNum, UH yNum, UW *bankIndex, UW *secIndex, UW *frmIndex, UW *num, UH *id);
+static BOOL lmap_checkIsNewID(UW code);
+static BOOL lmap_getIndexFromIDList(UH code, UH *index);
+static BOOL lmap_getCountFromIDList(UH code, UW *count);
+static BOOL lmap_updateMapInfoTable_location(UW bankIndex, UW secIndex, UW frmIndex);
+static BOOL lmap_updateMapInfoTable_num(UH rNum, UH yNum);
+static BOOL lmap_updateIDList(UW bankIndex, UW secIndex, UW frmIndex);
+static void lupdateLearnInfo(void);
+static void lshift_oldest_section(void);
+static void lupdate_TheLatestFrame(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData* new_learnDataPtr);
+static void lupdate_NotTheLatestFrame(SvLearnData* learnDataPtr);
+static void lupdate_NextFrameLocation(UW bankIndex, UW secIndex, UW frmIndex);
+static BOOL ladd_data(UW frmAddr, SvLearnData *learnDataPtr);
+static BOOL ladd_process_new_section(UW bankIndex, UW secIndex, SvLearnData* learnDataPtr);
+static BOOL ladd_process_start(void);
+static BOOL ladd_check_unique_data(UW cur_bankIndex, UW cur_secIndex, UW *num);
+static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW num);
+static BOOL laddSvLearnImg(SvLearnData *learnDataPtr);
 /******************************************************************************/
 /*************************** Local Constant Variables *************************/
 /******************************************************************************/
-// static volatile SvLearnData InitlearnData = {
-    // LDATA_NOT_YET_STS, /* not yet */
-    // 0,                 /* room 0 */
-    // 1                  /* Registration figure number */
-// };
+
 
 /******************************************************************************/
 /*************************** Local Variables **********************************/
@@ -103,34 +160,12 @@ static UB g_bank_num_max;
 static volatile UB ldataActivedBank;
 static volatile UW g_FrameNumber;
 static volatile InfoLearnInBankM InfoLearningBankTable[LDATA_REG_NBR_MAX]; //// 480
-// static volatile UH roomNumList[] = {
-    // LDATA_REG_NBR_MAX, //// 480
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX,
-    // LDATA_REG_NBR_MAX
-// };
+
 static UW g_bankIndex=0, g_secIndex=0, g_frmIndex=0;
-static UW g_next_bankIndex=0, g_next_secIndex=0;
+static UW g_next_bankIndex=0, g_next_secIndex=0, g_next_frmIndex=1;
 static UW g_oldest_bank_index=0, g_oldest_section_index=0;
-// static UH g_ctrl_flg_oldest=0;
+
 static SvLearnData g_learnData;
-static Info g_learnDataInSection[LDATA_FRAME_NUM_IN_SECTOR];
 static EmployeeList g_flash_data_info[4800];
 static UW g_total_empl=0; // 480*10
 static UB g_add_first_frame=0;
@@ -193,30 +228,7 @@ static void fast_test(UW *num)
 /******************************************************************************/
 /*************************** Functions Definition *****************************/
 /******************************************************************************/
-/*
- *
- */
-int InitEmployeeList(void)
-{
-	g_total_empl = 0;
-	memset(g_flash_data_info, 0, sizeof(g_flash_data_info));
-	return 0;
-}
 
-void InitInfoLearningBankTable(void)
-{
-	memset(InfoLearningBankTable, 0, sizeof(InfoLearningBankTable));
-}
-
-/*
- * Call after InitBankArea() to initialize g_start_bank_index
- */
-int InitOldestSection(void)
-{
-	// g_oldest_bank_index = g_start_bank_index;
-	// g_oldest_section_index = 0;
-	g_add_first_frame = 1;
-}
 /******************************************************************************/
 /* Function Name: InitBankArea                                                */
 /* Description  : This function will initial the learn data area in the flash */
@@ -236,63 +248,27 @@ int InitOldestSection(void)
 int InitBankArea(UB BankSw)
 {
     BOOL result;
-    UB bankIndex;
-    
-    result = FALSE;
-    if((BankSw & BANK0)==0) {
-        miInit();
-        /* find start bank and end bank in flash memory for learn data area */
-        g_start_bank_index = 0;
-        g_end_bank_index = 0;
-
-		for(bankIndex = 1; bankIndex < BANK_MAX_NUM; bankIndex++){
-			if(g_start_bank_index == 0){
-				if(BankSw & (UB)LDATA_BIT(bankIndex))	// b00000001 << 0 = 0x01, b00000001 << 1 = b00000010, b00000001 << 7 = b10000000
-				{
-					g_start_bank_index = bankIndex;	// 1:7
-					break;
-				}
-			}
-		}
-		
-		for(g_end_bank_index = bankIndex; bankIndex < BANK_MAX_NUM; bankIndex++)
-		{
-			
-			if(!(BankSw & (UB)LDATA_BIT(bankIndex)))
-			{
-				break;
-			}
-			else
-				g_end_bank_index = bankIndex;	// 1:7
-		}		
-    }
-	
-	g_bank_num_max = g_end_bank_index - g_start_bank_index + 1;
-	result = TRUE;
+	result = linitBankArea(BankSw);
     
     if(result)
     {
-        // result = ldataRemoveAllData();
 		result = lmem_rm_all();
-        if(result) {
-#if FWK_LD_SEMAPHORE_ENABLE
-            ldataosInit();
-#endif
-            ldataActivedBank = BankSw;
-            g_FrameNumber = 0;
-			// InitInfoLearningBankTable();
-        }
     }
-    ////////////////////////////////////
-	g_bankIndex = g_next_bankIndex = g_start_bank_index;
-	g_secIndex = g_next_secIndex = 0;
-	g_frmIndex = 0;
-	g_next_frmIndex = 1;
 	
-	InitInfoLearningBankTable();
-	InitEmployeeList();
-	InitOldestSection();
-	///////////////////////////////////
+	if(result)
+	{
+#if FWK_LD_SEMAPHORE_ENABLE
+		ldataosInit();
+#endif
+		ldataActivedBank = BankSw;
+		
+		// Initialize oldest Section
+		linitOldestSection();
+		// Initialize Mapping info
+		linitInfoLearningBankTable();
+		linitEmployeeList();
+	}
+
 	return ((result == TRUE) ? 0 : 1);
 }
 
@@ -319,117 +295,44 @@ int InitBankArea(UB BankSw)
 /******************************************************************************/
 int InitLearnInfo(UB BankSw, UB Spec)
 {
-    volatile BOOL result, searchFinish, searchFromFirst;
-    volatile UB bankIndex, bankStoreRingVal;
-    volatile UH yNum, rNum, secStoreRingVal;
-    volatile UH fingerInfo[LDATA_FINGER_INFO_SIZE]; //// 3 bytes : status, room, finger
-    volatile UW bankAddr, secAddr, frmAddr, secIndex, frmIndex, temp;
-    volatile SvLearnData* learnDataPtr;
-    
+	BOOL result;
 #if FWK_LD_SEMAPHORE_ENABLE
-    ldataosGetSemaphore();
-#endif
+	ldataosInit();
+	ldataosGetSemaphore();
+#endif  
+	result = (BankSw > 0);
+	if(result == FALSE)
+		goto END_FUNC;
+	
+	if(Spec == APARTMENT_TYPE)
+	{
+		result = linitBankArea(BankSw);
+		if(result)
+		{
+			result = lmem_rm_all();
+		}
 
-    result = ((BankSw>0)&((Spec==APARTMENT_TYPE)||(Spec==COMPANY_TYPE)));
-    if(result && (Spec == APARTMENT_TYPE)) {
-        secStoreRingVal = 0;
-        bankStoreRingVal = 0;
-        searchFinish = FALSE;
-        // memset(&InfoLearningBankTable[0], 0xFF, LDATA_REG_NBR_MAX*sizeof(InfoLearnInBankM));
-		InitInfoLearningBankTable();
-        /* Find location of ring buffer value */
-        for(bankIndex=0; bankIndex<BANK_MAX_NUM; bankIndex++) {
-            if((BankSw&LDATA_BIT(bankIndex))!=0) {
-                for(secIndex=0; secIndex<MI_NUM_SEC_IN_BANK; secIndex++) {
-					secAddr = lcalc_SectionAddr(bankIndex, secIndex);
-                    result = miReadRange(secAddr+CTRL_FLAG_OFFSET, (UB*)fingerInfo, sizeof(UH));
-                    if(result && (fingerInfo[0]==THE_OLDEST_SECTION)) { //// 0x0001
-                        secStoreRingVal = secIndex; //// top or oldest data location
-                        bankStoreRingVal = bankIndex; //// top or oldest data location
-                        searchFinish = TRUE;
-                        break;
-                    }
-                }
-            }
-            if(searchFinish)
-            {
-                break;
-            }
-        }
-        if(result && searchFinish)
-        {
-            searchFinish = FALSE;
-            searchFromFirst = FALSE;
-            learnDataPtr = (SvLearnData*)fingerInfo;
-            /* Find latest learn data from sector (store ring buffer value) to 0xFFFFFFFF in BankSw.*/
-            for(bankIndex=bankStoreRingVal; bankIndex<BANK_MAX_NUM; bankIndex++) {
-                if((BankSw&LDATA_BIT(bankIndex))!=0) {
-                    for(secIndex=secStoreRingVal; secIndex<MI_NUM_SEC_IN_BANK; secIndex++) {                     
-                        for(frmIndex=0; frmIndex<LDATA_FRAME_NUM_IN_SECTOR; frmIndex++) {
-							frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
-                            result = miReadRange(frmAddr, (UB*)fingerInfo, sizeof(fingerInfo));
-                            if(result)
-                            {
-                                if((fingerInfo[0]!=0xFFFF)&&(fingerInfo[1]!=0xFFFF)) { //// frames storing data
-                                    rNum = learnDataPtr->RegRnum;
-                                    yNum = learnDataPtr->RegYnum;
-                                    if(learnDataPtr->RegStatus==LDATA_REGISTERD_STS) { //// 0xFFFC new registerd
-                                        InfoLearningBankTable[rNum].BankNum[yNum]    = bankIndex;
-                                        InfoLearningBankTable[rNum].SectionNum[yNum] = secIndex;
-                                        InfoLearningBankTable[rNum].FrameNum[yNum]   = frmIndex;
-                                        InfoLearningBankTable[rNum].Num[yNum]++; //// update all data when adding new data
-                                        // roomNumList[yNum] = rNum;
-                                    }else if(learnDataPtr->RegStatus==LDATA_NOT_LATEST_STS) { //// 0xFFF8 old registerd
-                                        InfoLearningBankTable[rNum].BankNum[yNum]    = bankIndex;
-                                        InfoLearningBankTable[rNum].SectionNum[yNum] = secIndex;
-                                        InfoLearningBankTable[rNum].FrameNum[yNum]   = frmIndex;
-                                        InfoLearningBankTable[rNum].Num[yNum]++;
-                                    }
-                                }else { //// frames don't have data, all data are 0xFFFF
-                                    searchFinish = TRUE;
-                                }
-                            }
-                            if(searchFinish || (!result))
-                            {
-                                break;
-                            }
-                        }
-                        if(searchFinish || (!result))
-                        {
-                            break;
-                        }
-                    }
-                    secStoreRingVal = 0;
-                }
-                if(searchFinish || (!result))
-                {
-                    break;
-                }
-                
-                if(result)
-                {
-                    if((!searchFromFirst) && (bankIndex==(BANK_MAX_NUM-1)))
-                    {
-                        if(!searchFinish)
-                        {
-                            /* In writing full case, Find latest learn data from first bank to 0xFFFFFFFF in BankSw.*/
-                            bankIndex = g_start_bank_index-1;
-                            searchFromFirst = TRUE;
-                        }
-                    }else if(searchFromFirst && (bankIndex==bankStoreRingVal)) {
-                        break;
-                    }
-                }
-            }
-        }else{
-            result = FALSE;
-        }
-    }
+		if(result)
+		{
+			ldataActivedBank = BankSw;
+			// Initialize oldest Section
+			linitOldestSection();
+			// Initialize Mapping info
+			linitInfoLearningBankTable();
+			linitEmployeeList();
+			// Search latest data and update Mapping info
+			lupdateLearnInfo(); // --> UpdateLearnInfo(ldataActivedBank, APARTMENT_TYPE);
+		}
 
+	}else if(Spec == APARTMENT_TYPE)
+	{
+		// Not implemented
+	}
 #if FWK_LD_SEMAPHORE_ENABLE
-    ldataosReleaseSemaphore();
+	ldataosReleaseSemaphore();
 #endif
-    (result ? 0 : 1);
+END_FUNC:
+	return (result ? 0 : 1);
 }
 
 /******************************************************************************/
@@ -449,20 +352,22 @@ int AddSvLearnImg(SvLearnData *Data)
 #endif
 
 #ifdef FAST_TEST
-		fast_test(&g_FrameNumber);
+	fast_test(&g_FrameNumber);
 #endif
 
 	/* Check valid of input parameters */
-    result = (Data != NULL);
-
+	if(Data == NULL)
+		goto END_FUNC;
+	
 	result = laddSvLearnImg(Data);
 	
-	result = UpdateLearnInfo(ldataActivedBank, APARTMENT_TYPE)
+	lupdateLearnInfo();  // UpdateLearnInfo(ldataActivedBank, APARTMENT_TYPE);
+	
 
 #if FWK_LD_SEMAPHORE_ENABLE
     ldataosReleaseSemaphore();
 #endif
-    
+END_FUNC:
     return (result ? 0 : 1);
 }
 
@@ -489,7 +394,7 @@ int SearchLearnImg(UH SearchNum, UH* SearchResult[20][3])
     result = (SearchNum < LDATA_REG_NBR_MAX);
     if(result)
     {
-        for(fingerIndex = 0; fingerIndex < LDATA_REG_FIGURE_NBR_MAX; fingerIndex++) {)
+        for(fingerIndex = 0; fingerIndex < LDATA_REG_FIGURE_NBR_MAX; fingerIndex++) {
 			*SearchResult[fingerIndex][0] = InfoLearningBankTable[SearchNum].BankNum[fingerIndex];
 			*SearchResult[fingerIndex][1] = InfoLearningBankTable[SearchNum].SectionNum[fingerIndex];
 			*SearchResult[fingerIndex][2] = InfoLearningBankTable[SearchNum].FrameNum[fingerIndex];
@@ -526,12 +431,18 @@ int SearchLearnImg(UH SearchNum, UH* SearchResult[20][3])
 static int UpdateLearnInfo(UB BankSw, UB Spec)
 {
     BOOL result;
-    result = ((BankSw>0)&((Spec==APARTMENT_TYPE) || (Spec==COMPANY_TYPE)));
-    if(result && (Spec == APARTMENT_TYPE))
+	result = (BankSw > 0);
+	if(result == FALSE)
+		goto END_FUNC;
+	
+    if(Spec == APARTMENT_TYPE)
     {
 		lupdateLearnInfo();
-    }
-    
+    }else if(Spec == COMPANY_TYPE)
+	{
+		// Not implemented
+	}
+END_FUNC:
     return (result ? 0 : 1);
 }
 
@@ -550,46 +461,9 @@ static int UpdateLearnInfo(UB BankSw, UB Spec)
 /*                return the FALSE value.                                     */
 /* Remarks      : None                                                        */
 /******************************************************************************/
-static BOOL ldataFindCurLatestFinger(UH rNum, UH yNum, UW* curBankNum,
-                                     UW* curSecNum, UW* curFrmNum)
+static BOOL ldataFindCurLatestFinger(UH rNum, UH yNum, UW* curBankNum, UW* curSecNum, UW* curFrmNum)
 {
-    BOOL result;
-    UW bankIndex, secIndex, frmIndex;
-    SvLearnData *learnDataPtr;
-	
-	learnDataPtr = &g_learnData;
-    result =((curBankNum!=NULL) && (curSecNum!=NULL) && (curFrmNum!=NULL));
-	if(result)
-	{
-		result = lcheck_RegRnum(rNum);
-	}
-	
-	if(result)
-	{
-		result = lcheck_RegYnum(yNum);
-	}
-	
-    if(result == FALSE)
-	{
-		goto END_FUNC;
-	}
-
-	// Search latest finger register of room rNum, finger yNum
-	lmap_readMapInfoTable(rNum, yNum, &bankIndex, &secIndex, &frmIndex, 0, 0);
-	
-	ldat_rd_FrmByIdx(bankIndex, secIndex, frmIndex, learnDataPtr);
-	result = lcheck_RegStatus(learnDataPtr->RegStatus, LDATA_REGISTERD_STS); // 0xFFFC
-	if(result == TRUE)
-	{
-		// Return latest finger register
-		*curBankNum = bankIndex;
-		*curSecNum  = secIndex;
-		*curFrmNum  = frmIndex;
-		goto END_FUNC;
-	}
-
-END_FUNC:
-    return result;
+    return TRUE;
 }
 
 /******************************************************************************/
@@ -608,10 +482,6 @@ END_FUNC:
 /******************************************************************************/
 static BOOL ldataUpdateCurLatestToOld(UW bankIndex, UW secIndex, UW frmIndex)
 {
-    UW frmAddr;
-    
-	frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
-	ldat_wr_RegStatus(frmAddr, LDATA_NOT_LATEST_STS); //0xFFF8
     return TRUE;
 }
 
@@ -625,20 +495,7 @@ static BOOL ldataUpdateCurLatestToOld(UW bankIndex, UW secIndex, UW frmIndex)
 /******************************************************************************/
 static BOOL ldataRemoveAllData(void)
 {
-    volatile BOOL result;
-    volatile UW retryNumber, secAddr, sAddr, size;
-    
-    size = CALC_AREA_SIZE(g_start_bank_index, g_end_bank_index);
-    sAddr = CALC_SBANK_ADDR(g_start_bank_index);
-    for(secAddr = 0; secAddr < size; secAddr += MI_SECTOR_SIZE) {
-        result = miRemoveDataInSector(sAddr + secAddr);
-        if(!result) {
-            break;
-        }
-        // dly_tsk( 50/MSEC );
-    }
-    
-    return result;
+    return TRUE;
 }
 
 /******************************************************************************/
@@ -654,31 +511,7 @@ static BOOL ldataRemoveAllData(void)
 /******************************************************************************/
 static BOOL ldataStoreFrameData(UW frmAddr, SvLearnData *lDataPtr)
 {
-    BOOL result;
-    UW uwSize;
-	
-    lDataPtr->RegStatus = (UH)LDATA_DUR_REG_STS;
-    result = miWriteRange(frmAddr+LDATA_FRAME_STS_OFFSET, (UB*)&lDataPtr->RegStatus, LDATA_REG_STS_SIZE);
-    if(result)
-	{
-        dly_tsk(1/MSEC);
-        result = miWriteRange(frmAddr+LDATA_FRAME_IMG1_OFFSET, (UB*)&lDataPtr->RegImg1[0], LDATA_ALL_IMG_SIZE);
-	}
-    
-	if(result)
-	{
-		dly_tsk(1/MSEC);
-		result = miWriteRange(frmAddr+LDATA_FRAME_RNUM_OFFSET, (UB*)&lDataPtr->RegRnum, LDATA_REG_RNUM_SIZE+LDATA_REG_YNUM_SIZE+LDATA_REG_DUMMY_SIZE);
-	}
-	
-	if(result)
-	{
-		dly_tsk(1/MSEC);
-		lDataPtr->RegStatus = (UH)LDATA_REGISTERD_STS;
-		result = miWriteRange(frmAddr+LDATA_FRAME_STS_OFFSET, (UB*)&lDataPtr->RegStatus, LDATA_REG_STS_SIZE);
-	}
-    
-    return result;
+    return TRUE;
 }
 
 /******************************************************************************/
@@ -698,46 +531,9 @@ static BOOL ldataStoreFrameData(UW frmAddr, SvLearnData *lDataPtr)
 /*                return FALSE value                                          */
 /* Remarks      : None                                                        */
 /******************************************************************************/
-static BOOL ldataCheckFrameOnlyOneData(UW secAddr, UB* number, Info* learnDataInSection[])
+static BOOL ldataCheckFrameOnlyOneData(UW secAddr, UB* number)
 {
-	UW frmAddr;
-	int i;
-    SvLearnData *learnDataPtr;
-	UH rNum, yNum;
-	UW cnt_onlyOneData;
-	
-	learnDataPtr = &g_learnData;
-
-	cnt_onlyOneData = 0;
-	frmAddr = secAddr;
-	for(i = 0; i < LDATA_FRAME_NUM_IN_SECTOR; i++)
-	{
-		frmAddr += sizeof(SvLearnData)*i;
-		// Get Learn Data stored in frame address
-		ldat_rd_Frm(frmAddr, learnDataPtr);
-		// Read room, finger bankIndex info
-		rNum = learnDataPtr->RegRnum;
-        yNum = learnDataPtr->RegYnum;
-		// Search .Num in InfoLearnInBankM
-		if(InfoLearningBankTable[rNum].Num[yNum] == 1)
-		{
-			// +1 number of only one data counter
-			cnt_onlyOneData++;
-		}
-		
-		// save bankIndex, secIndex, frmIndex, of this section to Info table
-		learnDataInSection[i]->bankIndex = InfoLearningBankTable[rNum].BankNum[yNum];
-		learnDataInSection[i]->secIndex = InfoLearningBankTable[rNum].SectionNum[yNum];
-		learnDataInSection[i]->frmIndex = InfoLearningBankTable[rNum].FrameNum[yNum];
-		learnDataInSection[i]->secAddr = secAddr;
-		learnDataInSection[i]->frmAddr = frmAddr;
-		learnDataInSection[i]->num = InfoLearningBankTable[rNum].Num[yNum];
-	}
-	
-	// save only one data counter
-	*number = cnt_onlyOneData;
-	
-    return (cnt_onlyOneData > 0);
+    return TRUE;
 }
 
 /******************************************************************************/
@@ -752,34 +548,65 @@ static BOOL ldataCheckFrameOnlyOneData(UW secAddr, UB* number, Info* learnDataIn
 /******************************************************************************/
 static BOOL ldataMoveOnlyOneDataToTop(UB bankIndex, UB secIndex, UB frmIndex)
 {
-    BOOL result;
-    UW secAddr, frmAddr, pre_secAddr;
-    SvLearnData *learnDataPtr;
-	
-	learnDataPtr = &g_learnData;
-	result = ldat_rd_FrmByIdx(bankIndex, secIndex, frmIndex, learnDataPtr);
-
-	if(result)
-	{
-		/* Clear previous Section */
-		pre_secAddr = lcalc_SectionAddr(bankIndex, secIndex) - MI_SECTOR_SIZE;
-		result = miRemoveDataInSector(pre_secAddr);	// clear previous Section
-	}
-	
-	if(result)
-	{
-		/* Write to 1st frame of previous Section */
-		// result = miWriteRange(secAddr, (UB*)&InitlearnData, LDATA_FRAME_DATA_SIZE);
-		lmem_writeFrm(pre_secAddr, learnDataPtr);
-	}
-    
-    return result;
+    return TRUE;
 }
-
 
 /*
  *
  */
+static int linitEmployeeList(void)
+{
+	g_total_empl = 0;
+	memset(g_flash_data_info, 0, sizeof(g_flash_data_info));
+	return 0;
+}
+
+static void linitInfoLearningBankTable(void)
+{
+	memset(InfoLearningBankTable, 0, sizeof(InfoLearningBankTable));
+}
+
+/*
+ * Call after InitBankArea() to initialize g_start_bank_index
+ */
+static int linitOldestSection(void)
+{
+	g_oldest_bank_index = g_start_bank_index;
+	g_oldest_section_index = 0;
+	g_add_first_frame = 1;
+}
+
+static BOOL linitBankArea(UB BankSw)
+{  
+    if(BankSw & BANK0)
+		return FALSE;	// Invalid Bank
+	
+	FlInit( SEM_FL );	// Initilize flash driver miInit();
+	/* Find start bank and end bank in flash memory for learn data area */
+	g_start_bank_index = g_end_bank_index = g_bank_num_max =0;
+
+	for(g_start_bank_index = 1; g_start_bank_index < BANK_MAX_NUM; g_start_bank_index++)
+	{
+		if(BankSw & (UB)LDATA_BIT(g_start_bank_index))
+			break;
+	}
+	
+	for(g_end_bank_index = g_start_bank_index; g_end_bank_index < BANK_MAX_NUM; g_end_bank_index++)
+	{
+		if(!(BankSw & (UB)LDATA_BIT(g_end_bank_index+1)))
+			break;
+	}	
+	
+	g_bank_num_max = g_end_bank_index - g_start_bank_index + 1;
+	
+	// Start location
+	g_bankIndex = g_next_bankIndex = g_start_bank_index;
+	g_secIndex = g_next_secIndex = 0;
+	g_frmIndex = 0;
+	g_next_frmIndex = 1;
+
+	return TRUE;
+}
 
 static BOOL lcheck_BankIndex(UW bankIndex)
 {
@@ -1072,12 +899,11 @@ static BOOL ldat_rd_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData
 
 static BOOL ldat_wr_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData *learnDataPtr)
 {
-	BOOL result;
 	UW frmAddr;
 
 	frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
-	result = ldat_wr_Frm(frmAddr, learnDataPtr);
-	return result;
+	ldat_wr_Frm(frmAddr, learnDataPtr);
+	return TRUE;
 }
 
 static void ldat_rm_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex)
@@ -1160,7 +986,7 @@ static BOOL lmap_checkIsNewID(UW code)
 	return TRUE;
 }
 
-static BOOL lmap_getIndexFromIDList(UW code, UH *index)
+static BOOL lmap_getIndexFromIDList(UH code, UH *index)
 {
 	int i;
 	BOOL ret;
@@ -1187,7 +1013,7 @@ static BOOL lmap_getCountFromIDList(UH code, UW *count)
 	*count = 0;
 	index = 0;
 
-	ret = lmap_getIndexFromIDList(code, &index);
+	ret = lmap_getIndexFromIDList(code, (UH*)&index);
 	if(ret == TRUE)
 	{
 		*count = g_flash_data_info[index].cnt;
@@ -1228,7 +1054,7 @@ static BOOL lmap_updateMapInfoTable_num(UH rNum, UH yNum)
 	BOOL ret;
 	UW cnt;
 	id = InfoLearningBankTable[rNum].ID[yNum];
-	ret = lmap_getCountFromIDList(id, &cnt);
+	ret = lmap_getCountFromIDList(id, (UW*)&cnt);
 	if(ret == FALSE)
 		return FALSE;
 	
@@ -1253,7 +1079,7 @@ static BOOL lmap_updateIDList(UW bankIndex, UW secIndex, UW frmIndex)
 
 	// Check status = 0xFFFC or 0xFFF8
 	ret = lcheck_RegStatus(regStatus, LDATA_REGISTERD_STS);
-	ret |= lcheck_RegStatus(regStatus, LDATA_NOT_LATEST_STS));
+	ret |= lcheck_RegStatus(regStatus, LDATA_NOT_LATEST_STS);
 	if(ret == FALSE)
 	{
 		return FALSE;
@@ -1278,7 +1104,7 @@ static BOOL lmap_updateIDList(UW bankIndex, UW secIndex, UW frmIndex)
 	}else
 	{
 		// The same ID
-		ret = lmap_getIndexFromIDList(id, &index);
+		ret = lmap_getIndexFromIDList(id, (UH*)&index);
 		if(ret == TRUE)
 		{
 			g_flash_data_info[index].cnt++;	// increase counter
@@ -1313,7 +1139,7 @@ static void lupdateLearnInfo(void)
 	
 	// Scan Mapping info table
 	// Update .Num
-	for(rNum=0; rNum<=LDATA_REG_NBR_MAX rNum++)
+	for(rNum=0; rNum<=LDATA_REG_NBR_MAX; rNum++)
 	{
 		for(yNum=0; yNum<LDATA_REG_FIGURE_NBR_MAX; yNum++)
 		{
@@ -1327,7 +1153,7 @@ static void lupdateLearnInfo(void)
 /*
  * Shift and update the oldest Section location
  */
-static void lshiftOldestSectionFlag(void)
+static void lshift_oldest_section(void)
 {
 	UW cur_bankIndex, cur_secIndex, next_bankIndex, next_secIndex;
 	if(g_bankIndex == g_oldest_bank_index && g_secIndex == g_oldest_section_index)
@@ -1388,10 +1214,19 @@ static void lupdate_NotTheLatestFrame(SvLearnData* learnDataPtr)
 
 static void lupdate_NextFrameLocation(UW bankIndex, UW secIndex, UW frmIndex)
 {
-	g_bankIndex = bankIndex;
-	g_secIndex = secIndex;
-	g_frmIndex = frmIndex;
-	g_next_frmIndex = frmIndex+1;
+	if(bankIndex != 0)
+		g_bankIndex = bankIndex;
+	else g_bankIndex = g_next_bankIndex;
+	
+	if(secIndex != 0)
+		g_secIndex = secIndex;
+	else g_secIndex = g_next_secIndex;
+	
+	if(frmIndex != 0)
+		g_frmIndex = frmIndex;
+	else g_frmIndex = g_next_frmIndex;
+		
+	g_next_frmIndex = g_frmIndex + 1;
 	if(g_next_frmIndex == LDATA_FRAME_NUM_IN_SECTOR)
 	{
 		g_next_frmIndex = 0;
@@ -1411,14 +1246,14 @@ static BOOL ladd_data(UW frmAddr, SvLearnData *learnDataPtr)
     learnDataPtr->RegStatus = (UH)LDATA_DUR_REG_STS;
 	ldat_wr_RegStatus(frmAddr, learnDataPtr->RegStatus);
 	
-	ldat_wr_RegImg(frmAddr, learnDataPtr->RegImg1);
-	ldat_wr_RegImg(frmAddr, learnDataPtr->RegImg2);
-	ldat_wr_MiniImg(frmAddr, learnDataPtr->MiniImg);
+	ldat_wr_RegImg(frmAddr, (UH*)learnDataPtr->RegImg1);
+	ldat_wr_RegImg(frmAddr, (UH*)learnDataPtr->RegImg2);
+	ldat_wr_MiniImg(frmAddr, (UH*)learnDataPtr->MiniImg);
 
 	ldat_wr_RegRnum(frmAddr, learnDataPtr->RegRnum);
 	ldat_wr_RegYnum(frmAddr, learnDataPtr->RegYnum);
 	ldat_wr_RegID(frmAddr, learnDataPtr->RegID);
-	ldat_wr_Dummy1(frmAddr, learnDataPtr->Dummy1);
+	ldat_wr_Dummy1(frmAddr, (UH*)learnDataPtr->Dummy1);
 		
 	learnDataPtr->RegStatus = (UH)LDATA_REGISTERD_STS;
     ldat_wr_RegStatus(frmAddr, learnDataPtr->RegStatus);
@@ -1438,7 +1273,7 @@ static BOOL ladd_process_new_section(UW bankIndex, UW secIndex, SvLearnData* lea
 		// return FALSE;
 
 	// Shift 0x0001 to next Section
-	lshiftOldestSectionFlag();
+	lshift_oldest_section();
 	// Clear all frame in current Section
 	cur_secAddr = lcalc_SectionAddr(bankIndex, secIndex);
 	lmem_rm_sec(cur_secAddr);
@@ -1453,11 +1288,8 @@ static BOOL ladd_process_start(void)
 {
 	BOOL ret = FALSE;
 	
-	if(g_add_first_frame == 1)
-	{
-		// Remove all data
-		ret = lmem_rm_all();
-	}
+	// Remove all data
+	ret = lmem_rm_all();
 	
 	return ret;
 }
@@ -1481,19 +1313,19 @@ static BOOL ladd_check_unique_data(UW cur_bankIndex, UW cur_secIndex, UW *num)
 	for(frmIndex=0; frmIndex<LDATA_FRAME_NUM_IN_SECTOR; frmIndex++)
 	{
 		frmAddr = lcalc_FrameAddr(next_bankIndex, next_secIndex, frmIndex);
-		ldat_rd_RegStatus(frmAddr, &regStatus);
+		ldat_rd_RegStatus(frmAddr, &RegStatus);
 		ldat_rd_RegID(frmAddr, &id);
 		cnt = 0;
 		
-		ret = lmap_getCountFromIDList(id, &cnt);
+		ret = lmap_getCountFromIDList(id, (UW*)&cnt);
 		if(ret == FALSE)
 			continue;
 		
-		ret = lcheck_RegStatus(regStatus, LDATA_REGISTERD_STS); // 0xFFFC
+		ret = lcheck_RegStatus(RegStatus, LDATA_REGISTERD_STS); // 0xFFFC
 		if(ret == FALSE)
 			continue;
 		
-		if(cnt == 1 || regStatus == 0xFFFC)
+		if(cnt == 1 || RegStatus == 0xFFFC)
 		{
 			total++;
 			g_movedDataLocation[frmIndex] = 1;	// mark this index as only-one data or the latest data
@@ -1522,7 +1354,7 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 
 	cur_frmIndex = 0;
 	// Shift 0x0001 to next Section
-	lshiftOldestSectionFlag();
+	lshift_oldest_section();
 	// Remove data in current Section
 	ldat_rm_SecByIdx(cur_bankIndex, cur_secIndex);
 	lcalc_nextSection(cur_bankIndex, cur_secIndex, &next_bankIndex, &next_secIndex);
@@ -1533,37 +1365,18 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 		{
 			ldat_mv_FrmByIdx(next_bankIndex, next_secIndex, next_frmIndex, cur_bankIndex, cur_secIndex, cur_frmIndex);
 			cur_frmIndex++;
+			lupdate_NextFrameLocation(cur_bankIndex, cur_secIndex, cur_frmIndex);	// update each time moving data
 		}
-	}
-	
-	// Update next location
-	if(num == LDATA_FRAME_NUM_IN_SECTOR)
-	{
-		// 19 only-one data
-		lupdate_NextFrameLocation(next_bankIndex, next_secIndex, 0);
-	}
-	else{
-		lupdate_NextFrameLocation(cur_bankIndex, cur_secIndex, cur_frmIndex);
 	}
 
 	return (cur_frmIndex > 0);
-}
-
-
-enum {
-	PROCESS_NORMAL = 0,
-	PROCESS_1ST_DATA,
-	PROCESS_NEW_SECTION,
-	PROCESS_ONLY_ONE_DATA_IN_NEXT_SECTION,
-	PROCESS_LATEST_DATA_IN_NEXT_SECTION,
-	PROCESS_UNIQUE_DATA_IN_NEXT_SECTION,
 }
 
 static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 {
 	// Variables declaration
 	UW next_bankIndex, next_secIndex, next_frmIndex;
-	UW cur_bankIndex, UW cur_secIndex, cur_frmIndex;
+	UW cur_bankIndex, cur_secIndex, cur_frmIndex;
 	int process_flag;
 	UW sum_unique = 0;
 	BOOL ret = FALSE;
@@ -1573,12 +1386,11 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	// Check 1st Frame
 	if(g_add_first_frame == 1)
 	{
+		linitOldestSection();
 		g_add_first_frame = 0;
 		process_flag = PROCESS_1ST_DATA;
 	}
-	
-	// Check new Section
-	if(g_frmIndex == 0)
+	else if(g_frmIndex == 0) // Check new Section
 	{
 		// check RegStatus=0xFFFC and only-one data in next Section
 		ret = ladd_check_unique_data(g_bankIndex, g_secIndex, &sum_unique);
@@ -1594,10 +1406,7 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	switch (process_flag) {
 	case PROCESS_1ST_DATA:
 		// Set begin of oldest Section
-		g_oldest_bank_index = g_start_bank_index;
-		g_oldest_section_index = 0;
-		
-		ret = ladd_process_start(learnDataPtr);
+		ret = ladd_process_start();
 	break;
 	case PROCESS_UNIQUE_DATA_IN_NEXT_SECTION:
 		ret = ladd_process_save_unique_data(g_bankIndex, g_secIndex, sum_unique);
@@ -1625,12 +1434,11 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	ret = ladd_data(frmAddr, learnDataPtr);
 	if(ret == TRUE)
 	{
-		lupdate_NextFrameLocation(g_bankIndex+1, g_secIndex+1, g_frmIndex+1);
-		lupdate_NotTheLatestFrame(learnDataPtr); // Change RegStatus 0xFFFC -> 0xFFF8
+		lupdate_NextFrameLocation(0, 0, 0);	// auto update next location
+		if(g_add_first_frame == 0)
+			lupdate_NotTheLatestFrame(learnDataPtr); // Change RegStatus 0xFFFC -> 0xFFF8
 	}
-	
-// UPDATE: // END_FUNC
-	// Update next frame location
+
 	return ret;
 }
 #endif /* FWK_CFG_LEARN_DATA_ENABLE */

@@ -26,12 +26,12 @@
 /******************************************************************************/
 #include "drv_flash.h"
 #include "kernel.h"
-
+#include "id.h"
 /******************************************************************************/
 /*************************** Macro Definitions ********************************/
 /******************************************************************************/
-// #define LDATA_TEST_ENABLE               FALSE    /* Set to TRUE for fast testing */
-#define FAST_TEST
+#define LDATA_TEST_ENABLE               FALSE    /* Set to TRUE for fast testing */
+// #define FAST_TEST
 #define TEST_API
 
 #define LDATA_BIT(n)                    (1 << n)
@@ -102,14 +102,14 @@
 #define THE_OLDEST_SECTION				(0x0001)
 
 #define BANK_MAX_NUM                    8
-#define BANK0                           (UB)LDATA_BIT(0)
-#define BANK1                           (UB)LDATA_BIT(1)
-#define BANK2                           (UB)LDATA_BIT(2)
-#define BANK3                           (UB)LDATA_BIT(3)
-#define BANK4                           (UB)LDATA_BIT(4)
-#define BANK5                           (UB)LDATA_BIT(5)
-#define BANK6                           (UB)LDATA_BIT(6)
-#define BANK7                           (UB)LDATA_BIT(7)
+#define BANK0                           (UB)LDATA_BIT(0)	// 0x01
+#define BANK1                           (UB)LDATA_BIT(1)	// 0x02
+#define BANK2                           (UB)LDATA_BIT(2)	// 0x04
+#define BANK3                           (UB)LDATA_BIT(3)	// 0x08
+#define BANK4                           (UB)LDATA_BIT(4)	// 0x10
+#define BANK5                           (UB)LDATA_BIT(5)	// 0x20
+#define BANK6                           (UB)LDATA_BIT(6)	// 0x40
+#define BANK7                           (UB)LDATA_BIT(7)	// 0x80
 
 /* Bank selection */
 #define BANK3_3		(BANK3)
