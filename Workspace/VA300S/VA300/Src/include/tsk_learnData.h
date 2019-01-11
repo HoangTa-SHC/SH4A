@@ -155,7 +155,7 @@ typedef struct SvLearnResult_ST
 	UH RegStatus;
 	UH RegRnum;
 	UH RegYnum;
-	UW RegImg1; // first 4-byte
+	UH RegImg1; // first 1-byte
 }SvLearnResult;
 
 typedef struct SearchLearnDataResult_ST

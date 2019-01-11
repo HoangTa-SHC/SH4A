@@ -105,7 +105,7 @@ static BOOL lcheck_FrmIndex(UW frame_index);
 static BOOL lcheck_RegStatus(UH checked_val);
 static BOOL lcheck_RegRnum(UH checked_val);
 static BOOL lcheck_RegYnum(UH checked_val);
-static BOOL lcheck_RegImg1(UW checked_val, UH expected_val);
+static BOOL lcheck_RegImg1(UH checked_val, UH expected_val);
 static BOOL lcheck_SvLearnDataResult(SvLearnResult* ld ,UH data);
 static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW bank_index_cur, UW section_index_cur);
 static BOOL lcheck_RemoveAllData(UW bank_index, UW section_index);
@@ -268,22 +268,22 @@ static SvLearnData* lcreateLearnData(int pos)
 	{
 		learnDataPtr->RegRnum = 1;
 		learnDataPtr->RegYnum = i-LDATA_FINGER_GREEN_1_INDEX;
-		learnDataPtr->RegID = 4;	// GREEN ID
+		learnDataPtr->RegID = 0x0100 + 4; //4;	// GREEN ID
 	}
 	else if(i == LDATA_FINGER_YELLOW_1_INDEX || i == LDATA_FINGER_YELLOW_2_INDEX)
     {
     	learnDataPtr->RegRnum = 2;
     	learnDataPtr->RegYnum = i-LDATA_FINGER_YELLOW_1_INDEX;
-		learnDataPtr->RegID = 5;	// YELLOW ID
+		learnDataPtr->RegID = i-LDATA_FINGER_YELLOW_1_INDEX + 0x0200;	// YELLOW ID
     }
     else if(i >= LDATA_FINGER_ORANGE_1_INDEX && i <= LDATA_FINGER_ORANGE_19_INDEX)
     {
     	learnDataPtr->RegRnum = 19;
     	learnDataPtr->RegYnum = i-LDATA_FINGER_ORANGE_1_INDEX;
-		learnDataPtr->RegID = 6;	// ORANGE ID
+		learnDataPtr->RegID = i-LDATA_FINGER_ORANGE_1_INDEX + 0x1900;	// ORANGE ID
     }else // i == LDATA_FINGER_RED_1_INDEX
     {
-    	learnDataPtr->RegRnum = 20;
+    	learnDataPtr->RegRnum = 0;//20;
     	learnDataPtr->RegYnum = (pos%20);
 		learnDataPtr->RegID = 7;	// RED ID
     }
@@ -537,11 +537,9 @@ static BOOL lcheck_RegYnum(UH checked_val)
 	return checked_val < LDATA_REG_FIGURE_NBR_MAX;
 }
 
-static BOOL lcheck_RegImg1(UW checked_val, UH expected_val)
+static BOOL lcheck_RegImg1(UH checked_val, UH expected_val)
 {
-	UW expected;
-	expected = (UW)(expected_val << 24) | (UW)(expected_val << 16) | (UW)(expected_val << 8) | (UW)(expected_val << 0);
-	return checked_val == expected;
+	return checked_val == expected_val;
 }
 
 static BOOL lcheck_SvLearnDataResult(SvLearnResult* ld ,UH data)

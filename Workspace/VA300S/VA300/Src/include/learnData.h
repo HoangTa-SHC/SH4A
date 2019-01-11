@@ -39,13 +39,13 @@
 
 // #if LDATA_TEST_ENABLE
 // #define MI_FLASH_BASIC_ADDR             (0x02000000 - MI_BANK_SIZE)
-// #define MI_SECTOR_SIZE                  (128 * 1024)    //// 128kB = 0x2 0000
+// #define MI_SECTOR_SIZE                  (0x00020000)
 // #define MI_BANK_SIZE                    (4 * MI_SECTOR_SIZE)    //// 4 Sectors
 // #define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
 // #define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
 // #else
 // #define MI_FLASH_BASIC_ADDR             (0)
-// #define MI_SECTOR_SIZE                  (128 * 1024)	//// 0x20000
+// #define MI_SECTOR_SIZE                  (0x00020000)
 // #define MI_BANK_SIZE                    (256 * MI_SECTOR_SIZE)  //// 256 Sectors , 0x2000000
 // #define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
 // #define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
@@ -133,7 +133,8 @@
 
 /* Mapping information */
 #define CODE_MIN	(0)
-#define CODE_MAX	(9999)
+#define CODE_MAX	0x9999 //(4800)
+#define CODE_RANGE	40//(CODE_MAX - CODE_MIN + 1)
 /******************************************************************************/
 /************************ Enumerations Definitions ****************************/
 /******************************************************************************/
@@ -153,7 +154,7 @@ typedef struct svLearnDataSt {
     UH RegStatus;   //// Registration status
     UH RegRnum;    //// Registration room number
     UH RegYnum;   //// Registration figure number for each room [0:19]
-	UH RegID;		///// 0 --> 9999
+	UH RegID;
     UH Dummy1[LDATA_DUMMY_NUM];
     UB RegImg1[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
     UB RegImg2[LDATA_NORM_IMAGE_SIZE];   //// [3200] --> 32 fast test
@@ -165,11 +166,11 @@ typedef struct InfoLearningBankTableSt {
     UB SectionNum[LDATA_REG_FIGURE_NBR_MAX];
     UB FrameNum[LDATA_REG_FIGURE_NBR_MAX];
     UB Num[LDATA_REG_FIGURE_NBR_MAX];
-	UH ID[LDATA_REG_FIGURE_NBR_MAX];	///// 0 --> 9999
+	UH ID[LDATA_REG_FIGURE_NBR_MAX];
 }InfoLearnInBankM;
 
 typedef struct EmployeeListSt {
-	UH code;		///// 0 --> 9999
+	UH code;
 	UW cnt;
 }EmployeeList;
 /******************************************************************************/

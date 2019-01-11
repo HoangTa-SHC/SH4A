@@ -123,8 +123,8 @@ static BOOL ldat_rd_CtrlFlg(UW secAddr, UH* ctrl_flg);
 static void ldat_wr_CtrlFlg(UW secAddr, UH ctrl_flg);
 static BOOL ldat_rd_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData *learnDataPtr);
 static BOOL ldat_wr_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData *learnDataPtr);
-static void ldat_rm_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex);
-static void ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankIndex2, UW secIndex2, UW frmIndex2);
+static BOOL ldat_rm_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex);
+static BOOL ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankIndex2, UW secIndex2, UW frmIndex2);
 static BOOL ldat_rm_SecByIdx(UW bankIndex, UW secIndex);
 static BOOL ldat_rd_CtrlFlgByIdx(UW bankIndex, UW secIndex, UH* ctrl_flg);
 static void ldat_wr_CtrlFlgByIdx(UW bankIndex, UW secIndex, UH ctrl_flg);
@@ -138,7 +138,6 @@ static BOOL lmap_updateMapInfoTable_num(UH rNum, UH yNum);
 static BOOL lmap_updateIDList(UW bankIndex, UW secIndex, UW frmIndex);
 static void lupdateLearnInfo(void);
 static void lshift_oldest_section(void);
-static void lupdate_TheLatestFrame(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData* new_learnDataPtr);
 static void lupdate_NotTheLatestFrame(SvLearnData* learnDataPtr);
 static void lupdate_NextFrameLocation(UW bankIndex, UW secIndex, UW frmIndex);
 static BOOL ladd_data(UW frmAddr, SvLearnData *learnDataPtr);
@@ -166,19 +165,16 @@ static UW g_next_bankIndex=0, g_next_secIndex=0, g_next_frmIndex=1;
 static UW g_oldest_bank_index=0, g_oldest_section_index=0;
 
 static SvLearnData g_learnData;
-static EmployeeList g_flash_data_info[4800];
+static EmployeeList g_flash_data_info[CODE_RANGE];
 static UW g_total_empl=0; // 480*10
 static UB g_add_first_frame=0;
-static g_movedDataLocation[19];
+static UB g_movedDataLocation[19];
 
 
 #ifdef TEST_API
 void get_InfoLearnInBankM(int rNum, int yNum, UB* BankNum, UB* SectionNum, UB* FrameNum, UB* Num)
 {
-	*BankNum = InfoLearningBankTable[rNum].BankNum[yNum];
-	*SectionNum = InfoLearningBankTable[rNum].SectionNum[yNum];
-	*FrameNum = InfoLearningBankTable[rNum].FrameNum[yNum];
-	*Num = InfoLearningBankTable[rNum].Num[yNum];
+	lmap_readMapInfoTable(rNum, yNum, (UW*)BankNum, (UW*)SectionNum, (UW*)FrameNum, (UW*)Num, 0);
 }
 #endif
 
@@ -713,6 +709,7 @@ static UW lcalc_FrameAddr(UW bankIndex, UW secIndex, UW frmIndex)
 
 static void lcalc_nextSection(UW cur_bankIndex, UW cur_secIndex, UW *next_bankIndex, UW *next_secIndex)
 {
+	*next_bankIndex = cur_bankIndex;
 	*next_secIndex = cur_secIndex+1;
 	if(*next_secIndex >= MI_NUM_SEC_IN_BANK)
 	{
@@ -800,18 +797,23 @@ static void ldat_wr_Frm(UW frmAddr, SvLearnData* learnDataPtr)
 
 static void ldat_rm_Frm(UW frmAddr)
 {
-	UW n;
-	UH val;
-	UH	*puhAddr;
+	// UW n;
+	// UH val;
+	// UH	*puhAddr;
 
-	puhAddr = (UH*)frmAddr;
-	n = sizeof(SvLearnData)/sizeof(UH);
+	// puhAddr = (UH*)frmAddr;
+	// n = sizeof(SvLearnData)/sizeof(UH);
 	
-	while( n ) {
-		n--;
-		lmem_wr_hw((UW)puhAddr, 0xFFFF);
-		puhAddr++;
-	}
+	// while( n ) {
+		// n--;
+		// lmem_wr_hw((UW)puhAddr, 0xFFFF);
+		// puhAddr++;
+	// }
+	SvLearnData* learnDataPtr;
+	learnDataPtr = &g_learnData;
+	memset(learnDataPtr, 0xFF, sizeof(SvLearnData));
+	lmem_wr_buf(frmAddr, (UH*)learnDataPtr, sizeof(SvLearnData));
+	ldat_wr_RegStatus(frmAddr, LDATA_NOT_YET_STS);
 }
 
 static void ldat_mv_Frm(UW frmAddr1, UW frmAddr2)
@@ -906,22 +908,29 @@ static BOOL ldat_wr_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData
 	return TRUE;
 }
 
-static void ldat_rm_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex)
+static BOOL ldat_rm_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex)
 {
-	UH val = 0xFFFF;
 	UW frmAddr;
-
+	UH RegStatus;
+	
 	frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
 	ldat_rm_Frm(frmAddr);
+	// Check is cleared finished
+	ldat_rd_RegStatus(frmAddr, &RegStatus);
+	return lcheck_RegStatus(RegStatus, LDATA_NOT_YET_STS);
 }
 
-static void ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankIndex2, UW secIndex2, UW frmIndex2)
+static BOOL ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankIndex2, UW secIndex2, UW frmIndex2)
 {
 	UW frmAddr1, frmAddr2;
+	UH RegStatus;
 	
 	frmAddr1 = lcalc_FrameAddr(bankIndex1, secIndex1, frmIndex1);
 	frmAddr2 = lcalc_FrameAddr(bankIndex2, secIndex2, frmIndex2);
-	ldat_mv_Frm(frmAddr1, frmAddr2);	
+	ldat_mv_Frm(frmAddr1, frmAddr2);
+	// Check is cleared finished
+	ldat_rd_RegStatus(frmAddr1, &RegStatus);
+	return lcheck_RegStatus(RegStatus, LDATA_NOT_YET_STS);
 }
 
 static BOOL ldat_rm_SecByIdx(UW bankIndex, UW secIndex)
@@ -958,7 +967,7 @@ static void lmap_writeMapInfoTable(UH rNum, UH yNum, UW bankIndex, UW secIndex, 
 	if(num != 0xFFFF)
 		InfoLearningBankTable[rNum].Num[yNum]        = num;
 	
-	if(id != 0xFFFF)
+	// if(id != 0xFFFF)
 		InfoLearningBankTable[rNum].ID[yNum]         = id;
 }
 
@@ -1042,7 +1051,11 @@ static BOOL lmap_updateMapInfoTable_location(UW bankIndex, UW secIndex, UW frmIn
 		ldat_rd_RegRnum(frmAddr, &rNum);
 		ldat_rd_RegYnum(frmAddr, &yNum);
 		ldat_rd_RegID(frmAddr, &id);
-		lmap_writeMapInfoTable(rNum, yNum, bankIndex, secIndex, frmIndex, 0xFFFF, id);
+		// lmap_writeMapInfoTable(rNum, yNum, bankIndex, secIndex, frmIndex, 0xFFFF, id);
+		InfoLearningBankTable[rNum].BankNum[yNum]    = bankIndex;
+		InfoLearningBankTable[rNum].SectionNum[yNum] = secIndex;
+		InfoLearningBankTable[rNum].FrameNum[yNum]   = frmIndex;
+		InfoLearningBankTable[rNum].ID[yNum]         = id;
 	}
 	
 	return ret;
@@ -1120,6 +1133,8 @@ static void lupdateLearnInfo(void)
 	UH rNum, yNum;
 	BOOL ret;
 	
+	// Clear all ID list before scan Flash
+	linitEmployeeList();
 	// Scan Flash
 	for(bankIndex=g_start_bank_index; bankIndex<=g_end_bank_index; bankIndex++)
 	{
@@ -1127,9 +1142,9 @@ static void lupdateLearnInfo(void)
 		{
 			for(frmIndex=0; frmIndex<LDATA_FRAME_NUM_IN_SECTOR; frmIndex++)
 			{
-				// Update .BankNum, .SectionNum, .FrameNum, .ID
+				// Update .BankNum, .SectionNum, .FrameNum, .ID with Frame has .RegStatus=0xFFFC
 				lmap_updateMapInfoTable_location(bankIndex, secIndex, frmIndex);
-				// Update .code, .cnt
+				// Update .code, .cnt with Frame has .RegStatus=0xFFFC or 0xFFF8
 				ret = lmap_updateIDList(bankIndex, secIndex, frmIndex);
 				if(ret == FALSE)
 					continue;
@@ -1139,7 +1154,7 @@ static void lupdateLearnInfo(void)
 	
 	// Scan Mapping info table
 	// Update .Num
-	for(rNum=0; rNum<=LDATA_REG_NBR_MAX; rNum++)
+	for(rNum=0; rNum<LDATA_REG_NBR_MAX; rNum++)
 	{
 		for(yNum=0; yNum<LDATA_REG_FIGURE_NBR_MAX; yNum++)
 		{
@@ -1173,18 +1188,6 @@ static void lshift_oldest_section(void)
 	}
 }
 
-static void lupdate_TheLatestFrame(UW bankIndex, UW secIndex, UW frmIndex, SvLearnData* new_learnDataPtr)
-{
-	// UW frmAddr;
-	// UH rNum, yNum;
-
-	// rNum = new_learnDataPtr->RegRnum;
-	// yNum = new_learnDataPtr->RegYnum;
-	// InfoLearningBankTable[rNum].BankNum[yNum]    = bankIndex;
-	// InfoLearningBankTable[rNum].SectionNum[yNum] = secIndex;
-	// InfoLearningBankTable[rNum].FrameNum[yNum]   = frmIndex;
-
-}
 /*
  * Call after adding new learn data, before updateDataInfo
  */
@@ -1230,7 +1233,7 @@ static void lupdate_NextFrameLocation(UW bankIndex, UW secIndex, UW frmIndex)
 	if(g_next_frmIndex == LDATA_FRAME_NUM_IN_SECTOR)
 	{
 		g_next_frmIndex = 0;
-		lcalc_nextSection(bankIndex, secIndex, &g_next_bankIndex, &g_next_secIndex);
+		lcalc_nextSection(g_bankIndex, g_secIndex, &g_next_bankIndex, &g_next_secIndex);
 	}else
 	{
 		g_next_bankIndex = g_bankIndex;
@@ -1365,6 +1368,11 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 		{
 			ldat_mv_FrmByIdx(next_bankIndex, next_secIndex, next_frmIndex, cur_bankIndex, cur_secIndex, cur_frmIndex);
 			cur_frmIndex++;
+			if(cur_frmIndex == LDATA_FRAME_NUM_IN_SECTOR)
+			{
+				lupdate_NextFrameLocation(0, 0, 0);	// update for frame 19th
+			}
+			else
 			lupdate_NextFrameLocation(cur_bankIndex, cur_secIndex, cur_frmIndex);	// update each time moving data
 		}
 	}
@@ -1387,7 +1395,7 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	if(g_add_first_frame == 1)
 	{
 		linitOldestSection();
-		g_add_first_frame = 0;
+		// g_add_first_frame = 0;
 		process_flag = PROCESS_1ST_DATA;
 	}
 	else if(g_frmIndex == 0) // Check new Section
@@ -1401,7 +1409,8 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 			// Check RingBuffer
 			process_flag = PROCESS_NEW_SECTION;
 		}
-	}
+	}else
+		process_flag = PROCESS_NORMAL;
 
 	switch (process_flag) {
 	case PROCESS_1ST_DATA:
@@ -1417,7 +1426,6 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	break;
 	case PROCESS_NEW_SECTION:
 		ret = ladd_process_new_section(g_bankIndex, g_secIndex, learnDataPtr);
-		// Store new data to 1st frame of current Section
 	break;
 	case PROCESS_NORMAL:
 		// frmAddr = lcalc_FrameAddr(g_bankIndex, g_secIndex, g_frmIndex);
@@ -1428,15 +1436,15 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	break;
 	}
 	 
-	
 	// Store data
-	frmAddr = lcalc_FrameAddr(g_start_bank_index, g_secIndex, g_frmIndex);
+	frmAddr = lcalc_FrameAddr(g_bankIndex, g_secIndex, g_frmIndex);
 	ret = ladd_data(frmAddr, learnDataPtr);
 	if(ret == TRUE)
 	{
 		lupdate_NextFrameLocation(0, 0, 0);	// auto update next location
 		if(g_add_first_frame == 0)
 			lupdate_NotTheLatestFrame(learnDataPtr); // Change RegStatus 0xFFFC -> 0xFFF8
+		else g_add_first_frame = 0; // Clear for first frame
 	}
 
 	return ret;
