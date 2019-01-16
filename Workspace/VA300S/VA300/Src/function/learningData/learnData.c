@@ -39,6 +39,49 @@
 #define CALC_FRAME_NUM_IN_LAREA        ((CALC_AREA_SIZE(ldataSBank, ldataEBank)/MI_SECTOR_SIZE) * LDATA_FRAME_NUM_IN_SECTOR)
 
 // #define LDATA_ALL_IMG_SIZE              ((2*LDATA_NORM_IMAGE_SIZE) + (LDATA_MINI_IMAGE_NUM*LDATA_MINI_IMAGE_SIZE))
+
+/******************************************************************************/
+/*************************** Debug  *******************************************/
+/******************************************************************************/
+#define DEBUG
+#ifdef DEBUG
+#define DBG_LINE_TOTAL 120
+static char log_table[DBG_LINE_TOTAL][80];
+static void dbg_init(void)
+{
+	memset(log_table, 0, sizeof(log_table));
+}
+#define DBG_PRINT0(msg)						dbg_print(msg, 0, 0, 0, 0, 0, 0, 0, 0)
+#define DBG_PRINT1(msg, arg1)				dbg_print(msg, arg1, 0, 0, 0, 0, 0, 0, 0)
+#define DBG_PRINT2(msg, arg1, arg2)			dbg_print(msg, arg1, arg2, 0, 0, 0, 0, 0, 0)
+#define DBG_PRINT3(msg, arg1, arg2, arg3)	dbg_print(msg, arg1, arg2,arg3, 0, 0, 0, 0, 0)
+#define DBG_PRINT4(msg, arg1, arg2, arg3, arg4)				dbg_print(msg, arg1, arg2, arg3, arg4, 0, 0, 0, 0)
+#define DBG_PRINT5(msg, arg1, arg2, arg3, arg4, arg5)		dbg_print(msg, arg1, arg2, arg3, arg4, arg5, 0, 0, 0)
+#define DBG_PRINT6(msg, arg1, arg2, arg3, arg4, arg5, arg6)	dbg_print(msg, arg1, arg2, arg3, arg4, arg5, arg6, 0, 0)
+#define DBG_PRINT7(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7)		dbg_print(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, 0)
+#define DBG_PRINT8(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)	dbg_print(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+static void dbg_print(char* msg, UW arg1, UW arg2, UW arg3, UW arg4, UW arg5, UW arg6, UW arg7, UW arg8)
+{
+	static i = 0;
+	if(i < DBG_LINE_TOTAL)
+	{
+		sprintf((void*)log_table[i++], (void*)msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+	}else
+	{
+		i = 0;
+	}
+}
+#else
+#define DBG_PRINT0(msg)					
+#define DBG_PRINT1(msg, arg1)				
+#define DBG_PRINT2(msg, arg1, arg2)		
+#define DBG_PRINT3(msg, arg1, arg2,arg3)
+#define DBG_PRINT4(msg, arg1, arg2, arg3, arg4)
+#define DBG_PRINT5(msg, arg1, arg2, arg3, arg4, arg5)
+#define DBG_PRINT6(msg, arg1, arg2, arg3, arg4, arg5, arg6)
+#define DBG_PRINT7(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+#define DBG_PRINT8(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+#endif
 /******************************************************************************/
 /*************************** Structures Definitions ***************************/
 /******************************************************************************/
@@ -169,7 +212,7 @@ static EmployeeList g_flash_data_info[CODE_RANGE];
 static UW g_total_empl=0; // 480*10
 static UB g_add_first_frame=0;
 static UB g_movedDataLocation[19];
-
+static UW g_sum_unique = 0;
 
 #ifdef TEST_API
 void get_InfoLearnInBankM(int rNum, int yNum, UB* BankNum, UB* SectionNum, UB* FrameNum, UB* Num)
@@ -263,6 +306,9 @@ int InitBankArea(UB BankSw)
 		// Initialize Mapping info
 		linitInfoLearningBankTable();
 		linitEmployeeList();
+#ifdef DEBUG
+	dbg_init();
+#endif
 	}
 
 	return ((result == TRUE) ? 0 : 1);
@@ -359,7 +405,11 @@ int AddSvLearnImg(SvLearnData *Data)
 	
 	lupdateLearnInfo();  // UpdateLearnInfo(ldataActivedBank, APARTMENT_TYPE);
 	
-
+	if(g_sum_unique == LDATA_FRAME_NUM_IN_SECTOR)
+	{
+		AddSvLearnImg(Data); // Adding new data after reserve 19 unique data
+	}
+	
 #if FWK_LD_SEMAPHORE_ENABLE
     ldataosReleaseSemaphore();
 #endif
@@ -440,111 +490,6 @@ static int UpdateLearnInfo(UB BankSw, UB Spec)
 	}
 END_FUNC:
     return (result ? 0 : 1);
-}
-
-/******************************************************************************/
-/* Function Name: ldataFindCurLatestFinger                                    */
-/* Description  : This function will find current latest learn data of finger.*/
-/* Parameter    : Input: yNum - is number of finger that needs to find latest */
-/*                       learn data on flash memory.                          */
-/*                Output: curBankNum - is bank number to store current latest */
-/*                        learn data of yNum.                                 */
-/*                Output: curSecNum - is sector number to store current latest*/
-/*                        learn data of yNum.                                 */
-/*                Output: curFrmNum - is frame number to store current latest */
-/*                        learn data of yNum.                                 */
-/* Return Value : BOOL - return the TRUE value when finds successful, else to */
-/*                return the FALSE value.                                     */
-/* Remarks      : None                                                        */
-/******************************************************************************/
-static BOOL ldataFindCurLatestFinger(UH rNum, UH yNum, UW* curBankNum, UW* curSecNum, UW* curFrmNum)
-{
-    return TRUE;
-}
-
-/******************************************************************************/
-/* Function Name: ldataUpdateCurLatestToOld                                   */
-/* Description  : This function will update current latest learn data to old  */
-/*                data on flash memory.                                       */
-/* Parameter    : Input: bankIndex - is bank number to store current latest  */
-/*                       learn data.                                          */
-/* Parameter    : Input: secIndex - is sector number to store current latest */
-/*                       learn data.                                          */
-/* Parameter    : Input: frmIndex - is frame number to store current latest  */
-/*                       learn data.                                          */
-/* Return Value : BOOL - return the TRUE value when updates successful, else  */
-/*                to return the FALSE value.                                  */
-/* Remarks      : None                                                        */
-/******************************************************************************/
-static BOOL ldataUpdateCurLatestToOld(UW bankIndex, UW secIndex, UW frmIndex)
-{
-    return TRUE;
-}
-
-/******************************************************************************/
-/* Function Name: ldataRemoveAllData                                          */
-/* Description  : This function will remove all data in learn data area.      */
-/* Parameter    : None                                                        */
-/* Return Value : BOOL - return the TRUE value when erases successful, else to*/
-/*                return FALSE value                                          */
-/* Remarks      : None                                                        */
-/******************************************************************************/
-static BOOL ldataRemoveAllData(void)
-{
-    return TRUE;
-}
-
-/******************************************************************************/
-/* Function Name: ldataStoreFrameData                                         */
-/* Description  : This function will store a learn data into the flash memory.*/
-/* Parameter    : Input: frmAddr - is address of frame data in the flash */
-/*                       memory.                                              */
-/*                Input: lDataPtr - is a buffer that needs to store into the  */
-/*                       flash memory.                                        */
-/* Return Value : BOOL - return the TRUE value when erases successful, else to*/
-/*                return FALSE value                                          */
-/* Remarks      : None                                                        */
-/******************************************************************************/
-static BOOL ldataStoreFrameData(UW frmAddr, SvLearnData *lDataPtr)
-{
-    return TRUE;
-}
-
-/******************************************************************************/
-/* Function Name: ldataCheckFrameOnlyOneData                                  */
-/* Description  : This function will check only one learn data in a sector.   */
-/* Parameter    : Input: secAddr - is address of a sector that needs to */
-/*                       check only one learn data.                           */
-/*                Output: number - is number of the only one learn data in    */
-/*                        this sector                                         */
-/*                Output: bankNum - is current bank that stores first only one*/
-/*                        learn data.                                         */
-/*                Output: sectorNum - is current sector that stores first only*/
-/*                        one learn data.                                     */
-/*                Output: frameNum - is frame number that stores first only   */
-/*                        one learn data.                                     */
-/* Return Value : BOOL - return the TRUE value when checks successful, else to*/
-/*                return FALSE value                                          */
-/* Remarks      : None                                                        */
-/******************************************************************************/
-static BOOL ldataCheckFrameOnlyOneData(UW secAddr, UB* number)
-{
-    return TRUE;
-}
-
-/******************************************************************************/
-/* Function Name: ldataMoveOnlyOneDataToTop                                   */
-/* Description  : This function will move the only one learn data to top of   */
-/*                same sector.                                                */
-/* Parameter    : bankIndex, secIndex, frmIndex - Current only one data       */
-/*                location                                                    */
-/* Return Value : BOOL - return the TRUE value when moves successful, else to */
-/*                return FALSE value                                          */
-/* Remarks      : None                                                        */
-/******************************************************************************/
-static BOOL ldataMoveOnlyOneDataToTop(UB bankIndex, UB secIndex, UB frmIndex)
-{
-    return TRUE;
 }
 
 /*
@@ -735,7 +680,7 @@ static UW lmem_wr_hw(UW uwFp, UH uhData)
 {
 	UW uwSize;
 	
-	uwSize = FlWrite(uwFp, (UH*)&uhData, 1);
+	uwSize = FlWrite(uwFp, (UH*)&uhData, 1); // Cannot write 0xFFFF to Flash Memory
 	return uwSize;
 }
 
@@ -755,13 +700,14 @@ static UW lmem_wr_buf(UW uwFp, UH *puhBp, UW n)
 {
 	UW uwSize;
 	
-	uwSize = FlWrite(uwFp, puhBp, n/sizeof(UH));
+	uwSize = FlWrite(uwFp, puhBp, n/sizeof(UH));  // Cannot write 0xFFFF to Flash Memory
 	return uwSize;
 }
 
 static BOOL lmem_rm_sec(UW secAddr)
 {
     ER errCode;
+	
 	errCode = FlErase(secAddr);	// reset to 0xFFFF
     return (errCode == E_OK);
 }
@@ -797,23 +743,20 @@ static void ldat_wr_Frm(UW frmAddr, SvLearnData* learnDataPtr)
 
 static void ldat_rm_Frm(UW frmAddr)
 {
-	// UW n;
-	// UH val;
-	// UH	*puhAddr;
+	UW n;
+	UH val;
+	UH *puhAddr;
 
-	// puhAddr = (UH*)frmAddr;
-	// n = sizeof(SvLearnData)/sizeof(UH);
+	puhAddr = (UH*)frmAddr;
+	n = sizeof(SvLearnData)/sizeof(UH);
 	
-	// while( n ) {
-		// n--;
-		// lmem_wr_hw((UW)puhAddr, 0xFFFF);
-		// puhAddr++;
-	// }
-	SvLearnData* learnDataPtr;
-	learnDataPtr = &g_learnData;
-	memset(learnDataPtr, 0xFF, sizeof(SvLearnData));
-	lmem_wr_buf(frmAddr, (UH*)learnDataPtr, sizeof(SvLearnData));
-	ldat_wr_RegStatus(frmAddr, LDATA_NOT_YET_STS);
+	while( n ) {
+		n--;
+		lmem_wr_hw((UW)puhAddr, 0x0000); // Cannot write 0xFFFF to Flash Memory
+		puhAddr++;
+	}
+	
+	ldat_wr_RegStatus(frmAddr, LDATA_CLEARED_STS);	
 }
 
 static void ldat_mv_Frm(UW frmAddr1, UW frmAddr2)
@@ -824,6 +767,7 @@ static void ldat_mv_Frm(UW frmAddr1, UW frmAddr2)
 	ldat_wr_Frm(frmAddr2, learnDataPtr);
 	ldat_rm_Frm(frmAddr1);
 }
+
 static BOOL ldat_rd_RegStatus(UW frmAddr, UH *RegStatus)
 {
 	return lmem_rd_hw(frmAddr + LDATA_FRAME_STS_OFFSET, RegStatus);
@@ -917,28 +861,43 @@ static BOOL ldat_rm_FrmByIdx(UW bankIndex, UW secIndex, UW frmIndex)
 	ldat_rm_Frm(frmAddr);
 	// Check is cleared finished
 	ldat_rd_RegStatus(frmAddr, &RegStatus);
-	return lcheck_RegStatus(RegStatus, LDATA_NOT_YET_STS);
+	return lcheck_RegStatus(RegStatus, LDATA_CLEARED_STS);
 }
 
 static BOOL ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankIndex2, UW secIndex2, UW frmIndex2)
 {
 	UW frmAddr1, frmAddr2;
 	UH RegStatus;
+	UW ret;
 	
+	DBG_PRINT0("[ldat_mv_FrmByIdx]");
 	frmAddr1 = lcalc_FrameAddr(bankIndex1, secIndex1, frmIndex1);
 	frmAddr2 = lcalc_FrameAddr(bankIndex2, secIndex2, frmIndex2);
 	ldat_mv_Frm(frmAddr1, frmAddr2);
+	DBG_PRINT8("Move frame from B%dS%dF%d [0x%0.8x] to B%dS%dF%d [0x%0.8x]", bankIndex1, secIndex1, frmIndex1, frmAddr1, bankIndex2, secIndex2, frmIndex2, frmAddr2);
 	// Check is cleared finished
 	ldat_rd_RegStatus(frmAddr1, &RegStatus);
-	return lcheck_RegStatus(RegStatus, LDATA_NOT_YET_STS);
+	ret = lcheck_RegStatus(RegStatus, 0xFFFF);
+	DBG_PRINT3("After moving [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", frmAddr1, RegStatus, LDATA_CLEARED_STS);
+	// Check is the latest
+	ldat_rd_RegStatus(frmAddr2, &RegStatus);
+	ret &= lcheck_RegStatus(RegStatus, 0xFFFC);
+	DBG_PRINT3("After moving [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", frmAddr2, RegStatus, LDATA_REGISTERD_STS);
+
+	return ret;
 }
 
 static BOOL ldat_rm_SecByIdx(UW bankIndex, UW secIndex)
 {
 	UW secAddr;
+	UW ret;
+	UH RegStatus;
 	
 	secAddr = lcalc_SectionAddr(bankIndex, secIndex);
-	return lmem_rm_sec(secAddr);
+	ret = lmem_rm_sec(secAddr);
+	ldat_rd_RegStatus(secAddr, &RegStatus);
+	DBG_PRINT5("[ldat_rm_SecByIdx] Remove B%dS%d [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", bankIndex, secIndex, secAddr, RegStatus, 0xFFFF);
+	return ret;
 }
 
 static BOOL ldat_rd_CtrlFlgByIdx(UW bankIndex, UW secIndex, UH* ctrl_flg)
@@ -997,7 +956,7 @@ static BOOL lmap_checkIsNewID(UW code)
 
 static BOOL lmap_getIndexFromIDList(UH code, UH *index)
 {
-	int i;
+	UH i;
 	BOOL ret;
 	ret = lcheck_ID(code);
 	if(FALSE)
@@ -1016,13 +975,13 @@ static BOOL lmap_getIndexFromIDList(UH code, UH *index)
 
 static BOOL lmap_getCountFromIDList(UH code, UW *count)
 {
-	UW index;
+	UH index;
 	BOOL ret;
 	
 	*count = 0;
 	index = 0;
 
-	ret = lmap_getIndexFromIDList(code, (UH*)&index);
+	ret = lmap_getIndexFromIDList(code, &index);
 	if(ret == TRUE)
 	{
 		*count = g_flash_data_info[index].cnt;
@@ -1332,6 +1291,8 @@ static BOOL ladd_check_unique_data(UW cur_bankIndex, UW cur_secIndex, UW *num)
 		{
 			total++;
 			g_movedDataLocation[frmIndex] = 1;	// mark this index as only-one data or the latest data
+			DBG_PRINT3("[ladd_check_unique_data] Found %d unique data at B%dS%d", total, next_bankIndex, next_secIndex);
+			DBG_PRINT7("B%dS%dF%d [0x%0.8x] {ID=%d, Cnt=%d, RegStatus=0x%0.4x}", next_bankIndex, next_secIndex, frmIndex, frmAddr, id, cnt, RegStatus);
 		}
 	}
 	
@@ -1380,17 +1341,23 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 	return (cur_frmIndex > 0);
 }
 
+/*
+ * Input will be cleared to NULL pointer if write to Flash successfully
+ */
 static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 {
 	// Variables declaration
 	UW next_bankIndex, next_secIndex, next_frmIndex;
 	UW cur_bankIndex, cur_secIndex, cur_frmIndex;
 	int process_flag;
-	UW sum_unique = 0;
 	BOOL ret = FALSE;
 	UW frmAddr = 0;
-	
+	g_sum_unique = 0; // Reset
 	process_flag = PROCESS_NORMAL;
+	
+	if(learnDataPtr == NULL)
+		return FALSE;
+	
 	// Check 1st Frame
 	if(g_add_first_frame == 1)
 	{
@@ -1401,7 +1368,7 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	else if(g_frmIndex == 0) // Check new Section
 	{
 		// check RegStatus=0xFFFC and only-one data in next Section
-		ret = ladd_check_unique_data(g_bankIndex, g_secIndex, &sum_unique);
+		ret = ladd_check_unique_data(g_bankIndex, g_secIndex, &g_sum_unique);
 		if(ret == TRUE)
 		{
 			process_flag = PROCESS_UNIQUE_DATA_IN_NEXT_SECTION;
@@ -1418,35 +1385,41 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 		ret = ladd_process_start();
 	break;
 	case PROCESS_UNIQUE_DATA_IN_NEXT_SECTION:
-		ret = ladd_process_save_unique_data(g_bankIndex, g_secIndex, sum_unique);
-		if(sum_unique == LDATA_FRAME_NUM_IN_SECTOR)
-		{
-			laddSvLearnImg(learnDataPtr);
-		}
+		ret = ladd_process_save_unique_data(g_bankIndex, g_secIndex, g_sum_unique);
 	break;
 	case PROCESS_NEW_SECTION:
 		ret = ladd_process_new_section(g_bankIndex, g_secIndex, learnDataPtr);
 	break;
 	case PROCESS_NORMAL:
-		// frmAddr = lcalc_FrameAddr(g_bankIndex, g_secIndex, g_frmIndex);
-		// ret = ladd_data(frmAddr, learnDataPtr);
+		// Do nothing	
 	break;
 	default:
 		// Do nothing
 	break;
 	}
-	 
-	// Store data
-	frmAddr = lcalc_FrameAddr(g_bankIndex, g_secIndex, g_frmIndex);
-	ret = ladd_data(frmAddr, learnDataPtr);
-	if(ret == TRUE)
+	
+	if(g_sum_unique < LDATA_FRAME_NUM_IN_SECTOR)
 	{
-		lupdate_NextFrameLocation(0, 0, 0);	// auto update next location
-		if(g_add_first_frame == 0)
-			lupdate_NotTheLatestFrame(learnDataPtr); // Change RegStatus 0xFFFC -> 0xFFF8
-		else g_add_first_frame = 0; // Clear for first frame
+		// Store data
+		frmAddr = lcalc_FrameAddr(g_bankIndex, g_secIndex, g_frmIndex);
+		ret = ladd_data(frmAddr, learnDataPtr);
+		if(ret == TRUE)
+		{
+			// auto update next location
+			lupdate_NextFrameLocation(0, 0, 0);
+			// Change RegStatus 0xFFFC -> 0xFFF8
+			if(g_add_first_frame == 0)
+				lupdate_NotTheLatestFrame(learnDataPtr); 
+			else g_add_first_frame = 0; // Clear for first frame
+			// Clear input
+			learnDataPtr = NULL;	
+		}
+	}else
+	{
+		// Skip adding new data
+		return TRUE;
 	}
-
+		
 	return ret;
 }
 #endif /* FWK_CFG_LEARN_DATA_ENABLE */

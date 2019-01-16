@@ -278,13 +278,13 @@ static SvLearnData* lcreateLearnData(int pos)
     }
     else if(i >= LDATA_FINGER_ORANGE_1_INDEX && i <= LDATA_FINGER_ORANGE_19_INDEX)
     {
-    	learnDataPtr->RegRnum = 19;
+    	learnDataPtr->RegRnum = 3;
     	learnDataPtr->RegYnum = i-LDATA_FINGER_ORANGE_1_INDEX;
 		learnDataPtr->RegID = i-LDATA_FINGER_ORANGE_1_INDEX + 0x1900;	// ORANGE ID
     }else // i == LDATA_FINGER_RED_1_INDEX
     {
     	learnDataPtr->RegRnum = 0;//20;
-    	learnDataPtr->RegYnum = (pos%20);
+    	learnDataPtr->RegYnum = 0;
 		learnDataPtr->RegID = 7;	// RED ID
     }
     return learnDataPtr;
