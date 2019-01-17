@@ -142,7 +142,7 @@ typedef enum {
     LDATA_NOT_YET_STS   = 0xFFFF,  //// Not yet
     LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
     LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data (Newest)
-    LDATA_NOT_LATEST_STS= 0xFFF8, //// Not latest data. Old register
+    LDATA_NOT_LATEST_STS= 0xF0F8, //// Not latest data. Old register , (!) 0xFFF8 cause error
 	LDATA_CLEARED_STS   = 0x0000,  //// Cleared
     
     LDATA_UNKNOW_STS
@@ -166,7 +166,7 @@ typedef struct InfoLearningBankTableSt {
     UB BankNum[LDATA_REG_FIGURE_NBR_MAX];
     UB SectionNum[LDATA_REG_FIGURE_NBR_MAX];
     UB FrameNum[LDATA_REG_FIGURE_NBR_MAX];
-    UB Num[LDATA_REG_FIGURE_NBR_MAX];
+    UW Num[LDATA_REG_FIGURE_NBR_MAX];
 	UH ID[LDATA_REG_FIGURE_NBR_MAX];
 }InfoLearnInBankM;
 
