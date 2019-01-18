@@ -99,7 +99,7 @@
 										
 #define CTRL_FLAG_SIZE					(sizeof(UH))
 #define CTRL_FLAG_OFFSET				(MI_SECTOR_SIZE - CTRL_FLAG_SIZE)
-#define THE_OLDEST_SECTION				(0x0001)
+// #define THE_OLDEST_SECTION				(0x0001)
 
 #define BANK_MAX_NUM                    8
 #define BANK0                           (UB)LDATA_BIT(0)	// 0x01
@@ -142,12 +142,17 @@ typedef enum {
     LDATA_NOT_YET_STS   = 0xFFFF,  //// Not yet
     LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
     LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data (Newest)
-    LDATA_NOT_LATEST_STS= 0xF0F8, //// Not latest data. Old register , (!) 0xFFF8 cause error
+    LDATA_NOT_LATEST_STS= 0x0008, //// Not latest data. Old register , (!) 0xFFF8 cause error
 	LDATA_CLEARED_STS   = 0x0000,  //// Cleared
     
     LDATA_UNKNOW_STS
 } ldataRegStatusType;	//// Registraton status
 
+typedef enum {
+	LDATA_CTRL_FLG_OLDEST = 0x0001,
+	LDATA_CTRL_FLG_NORMAL = 0x0000,
+	LDATA_CTRL_FLG_ERASED = 0xFFFF, // Read only, cannot write to Flash Memory
+} ldataCtrlFlagType;
 /******************************************************************************/
 /*************************** Structures Definitions ***************************/
 /******************************************************************************/
