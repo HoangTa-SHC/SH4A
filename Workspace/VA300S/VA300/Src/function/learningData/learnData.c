@@ -235,12 +235,12 @@ static struct fast_test_ST
 	// {	XXXXXXXXXX,				XXXXXXXXXX,						B3S0F1		},			// Store 2nd data
 	{	B3S0F2,						B3S0F18-1,						B3S0F18		},			// Store full Section0
 	// {	XXXXXXXXXX,				XXXXXXXXXX,						B3S1F0		},			// Store 1st data Section1  , RingBuffer Bank3 Section0:0x0001 Section1:0xFFFF
-	{	B3S1F0,				B3S3F2-1,						B3S3F2		},					// Store 2 unique data in 1 Section Bank=3 Section=3 Frame=1,3 (2nd, 4th)
-	// {	XXXXXXXXXX,				XXXXXXXXXX,						B3S3F4		},			// Store 2 unique data in 1 Section
-	{	B3S3F4,				B3S5F0-1,						B3S5F0		},					// Store 19 unique data in 1 Section
+	{	B3S1F0,				B3S3F1-1,						B3S3F1		},					// Store 2 unique data in 1 Section Bank=3 Section=3 Frame=1,3 (2nd, 4th)
+	// {	XXXXXXXXXX,				XXXXXXXXXX,						B3S3F3		},			// Store 2 unique data in 1 Section
+	{	B3S3F3,				B3S5F0-1,						B3S5F0		},					// Store 19 unique data in 1 Section
 	// {	XXXXXXXXXX,				XXXXXXXXXX,						B3S5F18		},		    // Store 19 unique data in 1 Section
-	{	B3S6F0,				B3S8F2-1,						B3S8F2		},					// Store 1 unique data in 1 Section , Bank=3 Section=7 Frame=2
-	{	B3S8F2,				B3S255F18-1,					B3S255F18		},		// Store full Bank3
+	{	B3S6F0,				B3S8F1-1,						B3S8F1		},					// Store 1 unique data in 1 Section , Bank=3 Section=7 Frame=2
+	{	B3S8F1,				B3S255F18-1,					B3S255F18		},		// Store full Bank3
 	{	B4S0F0,				B7S255F18-1,					B7S255F18		},		// Store full Bank7 , RingBuffer
 	// {	XXXXXXXXXX,				XXXXXXXXXX,		(FULL_ALL_BANK+B3S0F0)		},	// RingBuffer: 2. ctrl area of Bank3 Section0:0xFFFF Section1:0x0001
 	{	(FULL_ALL_BANK+B3S0F0),	(FULL_ALL_BANK+B3S2F0)-1,	(FULL_ALL_BANK+B3S2F0)		},	// Check 2 unique data in 1 Section
@@ -456,7 +456,21 @@ int SearchLearnImg(UH SearchNum, UH* SearchResult[20][3])
 
     return (result ? 0 : 1);
 }
+/////////////////////////////////////////////////////////////
+void getOldestSection(UW *bankIndex, UW *secIndex, UW *ctrl_flg)
+{
+	*bankIndex = g_oldest_bank_index;
+	*secIndex = g_oldest_section_index;
+	ldat_rd_CtrlFlgByIdx(g_oldest_bank_index, g_oldest_section_index, ctrl_flg);
+}
 
+void getCurrentCursor(UW *bankIndex, UW *secIndex, UW *frmIndex)
+{
+	*bankIndex = g_bankIndex;
+	*secIndex = g_secIndex;
+	*frmIndex = g_frmIndex;
+}
+/////////////////////////////////////////////////////////////
 /******************************************************************************/
 /* Function Name: UpdateLearnInfo                                             */
 /* Description  : This function will update InfoLearnInBankM by searching data*/
@@ -512,6 +526,7 @@ static void linitInfoLearningBankTable(void)
 
 /*
  * Call after InitBankArea() to initialize g_start_bank_index
+ * Call after Remove all Sections
  */
 static int linitOldestSection(void)
 {
@@ -757,7 +772,7 @@ static void ldat_rm_Frm(UW frmAddr)
 	
 	while( n ) {
 		n--;
-		lmem_wr_hw((UW)puhAddr, 0x0000); // Cannot write 0xFFFF to Flash Memory
+		lmem_wr_hw((UW)puhAddr, LDATA_CLEARED_STS); // Cannot write 0xFFFF to Flash Memory
 		puhAddr++;
 	}
 	
@@ -1139,7 +1154,7 @@ static void lupdateLearnInfo(void)
 static void lshift_oldest_section(void)
 {
 	UW cur_bankIndex, cur_secIndex, next_bankIndex, next_secIndex;
-	if(g_bankIndex == g_oldest_bank_index && g_secIndex == g_oldest_section_index)
+	if(g_bankIndex == g_oldest_bank_index && g_secIndex == g_oldest_section_index && g_frmIndex == 0)
 	{
 		cur_bankIndex = g_oldest_bank_index;
 		cur_secIndex = g_oldest_section_index;
@@ -1310,11 +1325,11 @@ static BOOL ladd_process_new_section(UW bankIndex, UW secIndex, SvLearnData* lea
 		// return FALSE;
 
 	// Shift 0x0001 to next Section
-	lshift_oldest_section();
+	// lshift_oldest_section();
 	// Clear all frame in current Section
 	cur_secAddr = lcalc_SectionAddr(bankIndex, secIndex);
 	lmem_rm_sec(cur_secAddr);
-
+	
 	return TRUE;
 }
 
@@ -1327,6 +1342,8 @@ static BOOL ladd_process_start(void)
 	
 	// Remove all data
 	ret = lmem_rm_all();
+	// Set the oldest Section for Ring Buffer
+	linitOldestSection();
 	
 	return ret;
 }
@@ -1393,7 +1410,7 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 
 	cur_frmIndex = 0;
 	// Shift 0x0001 to next Section
-	lshift_oldest_section();
+	// lshift_oldest_section();
 	// Remove data in current Section
 	ldat_rm_SecByIdx(cur_bankIndex, cur_secIndex);
 	lcalc_nextSection(cur_bankIndex, cur_secIndex, &next_bankIndex, &next_secIndex);
@@ -1407,6 +1424,7 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 			if(cur_frmIndex == LDATA_FRAME_NUM_IN_SECTOR)
 			{
 				lupdate_NextFrameLocation(0, 0, 0);	// update for frame 19th
+				lshift_oldest_section(); // Shift 0x0001 to next Section
 			}
 			else
 			lupdate_NextFrameLocation(cur_bankIndex, cur_secIndex, cur_frmIndex);	// update each time moving data
@@ -1436,7 +1454,6 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	// Check 1st Frame
 	if(g_add_first_frame == 1)
 	{
-		linitOldestSection();
 		// g_add_first_frame = 0;
 		process_flag = PROCESS_1ST_DATA;
 	}
@@ -1488,6 +1505,8 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 			learnDataPtr = NULL;
 			// auto update next location
 			lupdate_NextFrameLocation(0, 0, 0);
+			// Shift 0x0001 to next Section
+			lshift_oldest_section();
 		}
 	}else
 	{

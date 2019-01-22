@@ -143,15 +143,15 @@ typedef enum {
     LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
     LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data (Newest)
     LDATA_NOT_LATEST_STS= 0x0008, //// Not latest data. Old register , (!) 0xFFF8 cause error
-	LDATA_CLEARED_STS   = 0x0000,  //// Cleared
+	LDATA_CLEARED_STS   = 0x0B0B,  //// Cleared
     
     LDATA_UNKNOW_STS
 } ldataRegStatusType;	//// Registraton status
 
 typedef enum {
-	LDATA_CTRL_FLG_OLDEST = 0x0001,
-	LDATA_CTRL_FLG_NORMAL = 0x0000,
-	LDATA_CTRL_FLG_ERASED = 0xFFFF, // Read only, cannot write to Flash Memory
+	LDATA_CTRL_FLG_OLDEST = 0x0001, // Oldest Section
+	LDATA_CTRL_FLG_NORMAL = 0x0A0A, // Occupied Section
+	LDATA_CTRL_FLG_ERASED = 0xFFFF, // Read only, cannot write to Flash Memory; Not occupied Section
 } ldataCtrlFlagType;
 /******************************************************************************/
 /*************************** Structures Definitions ***************************/
@@ -192,6 +192,17 @@ int InitEmployeeList(void);
 void get_InfoLearnInBankM(int rNum, int yNum, UB* BankNum, UB* SectionNum, UB* FrameNum, UB* Num);
 #endif
 
+/////////////////////////////////////////////////////////////
+/*
+ * Get location of the oldest Section
+ */
+void getOldestSection(UW *bankIndex, UW *secIndex, UW *ctrl_flg);
+
+/*
+ * Get location of next added learning data
+ */
+void getCurrentCursor(UW *bankIndex, UW *secIndex, UW *frmIndex);
+/////////////////////////////////////////////////////////////
 #endif /* FWK_CFG_LEARN_DATA_ENABLE */
 #endif /* LEARN_DATA_H */
 /*************************** The End ******************************************/

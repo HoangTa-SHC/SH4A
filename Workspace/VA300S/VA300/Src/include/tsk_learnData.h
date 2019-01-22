@@ -57,26 +57,29 @@
 #define BANK_OFFSET 3
 #endif
 
-#define N_FRM_PER_SECT      (19)
+#define N_FRM_PER_SECT      (LDATA_FRAME_NUM_IN_SECTOR)
 #define N_SECT_PER_BANK     (MI_NUM_SEC_IN_BANK)	// 256
 #define N_FRM_PER_BANK      (N_FRM_PER_SECT*N_SECT_PER_BANK)//(19*256)
 
-// B[3:7]S[0:255]F[0:18]
+// B[3:7]S[0:255]F[0:18]	(n_frames)
 #define B3S0F0	(1)
 #define B3S0F1	(2)
 #define B3S0F2	(3)
 #define B3S0F18	(N_FRM_PER_SECT)
 #define B3S1F0	(N_FRM_PER_SECT*1+1)
-#define B3S2F0	(N_FRM_PER_SECT*2+1)	// check 2 unique data
+#define B3S2F0	(N_FRM_PER_SECT*2+1)	// (+FULL_ALL_BANK) check 2 unique data 19*2+1 = 39
+#define B3S2F2	(N_FRM_PER_SECT*2+3)	// (+FULL_ALL_BANK) reset after clear Section and save 2 unique data + 1 new data
 #define B3S3F0	(N_FRM_PER_SECT*3+1)	
-#define B3S3F2	(N_FRM_PER_SECT*3+2)	// Store 2 unique data
-#define B3S3F4	(N_FRM_PER_SECT*3+4)	// Store 2 unique data
-#define B3S4F0	(N_FRM_PER_SECT*4+1)	// Check 19 unique data
+#define B3S3F1	(N_FRM_PER_SECT*3+2)	// Store 2 unique data
+#define B3S3F3	(N_FRM_PER_SECT*3+4)	// Store 2 unique data
+#define B3S4F0	(N_FRM_PER_SECT*4+1)	// (+FULL_ALL_BANK) Check 19 unique data 19*4+1 = 77
+#define B3S5F0	(N_FRM_PER_SECT*5+1)	// (+FULL_ALL_BANK) reset after clear Section and save 19 unique data + 1 new data
 #define B3S5F0	(N_FRM_PER_SECT*5+1)	// Store 19 unique data
-#define B3S5F18	(N_FRM_PER_SECT*5+19)
+#define B3S5F18	(N_FRM_PER_SECT*5+19)	// Store 19 unique data
 #define B3S6F0	(N_FRM_PER_SECT*6+1)
-#define B3S7F0	(N_FRM_PER_SECT*7+1) 	// Check 1 unique data
-#define B3S8F2	(N_FRM_PER_SECT*8+2)	// Store 1 unique data
+#define B3S7F0	(N_FRM_PER_SECT*7+1) 	// (+FULL_ALL_BANK) Check 1 unique data
+#define B3S7F1	(N_FRM_PER_SECT*7+2)	// (+FULL_ALL_BANK) reset after clear Section and save 1 unique data + 1 new data
+#define B3S8F1	(N_FRM_PER_SECT*8+2)	// Store 1 unique data
 #define B3S255F18 (N_FRM_PER_BANK)		/// 256*19
 #define B4S0F0	(N_FRM_PER_BANK+1)
 #define B7S255F18 (N_FRM_PER_BANK*N_BANK_INIT) /// (256*19)*5
@@ -85,8 +88,9 @@
 
 
 // Unique data position
-#define LDATA_FINGER_YELLOW_1_POS (B3S3F2)
-#define LDATA_FINGER_YELLOW_2_POS (B3S3F4)
+#define LDATA_FINGER_RED_1_POS (0)
+#define LDATA_FINGER_YELLOW_1_POS (B3S3F1)
+#define LDATA_FINGER_YELLOW_2_POS (B3S3F3)
 #define LDATA_FINGER_ORANGE_1_POS ((B3S5F0)+0)
 #define LDATA_FINGER_ORANGE_2_POS ((B3S5F0)+1)
 #define LDATA_FINGER_ORANGE_3_POS ((B3S5F0)+2)
@@ -106,7 +110,7 @@
 #define LDATA_FINGER_ORANGE_17_POS ((B3S5F0)+16)
 #define LDATA_FINGER_ORANGE_18_POS ((B3S5F0)+17)
 #define LDATA_FINGER_ORANGE_19_POS ((B3S5F0)+18)
-#define LDATA_FINGER_GREEN_1_POS (B3S8F2)
+#define LDATA_FINGER_GREEN_1_POS (B3S8F1)
 /******************************************************************************/
 /************************ Enumerations Definitions ****************************/
 /******************************************************************************/
@@ -143,6 +147,12 @@ enum{
 	LDATA_FINGER_INDEX_TOTAL
 };
 
+enum {
+	GREEN_ID = 0x0100 + 4,
+	YELLOW_ID = LDATA_FINGER_YELLOW_1_INDEX + 0x0200,
+	ORANGE_ID = LDATA_FINGER_ORANGE_1_INDEX + 0x1900,
+	RED_ID = 7,
+};
 /////////////////////////////////
 // Test case
 /////////////////////////////////
@@ -155,7 +165,8 @@ typedef struct SvLearnResult_ST
 	UH RegStatus;
 	UH RegRnum;
 	UH RegYnum;
-	UH RegImg1; // first 1-byte
+	UH RegID;
+	UB RegImg1; // first 1-byte
 }SvLearnResult;
 
 typedef struct SearchLearnDataResult_ST
