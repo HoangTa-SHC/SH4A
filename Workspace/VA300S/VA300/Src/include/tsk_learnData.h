@@ -57,7 +57,7 @@
 #define BANK_OFFSET 3
 #endif
 
-#define N_FRM_PER_SECT      (19)
+#define N_FRM_PER_SECT      (LDATA_FRAME_NUM_IN_SECTOR)
 #define N_SECT_PER_BANK     (MI_NUM_SEC_IN_BANK)	// 256
 #define N_FRM_PER_BANK      (N_FRM_PER_SECT*N_SECT_PER_BANK)//(19*256)
 
@@ -85,6 +85,7 @@
 
 
 // Unique data position
+#define LDATA_FINGER_RED_1_POS (0)
 #define LDATA_FINGER_YELLOW_1_POS (B3S3F2)
 #define LDATA_FINGER_YELLOW_2_POS (B3S3F4)
 #define LDATA_FINGER_ORANGE_1_POS ((B3S5F0)+0)
@@ -143,6 +144,12 @@ enum{
 	LDATA_FINGER_INDEX_TOTAL
 };
 
+enum {
+	GREEN_ID = 0x0100 + 4,
+	YELLOW_ID = LDATA_FINGER_YELLOW_1_INDEX + 0x0200,
+	ORANGE_ID = LDATA_FINGER_ORANGE_1_INDEX + 0x1900,
+	RED_ID = 7,
+};
 /////////////////////////////////
 // Test case
 /////////////////////////////////
@@ -155,7 +162,8 @@ typedef struct SvLearnResult_ST
 	UH RegStatus;
 	UH RegRnum;
 	UH RegYnum;
-	UH RegImg1; // first 1-byte
+	UH RegID;
+	UB RegImg1; // first 1-byte
 }SvLearnResult;
 
 typedef struct SearchLearnDataResult_ST

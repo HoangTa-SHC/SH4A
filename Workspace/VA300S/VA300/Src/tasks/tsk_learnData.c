@@ -87,7 +87,7 @@ enum{
 /*************************** Functions Prototype ******************************/
 /******************************************************************************/
 static int lcalc_FingerDataIndex(int pos);
-static UH lFingerDataImg(int pos);
+static UB lFingerDataImg(int pos);
 static SvLearnData* lcreateLearnData(int pos);
 static BOOL lmiReadHword(UW addr, UH* halfWord);
 static BOOL lmireadWord(UW addr, UW* Word);
@@ -106,8 +106,8 @@ static BOOL lcheck_RegStatus(UH checked_val);
 static BOOL lcheck_RegRnum(UH checked_val);
 static BOOL lcheck_RegYnum(UH checked_val);
 static BOOL lcheck_RegImg1(UH checked_val, UH expected_val);
-static BOOL lcheck_SvLearnDataResult(SvLearnResult* ld ,UH data);
-static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW bank_index_cur, UW section_index_cur);
+static BOOL lcheck_SvLearnDataResult(SvLearnResult* ld ,UB data);
+static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW erased_bank_index, UW erased_section_index);
 static BOOL lcheck_RemoveAllData(UW bank_index, UW section_index);
 static BOOL lcheck_notify_data(int notifyCase);
 static BOOL lcheck_SearchLearnImg(int index, UH SearchNum, int expected_val);
@@ -133,7 +133,7 @@ static const T_CTSK ctsk_learn_data = {TA_HLNG, NULL, (FP)TaskLearnData, TSK_PRI
 
 //static volatile SvLearnData ldRegFingerRed, ldRegFingerBlue, ldRegFingerGreen[4];
 static volatile SvLearnData g_LearnDataArray[LDATA_FINGER_INDEX_TOTAL];
-static volatile UH g_FingerDataImgArray[LDATA_FINGER_INDEX_TOTAL] = {
+static volatile UB g_FingerDataImgArray[LDATA_FINGER_INDEX_TOTAL] = {
 	/* default data */
 	0x11,                  // LDATA_FINGER_RED_1_INDEX
 	0x22,                  // LDATA_FINGER_BLUE_1_INDEX
@@ -180,33 +180,36 @@ static SearchLearnDataResult g_SearchLearnDataResult[TC_SEARCH_TOTAL];
 /******************************************************************************/
 /*************************** Local Functions **********************************/
 /******************************************************************************/
-
-// #if defined(DEBUG)
- // #define DEBUG_PRINT(fmt, args...) printf("DEBUG: %s:%d:%s(): " fmt, __FILE__, __LINE__, __func__, ##args)
-// #else
- // #define DEBUG_PRINT(x)//(fmt, args...) /* Don't do anything in release builds */
-// #endif
+/******************************************************************************/
+/*************************** Debug  *******************************************/
+/******************************************************************************/
 #define DEBUG
 #ifdef DEBUG
-#define DBG_LINE_TOTAL 120
+#define DBG_LINE_TOTAL 180
 static char log_table[DBG_LINE_TOTAL][80];
 static void dbg_init(void)
 {
 	memset(log_table, 0, sizeof(log_table));
 }
-#define DBG_PRINT0(msg)						dbg_print(msg, 0, 0, 0, 0, 0, 0)
-#define DBG_PRINT1(msg, arg1)				dbg_print(msg, arg1, 0, 0, 0, 0, 0)
-#define DBG_PRINT2(msg, arg1, arg2)			dbg_print(msg, arg1, arg2, 0, 0, 0, 0)
-#define DBG_PRINT3(msg, arg1, arg2, arg3)	dbg_print(msg, arg1, arg2,arg3, 0, 0, 0)
-#define DBG_PRINT4(msg, arg1, arg2, arg3, arg4)				dbg_print(msg, arg1, arg2, arg3, arg4, 0, 0)
-#define DBG_PRINT5(msg, arg1, arg2, arg3, arg4, arg5)		dbg_print(msg, arg1, arg2, arg3, arg4, arg5, 0)
-#define DBG_PRINT6(msg, arg1, arg2, arg3, arg4, arg5, arg6)	dbg_print(msg, arg1, arg2, arg3, arg4, arg5, arg6)
-static void dbg_print(char* msg, UW arg1, UW arg2, UW arg3, UW arg4, UW arg5, UW arg6)
+#define DBG_PRINT0(msg)						dbg_print(msg, 0, 0, 0, 0, 0, 0, 0, 0)
+#define DBG_PRINT1(msg, arg1)				dbg_print(msg, arg1, 0, 0, 0, 0, 0, 0, 0)
+#define DBG_PRINT2(msg, arg1, arg2)			dbg_print(msg, arg1, arg2, 0, 0, 0, 0, 0, 0)
+#define DBG_PRINT3(msg, arg1, arg2, arg3)	dbg_print(msg, arg1, arg2,arg3, 0, 0, 0, 0, 0)
+#define DBG_PRINT4(msg, arg1, arg2, arg3, arg4)				dbg_print(msg, arg1, arg2, arg3, arg4, 0, 0, 0, 0)
+#define DBG_PRINT5(msg, arg1, arg2, arg3, arg4, arg5)		dbg_print(msg, arg1, arg2, arg3, arg4, arg5, 0, 0, 0)
+#define DBG_PRINT6(msg, arg1, arg2, arg3, arg4, arg5, arg6)	dbg_print(msg, arg1, arg2, arg3, arg4, arg5, arg6, 0, 0)
+#define DBG_PRINT7(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7)		dbg_print(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, 0)
+#define DBG_PRINT8(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)	dbg_print(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
+static void dbg_print(char* msg, UW arg1, UW arg2, UW arg3, UW arg4, UW arg5, UW arg6, UW arg7, UW arg8)
 {
-	static i = 0;
+	static int i = 0;
 	if(i < DBG_LINE_TOTAL)
 	{
-		sprintf((void*)log_table[i++], (void*)msg, arg1, arg2, arg3, arg4, arg5, arg6);
+		sprintf((void*)log_table[i++], (void*)msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+	}else
+	{
+		i = 0;
+		sprintf((void*)log_table[i++], (void*)msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 	}
 }
 #else
@@ -217,6 +220,8 @@ static void dbg_print(char* msg, UW arg1, UW arg2, UW arg3, UW arg4, UW arg5, UW
 #define DBG_PRINT4(msg, arg1, arg2, arg3, arg4)
 #define DBG_PRINT5(msg, arg1, arg2, arg3, arg4, arg5)
 #define DBG_PRINT6(msg, arg1, arg2, arg3, arg4, arg5, arg6)
+#define DBG_PRINT7(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+#define DBG_PRINT8(msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8)
 #endif
 
 static int lcalc_FingerDataIndex(int pos)
@@ -247,13 +252,13 @@ static int lcalc_FingerDataIndex(int pos)
 	case LDATA_FINGER_ORANGE_19_POS :  {index = LDATA_FINGER_ORANGE_19_INDEX;   break;}
 	case LDATA_FINGER_GREEN_1_POS   :  {index = LDATA_FINGER_GREEN_1_INDEX;     break;}
 	//case LDATA_FINGER_BLUE_1_POS   :  {index = LDATA_FINGER_BLUE_1_INDEX;     break;}
-	//case LDATA_FINGER_RED_1_POS :
+	case LDATA_FINGER_RED_1_POS :
 	default                         :  {index = LDATA_FINGER_RED_1_INDEX;       break;}
 	};
 	return index;
 }
 
-static UH lFingerDataImg(int pos)
+static UB lFingerDataImg(int pos)
 {
 	return g_FingerDataImgArray[lcalc_FingerDataIndex(pos)];
 }
@@ -499,7 +504,9 @@ static void lchangeToSvLearnResult(SvLearnResult* ld, SvLearnData* lDataPtr)
 	ld->RegStatus = lDataPtr->RegStatus;
 	ld->RegRnum = lDataPtr->RegRnum;
 	ld->RegYnum = lDataPtr->RegYnum;
-	ld->RegImg1 = (UW)(lDataPtr->RegImg1[3] << 24) | (UW)(lDataPtr->RegImg1[2] << 16) | (UW)(lDataPtr->RegImg1[1] << 8) | (UW)(lDataPtr->RegImg1[0] << 0);
+	ld->RegID   = lDataPtr->RegID;
+	// ld->RegImg1 = (UW)(lDataPtr->RegImg1[3] << 24) | (UW)(lDataPtr->RegImg1[2] << 16) | (UW)(lDataPtr->RegImg1[1] << 8) | (UW)(lDataPtr->RegImg1[0] << 0);
+	ld->RegImg1 = lDataPtr->RegImg1[0]; // 1st byte
 }
 
 static BOOL lcheck_BankIndex(UW bank_index)
@@ -539,27 +546,28 @@ static BOOL lcheck_RegYnum(UH checked_val)
 
 static BOOL lcheck_RegImg1(UH checked_val, UH expected_val)
 {
+	// DBG_PRINT2("[lcheck_RegImg1]: 0x%0.2x (expected 0x%0.2x)", checked_val, expected_val);
 	return checked_val == expected_val;
 }
 
-static BOOL lcheck_SvLearnDataResult(SvLearnResult* ld ,UH data)
+static BOOL lcheck_SvLearnDataResult(SvLearnResult* ld ,UB data)
 {	
 	BOOL result;
 	result = FALSE;
 	result = lcheck_RegStatus(ld->RegStatus); // 0xFFFC : Registered (Newest)
-	if(result == TRUE) 
+	// if(result == TRUE) 
 	{
-		result = lcheck_RegRnum(ld->RegRnum);
+		result &= lcheck_RegRnum(ld->RegRnum);
 	}
 	
-	if(result == TRUE) 
+	// if(result == TRUE) 
 	{
-		result = lcheck_RegYnum(ld->RegYnum);
+		result &= lcheck_RegYnum(ld->RegYnum);
 	}
 	
-	if(result == TRUE) 
+	// if(result == TRUE) 
 	{
-		result = lcheck_RegImg1(ld->RegImg1, data);
+		result &= lcheck_RegImg1((UB)ld->RegImg1, data);
 	}
 	
 	return result;
@@ -576,8 +584,8 @@ static BOOL lcheck_SvLearnDataAt(UW bank_index, UW section_index, UW frame_index
 	ld_result = &g_learnDataResult;
 	lreadFrame(bank_index, section_index, frame_index, lDataPtr);
 	lchangeToSvLearnResult(ld_result, lDataPtr);
-	result = lcheck_SvLearnDataResult(ld_result, data);
-	
+	result = lcheck_SvLearnDataResult(ld_result, (UB)data);
+	DBG_PRINT8("Atual result {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", bank_index, section_index, frame_index, lDataPtr->RegRnum, lDataPtr->RegYnum, lDataPtr->RegID, lDataPtr->RegStatus, lDataPtr->RegImg1[0]);
 	return result;
 }
 
@@ -598,12 +606,14 @@ static BOOL lcheck_SvLearnDataAtIsRemoved(UW bank_index, UW section_index, UW fr
 	return result;
 }
 
-static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW bank_index_cur, UW section_index_cur)
+static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW erased_bank_index, UW erased_section_index)
 {
-	UH ctrl_flg_current, ctrl_flg_oldest;
-	ctrl_flg_current = lread_CtrlFlg(bank_index_cur, section_index_cur);
+	UH ctrl_flg_erased, ctrl_flg_oldest;
+	ctrl_flg_erased = lread_CtrlFlg(erased_bank_index, erased_section_index);
 	ctrl_flg_oldest = lread_CtrlFlg(bank_index_oldest, section_index_oldest);
-	if(ctrl_flg_current == 0xFFFF && ctrl_flg_oldest == 0x0001) // 0xFFFF: old data, 0x0001: the oldest data
+	DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", erased_bank_index, erased_section_index, ctrl_flg_erased, LDATA_CTRL_FLG_ERASED);
+	DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", bank_index_oldest, section_index_oldest, ctrl_flg_oldest, LDATA_CTRL_FLG_OLDEST);
+	if(ctrl_flg_erased == LDATA_CTRL_FLG_ERASED && ctrl_flg_oldest == LDATA_CTRL_FLG_OLDEST)
 	{
 		return TRUE;
 	}
@@ -612,47 +622,56 @@ static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW ba
 
 static BOOL lcheck_notify_data(int notifyCase)
 {
-	UH expected_data;
+	UB expected_data;
+	SvLearnData *expected_ldPtr;
 	BOOL ret = FALSE;
 	
 	switch (notifyCase){
 	case 1:
 	{
 		// Check if unique data 1 was moved to 1st frame of section
-		expected_data = g_FingerDataImgArray[LDATA_FINGER_GREEN_1_INDEX];
-		ret = lcheck_SvLearnDataAt(3,7,0, expected_data);
-		DBG_PRINT2("[TC_UNIQUE_ADD_01] Check 1 unique data at B3S7F0: %d (expected 0x%0.2x)", ret, expected_data);
+		DBG_PRINT0("[TC_UNIQUE_ADD_01] Check if 1 unique data was moved to B3S7");
+
+		expected_ldPtr = lcreateLearnData(LDATA_FINGER_GREEN_1_POS);
+		ret = lcheck_SvLearnDataAt(3,7,0, expected_ldPtr->RegImg1[0]);
+		DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 7, 0, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+		// DBG_PRINT1("[TC_UNIQUE_ADD_01] Result: %d", ret);
 		
 		// if(ret == TRUE)
-		{
-			// Check if new data was stored at 2nd frame of section
-			expected_data = g_FingerDataImgArray[LDATA_FINGER_RED_1_INDEX];
-			ret = lcheck_SvLearnDataAt(3,7,1, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_ADD_01] Check new data at B3S7F1: %d (expected 0x%0.2x)", ret, expected_data);
+		{			
+			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
+			ret = lcheck_SvLearnDataAt(3,7,1, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 7, 1, expected_ldPtr->RegRnum, 	expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT1("[TC_UNIQUE_ADD_01] Check new data at B3S7F1: %d", ret);
 		}
 		break;
 	}
 	case 2:
 	{
 		// Check if unique data 1 was moved to 1st frame of section
-		expected_data = g_FingerDataImgArray[LDATA_FINGER_YELLOW_1_INDEX];
-		ret = lcheck_SvLearnDataAt(3,2,0, expected_data);
-		DBG_PRINT2("[TC_UNIQUE_ADD_02] Check 2 unique data at B3S2F0: %d (expected 0x%0.2x)", ret, expected_data);
+		DBG_PRINT0("[TC_UNIQUE_ADD_02] Check if 2 unique data was moved to B3S2");
+		
+		expected_ldPtr = lcreateLearnData(LDATA_FINGER_YELLOW_1_POS);
+		ret = lcheck_SvLearnDataAt(3,2,0, expected_ldPtr->RegImg1[0]);
+		DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 2, 0, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+		// DBG_PRINT1("[TC_UNIQUE_ADD_02] Result: %d", ret);
 		
 		// if(ret == TRUE)
 		{
-			// Check if unique data 2 was moved to 2nd frame of section
-			expected_data = g_FingerDataImgArray[LDATA_FINGER_YELLOW_2_INDEX];
-			ret = lcheck_SvLearnDataAt(3,2,1, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_ADD_02] Check 2 unique data at B3S2F1: %d (expected 0x%0.2x)", ret, expected_data);
+			// Check if unique data 2 was moved to 2nd frame of section		
+			expected_ldPtr = lcreateLearnData(LDATA_FINGER_YELLOW_2_POS);
+			ret = lcheck_SvLearnDataAt(3,2,1, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 2, 1, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT1("[TC_UNIQUE_ADD_02] Result: %d", ret);
 		}
 		
 		// if(ret == TRUE)
 		{
-			// Check if new data was stored at 3rd frame of section
-			expected_data = g_FingerDataImgArray[LDATA_FINGER_RED_1_INDEX];
-			ret = lcheck_SvLearnDataAt(3,2,2, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_ADD_02] Check new data at B3S2F2: %d (expected 0x%0.2x)", ret, expected_data);	
+			// Check if new data was stored at 3rd frame of section		
+			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
+			ret = lcheck_SvLearnDataAt(3,2,2, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 2, 2, expected_ldPtr->RegRnum, 	expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT1("[TC_UNIQUE_ADD_02] Check new data at B3S2F2: %d", ret);
 		}
 		break;
 	}
@@ -661,20 +680,23 @@ static BOOL lcheck_notify_data(int notifyCase)
 		// Check if all 19 unique data was moved to current section
 		// from Bank3 Section5 to Bank3 Section4
 		int i;
+		DBG_PRINT0("[TC_UNIQUE_ADD_19] Check if 19 unique data were moved to B3S4");
 		for(i = 0; i<19; i++)
-		{
-			expected_data = g_FingerDataImgArray[LDATA_FINGER_ORANGE_1_INDEX+i];
-			ret = lcheck_SvLearnDataAt(3,4,i, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_ADD_19] Check 19 unique data at B3S4: %d (expected 0x%0.2x)", ret, expected_data);
+		{			
+			expected_ldPtr = lcreateLearnData(LDATA_FINGER_ORANGE_1_POS+i);
+			ret = lcheck_SvLearnDataAt(3,4,i, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 4, i, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT1("[TC_UNIQUE_ADD_19] Result: %d", ret);
 		}
 			
 		// if(ret == TRUE)
 		{
 			// Check if new data was stored at next Section
-			// Bank3 Section5 Frame0
-			expected_data = g_FingerDataImgArray[LDATA_FINGER_RED_1_INDEX];
-			ret = lcheck_SvLearnDataAt(3,5,0, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_ADD_19] Check new data at B3S5F0: %d (expected 0x%0.2x)", ret, expected_data);
+			// Bank3 Section5 Frame0					
+			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
+			ret = lcheck_SvLearnDataAt(3,5,0, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 5, 0, expected_ldPtr->RegRnum, 	expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			DBG_PRINT1("[TC_UNIQUE_ADD_19] Check new data at B3S5F0: %d", ret);
 		}
 		break;
 	}
@@ -737,7 +759,7 @@ static int TC_ADD_FUNC(void)
     int result;
     SvLearnData *learnDataPtr;
 	int ret;
-	UH expected_data;
+	UB expected_data;
 			
     while(TRUE)
     {
@@ -784,8 +806,9 @@ static int TC_RING_FUNC(void)
 {
     int result;
     SvLearnData *learnDataPtr;
+	SvLearnData *expected_ldPtr;
 	int ret;
-	UH expected_data;
+	UB expected_data;
     
     while(TRUE)
     {
@@ -902,9 +925,10 @@ static int TC_RING_FUNC(void)
 			 * Bank=3 [0x06000000], Section=3 [0x06060000], Frame=1 [0x06061ad6], Frame=3 [0x06065082] */
 			DBG_PRINT0("[TC_UNIQUE_PREPARE_02] Store 2 unique data in 1 Section at B3S3F2 & B3S3F4");
 			lcalc_LDLocation(g_numberOfLearnData, &g_bank_index, &g_section_index, &g_frame_index);
-			expected_data = lFingerDataImg(g_numberOfLearnData); // YELLOW 1 2
-			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_PREPARE_02] Check data: %d (expected 0x%0.2x)", ret, expected_data);
+			expected_ldPtr = lcreateLearnData(g_numberOfLearnData); // YELLOW 1 2
+			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", g_bank_index, g_section_index, g_frame_index, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT1("[TC_UNIQUE_PREPARE_02] Result: %d", ret);
 		}
 		else if(B3S5F0 <= g_numberOfLearnData && g_numberOfLearnData <= B3S5F18)
 		{
@@ -913,9 +937,10 @@ static int TC_RING_FUNC(void)
 			 * Bank=3 [0x06000000], Section=5 [0x060a0000], Frame=0 [0x060a0000] - Frame=18 [0x060be30c] */
 			DBG_PRINT0("[TC_UNIQUE_PREPARE_19] Store 19 unique data in 1 Section from B3S5F0 to B3S5F18");
 			lcalc_LDLocation(g_numberOfLearnData, &g_bank_index, &g_section_index, &g_frame_index);
-			expected_data = lFingerDataImg(g_numberOfLearnData); // ORANGE 1->19
-			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_PREPARE_19] Check data: %d (expected 0x%0.2x)", ret, expected_data);
+			expected_ldPtr = lcreateLearnData(g_numberOfLearnData); // ORANGE 1->19
+			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", g_bank_index, g_section_index, g_frame_index, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT1("[TC_UNIQUE_PREPARE_19] Result: %d", ret);
 		}
 		else if(g_numberOfLearnData == B3S8F2)
 		{
@@ -923,9 +948,10 @@ static int TC_RING_FUNC(void)
 			 * Bank=3 Section=8 Frame=2 */
 			DBG_PRINT0("[TC_UNIQUE_PREPARE_01] Store 1 unique data in 1 Section at B3S8F2");
 			lcalc_LDLocation(g_numberOfLearnData, &g_bank_index, &g_section_index, &g_frame_index);
-			expected_data = lFingerDataImg(g_numberOfLearnData); // GREEN 1
-			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_data);
-			DBG_PRINT2("[TC_UNIQUE_PREPARE_01] Check data: %d (expected 0x%0.2x)", ret, expected_data);
+			expected_ldPtr = lcreateLearnData(g_numberOfLearnData); // GREEN 1
+			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", g_bank_index, g_section_index, g_frame_index, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+			// DBG_PRINT1("[TC_UNIQUE_PREPARE_01] Result: %d", ret);
 		}
 		//////////////////////////////////
 	}
@@ -937,7 +963,7 @@ static int TC_NOTIFY_FUNC(void)
     int result;
     SvLearnData *learnDataPtr;
     int index, ret;
-	UH expected_data;
+	UB expected_data;
 			
     while(TRUE)
     {
@@ -1007,7 +1033,7 @@ static int TC_MAPPING_FUNC(void)
     int result;
     SvLearnData *learnDataPtr;
     int index, ret;
-	UH expected_data;
+	UB expected_data;
 
 	UB BankNum, SectionNum, FrameNum, Num;
 
