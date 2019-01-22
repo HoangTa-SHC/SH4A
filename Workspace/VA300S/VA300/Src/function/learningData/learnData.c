@@ -69,6 +69,7 @@ static void dbg_print(char* msg, UW arg1, UW arg2, UW arg3, UW arg4, UW arg5, UW
 	}else
 	{
 		i = 0;
+		sprintf((void*)log_table[i++], (void*)msg, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 	}
 }
 #else
@@ -516,6 +517,7 @@ static int linitOldestSection(void)
 {
 	g_oldest_bank_index = g_start_bank_index;
 	g_oldest_section_index = 0;
+	ldat_wr_CtrlFlgByIdx(g_oldest_bank_index, g_oldest_section_index, LDATA_CTRL_FLG_OLDEST); // 0x0001
 	g_add_first_frame = 1;
 }
 
@@ -1132,6 +1134,7 @@ static void lupdateLearnInfo(void)
 
 /*
  * Shift and update the oldest Section location
+ * Call before remove Section
  */
 static void lshift_oldest_section(void)
 {
@@ -1142,7 +1145,7 @@ static void lshift_oldest_section(void)
 		cur_secIndex = g_oldest_section_index;
 		
 		// Set the current oldest Section to normal Section
-		ldat_wr_CtrlFlgByIdx(cur_bankIndex, cur_secIndex, LDATA_CTRL_FLG_NORMAL); // Cannot write 0xFFFF to Flash Memory
+		// ldat_wr_CtrlFlgByIdx(cur_bankIndex, cur_secIndex, LDATA_CTRL_FLG_NORMAL); // Cannot write 0xFFFF to Flash Memory
 		// Move to next Section
 		lcalc_nextSection(cur_bankIndex, cur_secIndex, &next_bankIndex, &next_secIndex);
 		// Set next Section to the oldest Section
