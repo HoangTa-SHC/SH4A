@@ -181,7 +181,7 @@ static BOOL lmap_updateMapInfoTable_location(UW bankIndex, UW secIndex, UW frmIn
 static BOOL lmap_updateMapInfoTable_num(UH rNum, UH yNum);
 static BOOL lmap_updateIDList(UW bankIndex, UW secIndex, UW frmIndex);
 static void lupdateLearnInfo(void);
-static void lshift_oldest_section(void);
+static void lupdate_NextOldestSection(void);
 static void lupdate_NotTheLatestFrame(SvLearnData* learnDataPtr);
 static void lupdate_NotTheLatestFrame_ScanAll(SvLearnData* learnDataPtr);
 static void lupdate_NextFrameLocation(UW bankIndex, UW secIndex, UW frmIndex);
@@ -737,7 +737,7 @@ static BOOL lmem_rm_all(void)
 	UW size;
 	BOOL ret;
 	
-	DBG_PRINT0("[lmem_rm_all] Remove all.");
+	DBG_PRINT0("[lmem_rm_all] Erase all Banks.");
 	secAddr = lcalc_SectionAddr(g_start_bank_index, 0);
 	size = CALC_AREA_SIZE(g_start_bank_index, g_end_bank_index);
 	
@@ -890,7 +890,6 @@ static BOOL ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankI
 	UH RegStatus;
 	UW ret;
 	
-	// DBG_PRINT0("[ldat_mv_FrmByIdx]");
 	frmAddr1 = lcalc_FrameAddr(bankIndex1, secIndex1, frmIndex1);
 	frmAddr2 = lcalc_FrameAddr(bankIndex2, secIndex2, frmIndex2);
 	ldat_mv_Frm(frmAddr1, frmAddr2);
@@ -898,11 +897,11 @@ static BOOL ldat_mv_FrmByIdx(UW bankIndex1, UW secIndex1, UW frmIndex1, UW bankI
 	// Check is cleared finished
 	ldat_rd_RegStatus(frmAddr1, &RegStatus);
 	ret = lcheck_RegStatus(RegStatus, 0xFFFF);
-	// DBG_PRINT3("After moving [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", frmAddr1, RegStatus, LDATA_CLEARED_STS);
+	// DBG_PRINT3("After moving, [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", frmAddr1, RegStatus, LDATA_CLEARED_STS);
 	// Check is the latest
 	ldat_rd_RegStatus(frmAddr2, &RegStatus);
 	ret &= lcheck_RegStatus(RegStatus, 0xFFFC);
-	// DBG_PRINT3("After moving [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", frmAddr2, RegStatus, LDATA_REGISTERD_STS);
+	// DBG_PRINT3("After moving, [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", frmAddr2, RegStatus, LDATA_REGISTERD_STS);
 
 	return ret;
 }
@@ -916,7 +915,7 @@ static BOOL ldat_rm_SecByIdx(UW bankIndex, UW secIndex)
 	secAddr = lcalc_SectionAddr(bankIndex, secIndex);
 	ret = lmem_rm_sec(secAddr);
 	ldat_rd_RegStatus(secAddr, &RegStatus);
-	DBG_PRINT5("[ldat_rm_SecByIdx] Remove B%dS%d [0x%0.8x] RegStatus: 0x%0.4x (expected 0x%0.4x)", bankIndex, secIndex, secAddr, RegStatus, 0xFFFF);
+	DBG_PRINT5("Clear section B%dS%d [0x%0.8x]: 0x%0.4x (expected 0x%0.4x)", bankIndex, secIndex, secAddr, RegStatus, 0xFFFF);
 	return ret;
 }
 
@@ -1151,7 +1150,7 @@ static void lupdateLearnInfo(void)
  * Shift and update the oldest Section location
  * Call before remove Section
  */
-static void lshift_oldest_section(void)
+static void lupdate_NextOldestSection(void)
 {
 	UW cur_bankIndex, cur_secIndex, next_bankIndex, next_secIndex;
 	if(g_bankIndex == g_oldest_bank_index && g_secIndex == g_oldest_section_index && g_frmIndex == 0)
@@ -1257,7 +1256,7 @@ static void lupdate_NotTheLatestFrame_ScanAll(SvLearnData* learnDataPtr)
 					}
 					
 					ldat_rd_RegStatus(frmAddr, &RegStatus);
-					DBG_PRINT8("Change to old: Flash[0x%0.8x] {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x}", frmAddr, bankIndex, secIndex, frmIndex, rNum, yNum, id, RegStatus);
+					// DBG_PRINT8("Change to old: Flash[0x%0.8x] {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x}", frmAddr, bankIndex, secIndex, frmIndex, rNum, yNum, id, RegStatus);
 				}
 			}
 		}
@@ -1318,18 +1317,6 @@ static BOOL ladd_data(UW frmAddr, SvLearnData *learnDataPtr)
  */
 static BOOL ladd_process_new_section(UW bankIndex, UW secIndex, SvLearnData* learnDataPtr)
 {
-
-	UW cur_secAddr;
-
-	// if(g_frmIndex != 0)
-		// return FALSE;
-
-	// Shift 0x0001 to next Section
-	// lshift_oldest_section();
-	// Clear all frame in current Section
-	cur_secAddr = lcalc_SectionAddr(bankIndex, secIndex);
-	lmem_rm_sec(cur_secAddr);
-	
 	return TRUE;
 }
 
@@ -1383,7 +1370,7 @@ static BOOL ladd_check_unique_data(UW cur_bankIndex, UW cur_secIndex, UW *num)
 		{
 			total++;
 			g_movedDataLocation[frmIndex] = 1;	// mark this index as only-one data or the latest data
-			// DBG_PRINT3("[ladd_check_unique_data] Found %d unique data at B%dS%d", total, next_bankIndex, next_secIndex);
+			// DBG_PRINT3("Found %d unique data at B%dS%d", total, next_bankIndex, next_secIndex);
 			DBG_PRINT7("B%dS%dF%d [0x%0.8x] {ID=%d, Cnt=%d, RegStatus=0x%0.4x}", next_bankIndex, next_secIndex, frmIndex, frmAddr, id, cnt, RegStatus);
 		}
 	}
@@ -1409,10 +1396,6 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 	BOOL ret;
 
 	cur_frmIndex = 0;
-	// Shift 0x0001 to next Section
-	// lshift_oldest_section();
-	// Remove data in current Section
-	ldat_rm_SecByIdx(cur_bankIndex, cur_secIndex);
 	lcalc_nextSection(cur_bankIndex, cur_secIndex, &next_bankIndex, &next_secIndex);
 	// Move only-one/latest data
 	for(next_frmIndex=0; next_frmIndex<LDATA_FRAME_NUM_IN_SECTOR; next_frmIndex++)
@@ -1424,7 +1407,6 @@ static BOOL ladd_process_save_unique_data(UW cur_bankIndex, UW cur_secIndex, UW 
 			if(cur_frmIndex == LDATA_FRAME_NUM_IN_SECTOR)
 			{
 				lupdate_NextFrameLocation(0, 0, 0);	// update for frame 19th
-				lshift_oldest_section(); // Shift 0x0001 to next Section
 			}
 			else
 			lupdate_NextFrameLocation(cur_bankIndex, cur_secIndex, cur_frmIndex);	// update each time moving data
@@ -1460,6 +1442,8 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 	else if(g_frmIndex == 0) // Check new Section
 	{
 		// check RegStatus=0xFFFC and only-one data in next Section
+		lupdate_NextOldestSection(); // Shift 0x0001 to next Section
+		ldat_rm_SecByIdx(g_bankIndex, g_secIndex);
 		ret = ladd_check_unique_data(g_bankIndex, g_secIndex, &g_sum_unique);
 		if(ret == TRUE)
 		{
@@ -1480,10 +1464,10 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 		ret = ladd_process_save_unique_data(g_bankIndex, g_secIndex, g_sum_unique);
 	break;
 	case PROCESS_NEW_SECTION:
-		ret = ladd_process_new_section(g_bankIndex, g_secIndex, learnDataPtr);
+		// Do nothing
 	break;
 	case PROCESS_NORMAL:
-		// Do nothing	
+		// Do nothing
 	break;
 	default:
 		// Do nothing
@@ -1505,8 +1489,6 @@ static BOOL laddSvLearnImg(SvLearnData *learnDataPtr)
 			learnDataPtr = NULL;
 			// auto update next location
 			lupdate_NextFrameLocation(0, 0, 0);
-			// Shift 0x0001 to next Section
-			lshift_oldest_section();
 		}
 	}else
 	{

@@ -382,15 +382,22 @@ static UW lcalc_FrameAddr(UW bank_index, UW section_index, UW frame_index)
 	frmAddr = 0;
 
 	ret = lcheck_BankIndex(bank_index);
+	if(ret == FALSE)
+		DBG_PRINT3("Invalid Bank %d [%d:%d]", bank_index, BANK_NUM_MIN, BANK_NUM_MAX);
+	
 	if(ret == TRUE)
 	{
 		ret = lcheck_SecIndex(section_index);
-	}
+		if(ret == FALSE)
+			DBG_PRINT3("Invalid Section %d [%d:%d]", section_index, 0, MI_NUM_SEC_IN_BANK-1);
+	}		
 
 	if(ret == TRUE)
 	{
 		ret = lcheck_FrmIndex(frame_index);
-	}
+		if(ret == FALSE)
+			DBG_PRINT3("Invalid Frame %d [%d:%d]", frame_index, 0, LDATA_FRAME_NUM_IN_SECTOR-1);
+	}		
 
 	if(ret == TRUE)
 	{
@@ -441,9 +448,14 @@ static UW lcalc_CtrlFlgAddr(UW bank_index, UW section_index)
 
 	ctrl_addr = 0;
 	ret = lcheck_BankIndex(bank_index);
+	if(ret == FALSE)
+		DBG_PRINT3("Invalid Bank %d [%d:%d]", bank_index, BANK_NUM_MIN, BANK_NUM_MAX);
+	
 	if(ret == TRUE)
 	{
 		ret = lcheck_SecIndex(section_index);
+		if(ret == FALSE)
+			DBG_PRINT3("Invalid Section %d [%d:%d]", section_index, 0, MI_NUM_SEC_IN_BANK-1);
 	}
 
 	if(ret == TRUE)
@@ -614,10 +626,10 @@ static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW er
 	DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", erased_bank_index, erased_section_index, ctrl_flg_erased, LDATA_CTRL_FLG_ERASED);
 	DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", bank_index_oldest, section_index_oldest, ctrl_flg_oldest, LDATA_CTRL_FLG_OLDEST);
 	//////////////////////////////////////////
-	getOldestSection(&g_bank_oldest_index, &g_section_oldest_index, &g_ctrl_flg_oldest);	
-	DBG_PRINT4("Current oldest B%dS%d: 0x%0.4x", g_bank_oldest_index, g_section_oldest_index, g_ctrl_flg_oldest, LDATA_CTRL_FLG_OLDEST); 
+	getOldestSection(&g_bank_oldest_index, &g_section_oldest_index, &g_ctrl_flg_oldest);
 	getCurrentCursor(&g_bank_index, &g_section_index, &g_frame_index);
-	DBG_PRINT3("Current location B%dS%dF%d", g_bank_index, g_section_index, g_frame_index);
+	DBG_PRINT6("Current oldest section B%dS%d: 0x%0.4x, next location B%dS%dF%d", g_bank_oldest_index, g_section_oldest_index, g_ctrl_flg_oldest, g_bank_index, g_section_index, g_frame_index); 
+	// DBG_PRINT3("Current location B%dS%dF%d", g_bank_index, g_section_index, g_frame_index);
 	//////////////////////////////////////////
 	if(ctrl_flg_erased == LDATA_CTRL_FLG_ERASED && ctrl_flg_oldest == LDATA_CTRL_FLG_OLDEST)
 	{
@@ -827,7 +839,9 @@ static int TC_RING_FUNC(void)
 		if(result != 0) {
 			return -1;	// Test case fail
 		}
-		
+		///////////////////////////
+		getCurrentCursor(&g_bank_index, &g_section_index, &g_frame_index);
+		///////////////////////////
 		g_numberOfLearnData++;
 		if(g_numberOfLearnData == B3S0F18)
 		{
@@ -875,12 +889,12 @@ static int TC_RING_FUNC(void)
 			DBG_PRINT0("[TC_RING_03] Store full Bank3 at B3S255F18");
 						
 			// Check ctrl_flg
-			ret = lcheck_ctrl_flg(3,0, 3,255);	// Bank3 Section0 ctrl_flg : 0x0001
+			ret = lcheck_ctrl_flg(3,0, BANK_NUM_MIN,(MI_NUM_SEC_IN_BANK-1));	// Bank3 Section0 ctrl_flg : 0x0001 (fast test MI_NUM_SEC_IN_BANK=10)
 			DBG_PRINT1("[TC_RING_03] Check ctrl flag: %d", ret);
 			
 			// Check learn data
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(3, 255, 18, expected_data);
+			ret = lcheck_SvLearnDataAt(3, (MI_NUM_SEC_IN_BANK-1), (LDATA_FRAME_NUM_IN_SECTOR-1), expected_data); // (fast test MI_NUM_SEC_IN_BANK=10)
 			DBG_PRINT2("[TC_RING_03] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 		}
 		else if(g_numberOfLearnData == B7S255F18)
@@ -891,12 +905,12 @@ static int TC_RING_FUNC(void)
 			DBG_PRINT0("[TC_RING_04] Store full Bank7 at B7S255F18");
 						
 			// Check ctrl_flg
-			ret = lcheck_ctrl_flg(3,0, 7,255);	// Bank3 Section0 ctrl_flg : 0x0001
+			ret = lcheck_ctrl_flg(3,0, BANK_NUM_MAX,(MI_NUM_SEC_IN_BANK-1));	// Bank3 Section0 ctrl_flg : 0x0001
 			DBG_PRINT1("[TC_RING_04] Check ctrl flag: %d", ret);
 			
 			// Check learn data
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(7, 255, 18, expected_data);
+			ret = lcheck_SvLearnDataAt(BANK_NUM_MAX, (MI_NUM_SEC_IN_BANK-1), (LDATA_FRAME_NUM_IN_SECTOR-1), expected_data);
 			DBG_PRINT2("[TC_RING_04] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 		}
 		else if(g_numberOfLearnData == (FULL_ALL_BANK+B3S0F0))
