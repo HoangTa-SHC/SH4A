@@ -70,7 +70,7 @@
 #define LDATA_NORM_IMAGE_SIZE           8	 // fast test
 #define LDATA_MINI_IMAGE_NUM            2
 #define LDATA_MINI_IMAGE_SIZE           4	 // fast test
-#define LDATA_REG_NBR_MAX               480
+#define LDATA_REG_NBR_MAX               8	 // fast test
 #define LDATA_REG_FIGURE_NBR_MAX        20
 #else
 #define LDATA_DUMMY_NUM                 30
@@ -185,12 +185,9 @@ typedef struct EmployeeListSt {
 int InitBankArea(UB BankSw);
 int InitLearnInfo(UB BankSw, UB Spec);
 int AddSvLearnImg(SvLearnData *Data);
-int SearchLearnImg(UH SearchNum, UH* SearchResult[20][3]);
+int SearchLearnImg(UH SearchNum, UW SearchResult[20][3]);
 
 int InitEmployeeList(void);
-#ifdef TEST_API
-void get_InfoLearnInBankM(int rNum, int yNum, UB* BankNum, UB* SectionNum, UB* FrameNum, UB* Num);
-#endif
 
 /////////////////////////////////////////////////////////////
 /*
@@ -202,6 +199,8 @@ void getOldestSection(UW *bankIndex, UW *secIndex, UW *ctrl_flg);
  * Get location of next added learning data
  */
 void getCurrentCursor(UW *bankIndex, UW *secIndex, UW *frmIndex);
+
+void get_InfoLearnInBankM(int rNum, int yNum, UW* BankNum, UW* SectionNum, UW* FrameNum, UW* Num);
 /////////////////////////////////////////////////////////////
 #endif /* FWK_CFG_LEARN_DATA_ENABLE */
 #endif /* LEARN_DATA_H */

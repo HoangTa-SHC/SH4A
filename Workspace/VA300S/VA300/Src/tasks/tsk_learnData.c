@@ -94,15 +94,16 @@ static BOOL lmireadWord(UW addr, UW* Word);
 static BOOL lmiReadRange(UW addr, UH* buffer, UW length);
 static int lcalc_LDLocation(int numberOfLearnData, UW* bank_index, UW* section_index, UW* frame_index);
 static UW lcalc_FrameAddr(UW bank_index, UW section_index, UW frame_index);
-static BOOL lreadFrame(UW bank_index, UW section_index, UW frame_index, SvLearnData *learnDataPtr);
+static BOOL lreadFrame(UW frmAddr, SvLearnData *learnDataPtr);
+static BOOL lreadFrameByIndex(UW bank_index, UW section_index, UW frame_index, SvLearnData *learnDataPtr);
 static UW lcalc_CtrlFlgAddr(UW bank_index, UW section_index);
 static volatile UH lread_CtrlFlg(UW bank_index, UW section_index);
-static void lwrite_CtrlFlg(UW bank_index, UW section_index, UH value);
-static void lchangeToSvLearnResult(SvLearnResult *ld, SvLearnData *lDataPtr);
+static void lchangeToSvLearnResult(SvLearnResult *ld, SvLearnData *learnDataPtr);
+static void printCurrentMappingInformation(void);
 static BOOL lcheck_BankIndex(UW bank_index);
 static BOOL lcheck_SecIndex(UW section_index);
 static BOOL lcheck_FrmIndex(UW frame_index);
-static BOOL lcheck_RegStatus(UH checked_val);
+static BOOL lcheck_RegStatus(UH checked_val, UH expected_val);
 static BOOL lcheck_RegRnum(UH checked_val);
 static BOOL lcheck_RegYnum(UH checked_val);
 static BOOL lcheck_RegImg1(UH checked_val, UH expected_val);
@@ -111,7 +112,7 @@ static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW er
 static BOOL lcheck_RemoveAllData(UW bank_index, UW section_index);
 static BOOL lcheck_notify_data(int notifyCase);
 static BOOL lcheck_SearchLearnImg(int index, UH SearchNum, int expected_val);
-
+static void lcheck_PrepareUniqueData(void);
 // static void init_InitBankAreaResult(void);
 // static void init_AddSvLearnImgResult(void);
 // static void init_NotifyDataResult(void);
@@ -186,7 +187,7 @@ static SearchLearnDataResult g_SearchLearnDataResult[TC_SEARCH_TOTAL];
 #define DEBUG
 #ifdef DEBUG
 #define DBG_LINE_TOTAL 180
-static char log_table[DBG_LINE_TOTAL][80];
+static char log_table[DBG_LINE_TOTAL][100];
 static void dbg_init(void)
 {
 	memset(log_table, 0, sizeof(log_table));
@@ -269,31 +270,75 @@ static SvLearnData* lcreateLearnData(int pos)
     int i;
 	i = lcalc_FingerDataIndex(pos);
 	learnDataPtr = &g_LearnDataArray[lcalc_FingerDataIndex(pos)];
-	if(i == LDATA_FINGER_GREEN_1_INDEX)
-	{
-		learnDataPtr->RegRnum = 1;
-		learnDataPtr->RegYnum = i-LDATA_FINGER_GREEN_1_INDEX;
-		learnDataPtr->RegID = 0x0100 + 4; //4;	// GREEN ID
-	}
-	else if(i == LDATA_FINGER_YELLOW_1_INDEX || i == LDATA_FINGER_YELLOW_2_INDEX)
-    {
-    	learnDataPtr->RegRnum = 2;
-    	learnDataPtr->RegYnum = i-LDATA_FINGER_YELLOW_1_INDEX;
-		learnDataPtr->RegID = i-LDATA_FINGER_YELLOW_1_INDEX + 0x0200;	// YELLOW ID
-    }
-    else if(i >= LDATA_FINGER_ORANGE_1_INDEX && i <= LDATA_FINGER_ORANGE_19_INDEX)
-    {
-    	learnDataPtr->RegRnum = 3;
-    	learnDataPtr->RegYnum = i-LDATA_FINGER_ORANGE_1_INDEX;
-		learnDataPtr->RegID = i-LDATA_FINGER_ORANGE_1_INDEX + 0x1900;	// ORANGE ID
-    }else // i == LDATA_FINGER_RED_1_INDEX
-    {
-    	learnDataPtr->RegRnum = 0;//20;
-    	learnDataPtr->RegYnum = 0;
-		learnDataPtr->RegID = 7;	// RED ID
-    }
+
     return learnDataPtr;
 }
+
+static Location lget_Location(int index)
+{
+	Location loc;
+	switch (index){
+	case FIRST_LOCATION                : {loc.bankIndex = 3, loc.secIndex = 0, loc.frmIndex = 0; break;}
+	case SECOND_LOCATION               : {loc.bankIndex = 3, loc.secIndex = 0, loc.frmIndex = 1; break;}
+	case FULL_FIRST_SECTION_LOCATION   : {loc.bankIndex = 3, loc.secIndex = 0, loc.frmIndex = LDATA_FRAME_NUM_IN_SECTOR-1; break;}
+	case START_SECOND_SECTION_LOCATION : {loc.bankIndex = 3, loc.secIndex = 1, loc.frmIndex = 0; break;}
+	case FULL_FIRST_BANK_LOCATION      : {loc.bankIndex = 3, loc.secIndex = MI_NUM_SEC_IN_BANK-1, loc.frmIndex = LDATA_FRAME_NUM_IN_SECTOR-1; break;}
+	case FULL_ALL_BANK_LOCATION        : {loc.bankIndex = BANK_NUM_MAX, loc.secIndex = MI_NUM_SEC_IN_BANK-1, loc.frmIndex = LDATA_FRAME_NUM_IN_SECTOR-1; break;}
+	case RESTART_FIRST_BANK_LOCATION   : {loc.bankIndex = 3, loc.secIndex = 0, loc.frmIndex = 0; break;}
+	case YELLOW_1_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 3, loc.frmIndex = 1; break;}
+	case YELLOW_2_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 3, loc.frmIndex = 3; break;}
+	case ORANGE_1_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 0; break;}
+	case ORANGE_2_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 1; break;}
+	case ORANGE_3_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 2; break;}
+	case ORANGE_4_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 3; break;}
+	case ORANGE_5_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 4; break;}
+	case ORANGE_6_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 5; break;}
+	case ORANGE_7_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 6; break;}
+	case ORANGE_8_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 7; break;}
+	case ORANGE_9_PREPARED_LOCATION  : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 8; break;}
+	case ORANGE_10_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 9; break;}
+	case ORANGE_11_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 10; break;}
+	case ORANGE_12_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 11; break;}
+	case ORANGE_13_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 12; break;}
+	case ORANGE_14_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 13; break;}
+	case ORANGE_15_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 14; break;}
+	case ORANGE_16_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 15; break;}
+	case ORANGE_17_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 16; break;}
+	case ORANGE_18_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 17; break;}
+	case ORANGE_19_PREPARED_LOCATION : {loc.bankIndex = 3, loc.secIndex = 5, loc.frmIndex = 18; break;}
+	case GREEN_1_PREPARED_LOCATION   : {loc.bankIndex = 3, loc.secIndex = 8, loc.frmIndex = 1; break;}
+	case YELLOW_1_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 2, loc.frmIndex = 0; break;}
+	case YELLOW_2_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 2, loc.frmIndex = 1; break;}
+	case RED_NEW_2_LOCATION          : {loc.bankIndex = 3, loc.secIndex = 2, loc.frmIndex = 2; break;}
+	case ORANGE_1_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 0; break;}
+	case ORANGE_2_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 1; break;}
+	case ORANGE_3_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 2; break;}
+	case ORANGE_4_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 3; break;}
+	case ORANGE_5_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 4; break;}
+	case ORANGE_6_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 5; break;}
+	case ORANGE_7_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 6; break;}
+	case ORANGE_8_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 7; break;}
+	case ORANGE_9_MOVED_LOCATION     : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 8; break;}
+	case ORANGE_10_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 9; break;}
+	case ORANGE_11_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 10; break;}
+	case ORANGE_12_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 11; break;}
+	case ORANGE_13_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 12; break;}
+	case ORANGE_14_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 13; break;}
+	case ORANGE_15_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 14; break;}
+	case ORANGE_16_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 15; break;}
+	case ORANGE_17_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 16; break;}
+	case ORANGE_18_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 17; break;}
+	case ORANGE_19_MOVED_LOCATION    : {loc.bankIndex = 3, loc.secIndex = 4, loc.frmIndex = 18; break;}
+	case RED_NEW_19_LOCATION         : {loc.bankIndex = 3, loc.secIndex = 6, loc.frmIndex = 0; break;}
+	case GREEN_1_MOVED_LOCATION      : {loc.bankIndex = 3, loc.secIndex = 7, loc.frmIndex = 0; break;}
+	case RED_NEW_1_LOCATION          : {loc.bankIndex = 3, loc.secIndex = 7, loc.frmIndex = 1; break;}
+	
+	default                         :  {loc.bankIndex = 0, loc.secIndex = 0, loc.frmIndex = 0; break;}
+	};
+	
+	return loc;
+}
+
 /******************************************************************************/
 /* Function Name: miReadHword                                                 */
 /* Description  : This function will read half word data from flash memory.   */
@@ -421,7 +466,15 @@ static UW lcalc_FrameAddr(UW bank_index, UW section_index, UW frame_index)
 	return frmAddr;	
 }
 
-static BOOL lreadFrame(UW bank_index, UW section_index, UW frame_index, SvLearnData *learnDataPtr)
+static BOOL lreadFrame(UW frmAddr, SvLearnData *learnDataPtr)
+{
+	ER errCode;
+
+	errCode = FlRead(frmAddr, (UH*)learnDataPtr, sizeof(SvLearnData)/sizeof(UH) );
+	return (errCode == E_OK);
+}
+
+static BOOL lreadFrameByIndex(UW bank_index, UW section_index, UW frame_index, SvLearnData *learnDataPtr)
 {
 	BOOL result;
 	ER errCode;
@@ -499,26 +552,46 @@ static volatile UH lread_CtrlFlg(UW bank_index, UW section_index)
 	return value;
 }
 
-static void lwrite_CtrlFlg(UW bank_index, UW section_index, UH value)
+static void lchangeToSvLearnResult(SvLearnResult* ld, SvLearnData* learnDataPtr)
 {
-	// UW ctrl_addr = 0; 	// 32-bit address
-	// UH *p;
-	// ctrl_addr = lcalc_CtrlFlgAddr(bank_index, section_index);
-	// if(ctrl_addr != 0)
-	// {
-		// p = (UH*)(ctrl_addr); 
-		// *p = value; // 16-bit value
-	// }
+	ld->RegStatus = learnDataPtr->RegStatus;
+	ld->RegRnum = learnDataPtr->RegRnum;
+	ld->RegYnum = learnDataPtr->RegYnum;
+	ld->RegID   = learnDataPtr->RegID;
+	ld->RegImg1 = learnDataPtr->RegImg1[0]; // 1st byte
 }
 
-static void lchangeToSvLearnResult(SvLearnResult* ld, SvLearnData* lDataPtr)
+static void printCurrentMappingInformation(void)
 {
-	ld->RegStatus = lDataPtr->RegStatus;
-	ld->RegRnum = lDataPtr->RegRnum;
-	ld->RegYnum = lDataPtr->RegYnum;
-	ld->RegID   = lDataPtr->RegID;
-	// ld->RegImg1 = (UW)(lDataPtr->RegImg1[3] << 24) | (UW)(lDataPtr->RegImg1[2] << 16) | (UW)(lDataPtr->RegImg1[1] << 8) | (UW)(lDataPtr->RegImg1[0] << 0);
-	ld->RegImg1 = lDataPtr->RegImg1[0]; // 1st byte
+	UW BankNum, SectionNum, FrameNum, Num;
+	int i;
+
+	// RED room
+	get_InfoLearnInBankM(RED_ROOM, RED_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("RED 1 [%d][%d]: {B%dS%dF%d, Num=%d}", RED_ROOM, RED_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+
+	// GREEN room
+	get_InfoLearnInBankM(GREEN_ROOM, GREEN_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("GREEN 1 [%d][%d]: {B%dS%dF%d, Num=%d}", GREEN_ROOM, GREEN_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+	
+	// YELLOW room
+	get_InfoLearnInBankM(YELLOW_ROOM, YELLOW_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("YELLOW 1 [%d][%d]: {B%dS%dF%d, Num=%d}", YELLOW_ROOM, YELLOW_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+	get_InfoLearnInBankM(YELLOW_ROOM, YELLOW_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("YELLOW 2 [%d][%d]: {B%dS%dF%d, Num=%d}", YELLOW_ROOM, YELLOW_2_YNUM, BankNum, SectionNum, FrameNum, Num);
+
+	// ORANGE room
+	for(i = 0; i<19; i++)
+	{
+		get_InfoLearnInBankM(ORANGE_ROOM, ORANGE_1_YNUM+i, &BankNum, &SectionNum, &FrameNum, &Num);
+		DBG_PRINT7("ORANGE %d [%d][%d]: {B%dS%dF%d, Num=%d}", i+1, ORANGE_ROOM, ORANGE_1_YNUM+i, BankNum, SectionNum, FrameNum, Num);
+	}
+
+	// BLUE room
+	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("BLUE 1 [%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("BLUE 1 [%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num);
 }
 
 static BOOL lcheck_BankIndex(UW bank_index)
@@ -536,14 +609,14 @@ static BOOL lcheck_FrmIndex(UW frame_index)
 	return (frame_index >= 0 && frame_index < N_FRM_PER_SECT);
 }
 
-static BOOL lcheck_RegStatus(UH checked_val)
+static BOOL lcheck_RegStatus(UH checked_val, UH expected_val)
 {
     // LDATA_NOT_YET_STS   = 0xFFFF,  //// Not yet
     // LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
     // LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data
     // LDATA_NOT_LATEST_STS= 0xFFF8, //// Not latest data. Old register
     // LDATA_UNKNOW_STS
-	return checked_val == LDATA_REGISTERD_STS;
+	return checked_val == expected_val;
 }
 
 static BOOL lcheck_RegRnum(UH checked_val)
@@ -565,57 +638,70 @@ static BOOL lcheck_RegImg1(UH checked_val, UH expected_val)
 static BOOL lcheck_SvLearnDataResult(SvLearnResult* ld ,UB data)
 {	
 	BOOL result;
-	result = FALSE;
-	result = lcheck_RegStatus(ld->RegStatus); // 0xFFFC : Registered (Newest)
-	// if(result == TRUE) 
+	result = TRUE;
+	
+	if(lcheck_RegStatus(ld->RegStatus, LDATA_REGISTERD_STS) == FALSE)
 	{
-		result &= lcheck_RegRnum(ld->RegRnum);
+		result = FALSE;
+		DBG_PRINT2("Check RegStatus failed: 0x%0.4x (expected 0x%0.4x)", ld->RegStatus, LDATA_REGISTERD_STS);
 	}
 	
-	// if(result == TRUE) 
+	if(lcheck_RegRnum(ld->RegRnum) == FALSE)
 	{
-		result &= lcheck_RegYnum(ld->RegYnum);
+		result = FALSE;
+		DBG_PRINT2("Check RegRnum failed: %d (expected [0:%d])", ld->RegRnum, LDATA_REG_NBR_MAX-1);
 	}
 	
-	// if(result == TRUE) 
+	if(lcheck_RegYnum(ld->RegYnum) == FALSE) 
 	{
-		result &= lcheck_RegImg1((UB)ld->RegImg1, data);
+		result = FALSE;
+		DBG_PRINT2("Check RegRnum failed: %d (expected [0:%d])", ld->RegYnum, LDATA_REG_FIGURE_NBR_MAX-1);
+	}
+	
+	if(lcheck_RegImg1((UB)ld->RegImg1, data) == FALSE) 
+	{
+		result = FALSE;
+		DBG_PRINT2("Check RegImg1 failed: 0x%0.2x (expected 0x%0.2x)", ld->RegImg1, data);
 	}
 	
 	return result;
 }
 
-static BOOL lcheck_SvLearnDataAt(UW bank_index, UW section_index, UW frame_index, UH data)
+static BOOL lcheck_SvLearnDataAt(UW bank_index, UW section_index, UW frame_index, SvLearnData *expected_ldPtr)
 {
-	SvLearnData *lDataPtr;
+	SvLearnData *learnDataPtr;
 	SvLearnResult *ld_result;
+	UW frmAddr;
 	BOOL result;
 	result = FALSE;
 	
-	lDataPtr = &g_learnData;
+	learnDataPtr = &g_learnData;
 	ld_result = &g_learnDataResult;
-	lreadFrame(bank_index, section_index, frame_index, lDataPtr);
-	lchangeToSvLearnResult(ld_result, lDataPtr);
-	result = lcheck_SvLearnDataResult(ld_result, (UB)data);
-	DBG_PRINT8("Atual result {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", bank_index, section_index, frame_index, lDataPtr->RegRnum, lDataPtr->RegYnum, lDataPtr->RegID, lDataPtr->RegStatus, lDataPtr->RegImg1[0]);
+	frmAddr = lcalc_FrameAddr(bank_index, section_index, frame_index);
+	result = lreadFrame(frmAddr, learnDataPtr);
+	// lreadFrameByIndex(bank_index, section_index, frame_index, learnDataPtr);
+	lchangeToSvLearnResult(ld_result, learnDataPtr);
+	result = lcheck_SvLearnDataResult(ld_result, expected_ldPtr->RegImg1[0]);
+	if(result == FALSE)
+	{
+		DBG_PRINT8("Read Memory [B%dS%dF%d]{Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", bank_index, section_index, frame_index, learnDataPtr->RegRnum, learnDataPtr->RegYnum, learnDataPtr->RegID, learnDataPtr->RegStatus, learnDataPtr->RegImg1[0]);
+		DBG_PRINT8("Expected [B%dS%dF%d]{Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", bank_index, section_index, frame_index, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+	}
+	
 	return result;
 }
 
 static BOOL lcheck_SvLearnDataAtIsRemoved(UW bank_index, UW section_index, UW frame_index)
 {
-	SvLearnData *lDataPtr;
-	UW secAddr, frmAddr;
+	SvLearnData *learnDataPtr;
+	UW frmAddr;
 	BOOL result;
-	SvLearnResult ld_result;
-	result = FALSE;
 	
-	lDataPtr = &g_learnData;
-	// ld_result = &g_learnDataResult
-	lreadFrame(bank_index, section_index, frame_index, lDataPtr);
-	lchangeToSvLearnResult(&ld_result, lDataPtr);
-	result = lcheck_SvLearnDataResult(&ld_result, 0xFF);
-	
-	return result;
+	learnDataPtr = &g_learnData;
+	frmAddr = lcalc_FrameAddr(bank_index, section_index, frame_index);
+	result = lreadFrame(frmAddr, learnDataPtr);
+
+	return lcheck_RegStatus(learnDataPtr->RegStatus, LDATA_NOT_YET_STS);
 }
 
 static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW erased_bank_index, UW erased_section_index)
@@ -623,12 +709,12 @@ static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW er
 	UH ctrl_flg_erased, ctrl_flg_oldest;
 	ctrl_flg_erased = lread_CtrlFlg(erased_bank_index, erased_section_index);
 	ctrl_flg_oldest = lread_CtrlFlg(bank_index_oldest, section_index_oldest);
-	DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", erased_bank_index, erased_section_index, ctrl_flg_erased, LDATA_CTRL_FLG_ERASED);
-	DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", bank_index_oldest, section_index_oldest, ctrl_flg_oldest, LDATA_CTRL_FLG_OLDEST);
+	// DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", erased_bank_index, erased_section_index, ctrl_flg_erased, LDATA_CTRL_FLG_ERASED);
+	// DBG_PRINT4("Control flag of B%dS%d: 0x%0.4x (expected 0x%0.4x)", bank_index_oldest, section_index_oldest, ctrl_flg_oldest, LDATA_CTRL_FLG_OLDEST);
 	//////////////////////////////////////////
 	getOldestSection(&g_bank_oldest_index, &g_section_oldest_index, &g_ctrl_flg_oldest);
 	getCurrentCursor(&g_bank_index, &g_section_index, &g_frame_index);
-	DBG_PRINT6("Current oldest section B%dS%d: 0x%0.4x, next location B%dS%dF%d", g_bank_oldest_index, g_section_oldest_index, g_ctrl_flg_oldest, g_bank_index, g_section_index, g_frame_index); 
+	// DBG_PRINT6("Current oldest section B%dS%d: 0x%0.4x, next location B%dS%dF%d", g_bank_oldest_index, g_section_oldest_index, g_ctrl_flg_oldest, g_bank_index, g_section_index, g_frame_index); 
 	// DBG_PRINT3("Current location B%dS%dF%d", g_bank_index, g_section_index, g_frame_index);
 	//////////////////////////////////////////
 	if(ctrl_flg_erased == LDATA_CTRL_FLG_ERASED && ctrl_flg_oldest == LDATA_CTRL_FLG_OLDEST)
@@ -643,6 +729,7 @@ static BOOL lcheck_notify_data(int notifyCase)
 	UB expected_data;
 	SvLearnData *expected_ldPtr;
 	BOOL ret = FALSE;
+	Location loc;
 	
 	switch (notifyCase){
 	case 1:
@@ -650,18 +737,15 @@ static BOOL lcheck_notify_data(int notifyCase)
 		// Check if unique data 1 was moved to 1st frame of section
 		DBG_PRINT0("[TC_UNIQUE_ADD_01] Check if 1 unique data was moved to B3S7");
 
+		loc = lget_Location(GREEN_1_MOVED_LOCATION);
 		expected_ldPtr = lcreateLearnData(LDATA_FINGER_GREEN_1_POS);
-		ret = lcheck_SvLearnDataAt(3,7,0, expected_ldPtr->RegImg1[0]);
-		DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 7, 0, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-		// DBG_PRINT1("[TC_UNIQUE_ADD_01] Result: %d", ret);
-		
-		// if(ret == TRUE)
-		{			
-			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
-			ret = lcheck_SvLearnDataAt(3,7,1, expected_ldPtr->RegImg1[0]);
-			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 7, 1, expected_ldPtr->RegRnum, 	expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			DBG_PRINT1("[TC_UNIQUE_ADD_01] Check new data at B3S7F1: %d", ret);
-		}
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+
+		loc = lget_Location(RED_NEW_1_LOCATION);
+		expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+		DBG_PRINT1("[TC_UNIQUE_ADD_01] Check new data at B3S7F1: %d", ret);
+
 		break;
 	}
 	case 2:
@@ -669,28 +753,21 @@ static BOOL lcheck_notify_data(int notifyCase)
 		// Check if unique data 1 was moved to 1st frame of section
 		DBG_PRINT0("[TC_UNIQUE_ADD_02] Check if 2 unique data was moved to B3S2");
 		
+		loc = lget_Location(YELLOW_1_MOVED_LOCATION);
 		expected_ldPtr = lcreateLearnData(LDATA_FINGER_YELLOW_1_POS);
-		ret = lcheck_SvLearnDataAt(3,2,0, expected_ldPtr->RegImg1[0]);
-		// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 2, 0, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-		// DBG_PRINT1("[TC_UNIQUE_ADD_02] Result: %d", ret);
-		
-		// if(ret == TRUE)
-		{
-			// Check if unique data 2 was moved to 2nd frame of section		
-			expected_ldPtr = lcreateLearnData(LDATA_FINGER_YELLOW_2_POS);
-			ret = lcheck_SvLearnDataAt(3,2,1, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 2, 1, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT1("[TC_UNIQUE_ADD_02] Result: %d", ret);
-		}
-		
-		// if(ret == TRUE)
-		{
-			// Check if new data was stored at 3rd frame of section		
-			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
-			ret = lcheck_SvLearnDataAt(3,2,2, expected_ldPtr->RegImg1[0]);
-			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 2, 2, expected_ldPtr->RegRnum, 	expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			DBG_PRINT1("[TC_UNIQUE_ADD_02] Check new data at B3S2F2: %d", ret);
-		}
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+
+		// Check if unique data 2 was moved to 2nd frame of section		
+		loc = lget_Location(YELLOW_2_MOVED_LOCATION);
+		expected_ldPtr = lcreateLearnData(LDATA_FINGER_YELLOW_2_POS);
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+
+		// Check if new data was stored at 3rd frame of section		
+		loc = lget_Location(RED_NEW_2_LOCATION);
+		expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+		DBG_PRINT1("[TC_UNIQUE_ADD_02] Check new data at B3S2F2: %d", ret);
+
 		break;
 	}
 	case 19:
@@ -700,22 +777,19 @@ static BOOL lcheck_notify_data(int notifyCase)
 		int i;
 		DBG_PRINT0("[TC_UNIQUE_ADD_19] Check if 19 unique data were moved to B3S4");
 		for(i = 0; i<19; i++)
-		{			
+		{
+			loc = lget_Location(ORANGE_1_MOVED_LOCATION+i);
 			expected_ldPtr = lcreateLearnData(LDATA_FINGER_ORANGE_1_POS+i);
-			ret = lcheck_SvLearnDataAt(3,4,i, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 4, i, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT1("[TC_UNIQUE_ADD_19] Result: %d", ret);
+			ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
 		}
 			
-		// if(ret == TRUE)
-		{
-			// Check if new data was stored at next Section
-			// Bank3 Section5 Frame0					
-			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
-			ret = lcheck_SvLearnDataAt(3,5,0, expected_ldPtr->RegImg1[0]);
-			DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", 3, 5, 0, expected_ldPtr->RegRnum, 	expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			DBG_PRINT1("[TC_UNIQUE_ADD_19] Check new data at B3S5F0: %d", ret);
-		}
+		// Check if new data was stored at next Section
+		// Bank3 Section5 Frame0	
+		loc = lget_Location(RED_NEW_19_LOCATION);			
+		expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+		DBG_PRINT1("[TC_UNIQUE_ADD_19] Check new data at B3S5F0: %d", ret);
+
 		break;
 	}
 	default:
@@ -727,12 +801,12 @@ static BOOL lcheck_notify_data(int notifyCase)
 
 static BOOL lcheck_RemoveAllData(UW bank_index, UW section_index)
 {
-	BOOL ret = 0;
-	ret |= lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-1);
-	ret |= lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-2);
-	ret |= lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-3);
-	ret |= lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-4);
-	return (ret==0 ? TRUE : FALSE);
+	BOOL ret;
+	ret = lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-1);
+	ret &= lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-2);
+	ret &= lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-3);
+	ret &= lcheck_SvLearnDataAtIsRemoved(bank_index, section_index, N_FRM_PER_SECT-4);
+	return ret;
 }
 
 static BOOL lcheck_SearchLearnImg(int index, UH SearchNum, int expected_val)
@@ -740,7 +814,7 @@ static BOOL lcheck_SearchLearnImg(int index, UH SearchNum, int expected_val)
 	int result;
 	int fingerIndex;
 	UH *SearchLearnDataResultPtr[LDATA_REG_FIGURE_NBR_MAX][3];
-	
+
 	for(fingerIndex=0; fingerIndex<LDATA_REG_FIGURE_NBR_MAX; fingerIndex++)
 	{
 		SearchLearnDataResultPtr[fingerIndex][0] = &g_SearchLearnDataResult[index].LearnInfo[fingerIndex][0];
@@ -752,6 +826,74 @@ static BOOL lcheck_SearchLearnImg(int index, UH SearchNum, int expected_val)
 	g_SearchLearnDataResult[index].result = result;
 
 	return (result == expected_val);
+}
+
+static void lcheck_PrepareUniqueData(void)
+{	
+	Location loc;
+	SvLearnData *expected_ldPtr;
+	BOOL ret = FALSE;
+	int i;
+	
+	DBG_PRINT0("Check preparing unique data:");
+	DBG_PRINT0("Stored 2 unique data in 1 Section at B3S3F1 & B3S3F3");
+	{
+		loc = lget_Location(YELLOW_1_PREPARED_LOCATION);
+		expected_ldPtr = &g_LearnDataArray[LDATA_FINGER_YELLOW_1_INDEX]; // YELLOW 1
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex+1, expected_ldPtr);
+		if(ret == FALSE)
+		{
+			// DBG_PRINT0("Failed");
+			DBG_PRINT8("Failed, expected [B%dS%dF%d]{Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+		}
+		
+		loc = lget_Location(YELLOW_2_PREPARED_LOCATION);
+		expected_ldPtr = &g_LearnDataArray[LDATA_FINGER_YELLOW_2_INDEX]; // YELLOW 2
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+		if(ret == FALSE)
+		{
+			// DBG_PRINT0("Failed");
+			DBG_PRINT8("Failed, expected{B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+		}
+		
+		if(ret == TRUE)
+		{
+			DBG_PRINT0("Success");
+		}
+	}
+
+	DBG_PRINT0("Stored 19 unique data in 1 Section from B3S5F0 to B3S5F18");
+	for(i = 0; i<19; i++)
+	{
+		loc = lget_Location(ORANGE_1_PREPARED_LOCATION+i);
+		expected_ldPtr = &g_LearnDataArray[LDATA_FINGER_ORANGE_1_INDEX+i]; // ORANGE 1->19
+		ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+		if(ret == FALSE)
+		{
+			DBG_PRINT0("Failed");
+			// DBG_PRINT8("Failed, expected{B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+		}				
+	}
+	
+	if(ret == TRUE)
+	{
+		DBG_PRINT0("Success");
+	}
+
+	DBG_PRINT0("Stored 1 unique data in 1 Section at B3S8F1");
+	loc = lget_Location(GREEN_1_PREPARED_LOCATION);
+	expected_ldPtr = &g_LearnDataArray[LDATA_FINGER_GREEN_1_INDEX]; // GREEN 1
+	ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
+	if(ret == FALSE)
+	{
+		DBG_PRINT0("Failed");
+		// DBG_PRINT8("Failed, expected{B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
+	}
+
+	if(ret == TRUE)
+	{
+		DBG_PRINT0("Success");
+	}
 }
 
 static void init_SearchLearnImgResult(void)
@@ -776,9 +918,11 @@ static int TC_ADD_FUNC(void)
 {
     int result;
     SvLearnData *learnDataPtr;
+	SvLearnData *expected_ldPtr;
 	int ret;
 	UB expected_data;
-			
+
+	expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
     while(TRUE)
     {
 #ifdef FAST_TEST
@@ -798,7 +942,7 @@ static int TC_ADD_FUNC(void)
 			 * Bank=3 [0x06000000], Section=0 [0x06000000], Frame=0 [0x06000000] */
 			DBG_PRINT0("[TC_ADD_01] Store 1st data at B3S0F0");
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(3, 0, 0, expected_data);
+			ret = lcheck_SvLearnDataAt(3, 0, 0, expected_ldPtr);
 			DBG_PRINT2("[TC_ADD_01] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 
 		}else if(g_numberOfLearnData == B3S0F1)
@@ -808,7 +952,7 @@ static int TC_ADD_FUNC(void)
 			 * Bank=3 [0x06000000], Section=0 [0x06000000], Frame=1 [0x06001ad6] */
 			DBG_PRINT0("[TC_ADD_02] Store 2nd data at B3S0F1");
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(3, 0, 1, expected_data);	
+			ret = lcheck_SvLearnDataAt(3, 0, 1, expected_ldPtr);	
 			DBG_PRINT2("[TC_ADD_02] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 					
 			DBG_PRINT0("[TC_ADD_FUNC] Done");
@@ -827,7 +971,8 @@ static int TC_RING_FUNC(void)
 	SvLearnData *expected_ldPtr;
 	int ret;
 	UB expected_data;
-    
+
+	expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
     while(TRUE)
     {
 #ifdef FAST_TEST
@@ -852,11 +997,11 @@ static int TC_RING_FUNC(void)
 
 			// Check ctrl_flg
 			ret = lcheck_ctrl_flg(3,0, 3,1);	// Bank3 Section0 ctrl_flg : 0x0001
-			DBG_PRINT1("[TC_RING_01] Check ctrl flag: %d", ret);
+			DBG_PRINT2("[TC_RING_01] Check ctrl flag: %d, (expected %d)", ret, TRUE);
 			
 			// Check learn data
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(3, 0, 18, expected_data);
+			ret = lcheck_SvLearnDataAt(3, 0, 18, expected_ldPtr);
 			DBG_PRINT2("[TC_RING_01] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 		}
 		else if(g_numberOfLearnData == B3S1F0)
@@ -870,15 +1015,15 @@ static int TC_RING_FUNC(void)
 					
 			// Check remove all data Bank3 Section1
 			ret = lcheck_RemoveAllData(3,1);
-			DBG_PRINT1("[TC_RING_02] Check clear section: %d", ret);
+			DBG_PRINT2("[TC_RING_02] Check clear section: %d (expected %d)", ret, TRUE);
 			
 			// Check ctrl_flg
 			ret = lcheck_ctrl_flg(3,0, 3,1);	// Bank3 Section0 ctrl_flg : 0x0001
-			DBG_PRINT1("[TC_RING_02] Check ctrl flag: %d", ret);
+			DBG_PRINT2("[TC_RING_02] Check ctrl flag: %d, (expected %d)", ret, TRUE);
 			
 			// Check learn data
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(3, 1, 0, expected_data);
+			ret = lcheck_SvLearnDataAt(3, 1, 0, expected_ldPtr);
 			DBG_PRINT2("[TC_RING_02] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 		}
 		else if(g_numberOfLearnData == B3S255F18)
@@ -890,11 +1035,11 @@ static int TC_RING_FUNC(void)
 						
 			// Check ctrl_flg
 			ret = lcheck_ctrl_flg(3,0, BANK_NUM_MIN,(MI_NUM_SEC_IN_BANK-1));	// Bank3 Section0 ctrl_flg : 0x0001 (fast test MI_NUM_SEC_IN_BANK=10)
-			DBG_PRINT1("[TC_RING_03] Check ctrl flag: %d", ret);
+			DBG_PRINT2("[TC_RING_03] Check ctrl flag: %d, (expected %d)", ret, TRUE);
 			
 			// Check learn data
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(3, (MI_NUM_SEC_IN_BANK-1), (LDATA_FRAME_NUM_IN_SECTOR-1), expected_data); // (fast test MI_NUM_SEC_IN_BANK=10)
+			ret = lcheck_SvLearnDataAt(3, (MI_NUM_SEC_IN_BANK-1), (LDATA_FRAME_NUM_IN_SECTOR-1), expected_ldPtr); // (fast test MI_NUM_SEC_IN_BANK=10)
 			DBG_PRINT2("[TC_RING_03] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 		}
 		else if(g_numberOfLearnData == B7S255F18)
@@ -906,11 +1051,11 @@ static int TC_RING_FUNC(void)
 						
 			// Check ctrl_flg
 			ret = lcheck_ctrl_flg(3,0, BANK_NUM_MAX,(MI_NUM_SEC_IN_BANK-1));	// Bank3 Section0 ctrl_flg : 0x0001
-			DBG_PRINT1("[TC_RING_04] Check ctrl flag: %d", ret);
+			DBG_PRINT2("[TC_RING_04] Check ctrl flag: %d, (expected %d)", ret, TRUE);
 			
 			// Check learn data
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(BANK_NUM_MAX, (MI_NUM_SEC_IN_BANK-1), (LDATA_FRAME_NUM_IN_SECTOR-1), expected_data);
+			ret = lcheck_SvLearnDataAt(BANK_NUM_MAX, (MI_NUM_SEC_IN_BANK-1), (LDATA_FRAME_NUM_IN_SECTOR-1), expected_ldPtr);
 			DBG_PRINT2("[TC_RING_04] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 		}
 		else if(g_numberOfLearnData == (FULL_ALL_BANK+B3S0F0))
@@ -922,14 +1067,14 @@ static int TC_RING_FUNC(void)
 
 			// Check remove all data Bank3 Section0
 			ret = lcheck_RemoveAllData(3,0);
-			DBG_PRINT1("[TC_RING_05] Check clear section: %d", ret);
+			DBG_PRINT2("[TC_RING_05] Check clear section: %d (expected %d)", ret, TRUE);
 						
 			// Check ctrl_flg
 			ret = lcheck_ctrl_flg(3,1, 3,0);	// Bank3 Section1 ctrl_flg : 0x0001
-			DBG_PRINT1("[TC_RING_05] Check ctrl flag: %d", ret);
+			DBG_PRINT2("[TC_RING_05] Check ctrl flag: %d, (expected %d)", ret, TRUE);
 			// Check learn data
 			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
-			ret = lcheck_SvLearnDataAt(3, 0, 0, expected_data);
+			ret = lcheck_SvLearnDataAt(3, 0, 0, expected_ldPtr);
 			DBG_PRINT2("[TC_RING_05] Check data: %d (expected 0x%0.2x)", ret, expected_data);
 			
 			DBG_PRINT0("[TC_RING_FUNC] Done");
@@ -943,35 +1088,20 @@ static int TC_RING_FUNC(void)
 			/* Store 2 unique fingers in 1 Section, prepare for LDATA_NOTIFY_CASE
 			 * g_numberOfLearnData=59,61 Bank=3 Section=3 Frame=1,3 (2nd, 4th)
 			 * Bank=3 [0x06000000], Section=3 [0x06060000], Frame=1 [0x06061ad6], Frame=3 [0x06065082] */
-			DBG_PRINT0("[TC_UNIQUE_PREPARE_02] Store 2 unique data in 1 Section at B3S3F1 & B3S3F3");
-			lcalc_LDLocation(g_numberOfLearnData, &g_bank_index, &g_section_index, &g_frame_index);
-			expected_ldPtr = lcreateLearnData(g_numberOfLearnData); // YELLOW 1 2
-			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", g_bank_index, g_section_index, g_frame_index, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT1("[TC_UNIQUE_PREPARE_02] Result: %d", ret);
+			// DBG_PRINT0("[TC_UNIQUE_PREPARE_02] Store 2 unique data in 1 Section at B3S3F1 & B3S3F3");
 		}
 		else if(B3S5F0 <= g_numberOfLearnData && g_numberOfLearnData <= B3S5F18)
 		{
 			/* Store 19 (full) unique fingers in 1 Section, prepare for LDATA_NOTIFY_CASE
 			 * Bank=3 Section=5 Frame=0-18
 			 * Bank=3 [0x06000000], Section=5 [0x060a0000], Frame=0 [0x060a0000] - Frame=18 [0x060be30c] */
-			DBG_PRINT0("[TC_UNIQUE_PREPARE_19] Store 19 unique data in 1 Section from B3S5F0 to B3S5F18");
-			lcalc_LDLocation(g_numberOfLearnData, &g_bank_index, &g_section_index, &g_frame_index);
-			expected_ldPtr = lcreateLearnData(g_numberOfLearnData); // ORANGE 1->19
-			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", g_bank_index, g_section_index, g_frame_index, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT1("[TC_UNIQUE_PREPARE_19] Result: %d", ret);
+			// DBG_PRINT0("[TC_UNIQUE_PREPARE_19] Store 19 unique data in 1 Section from B3S5F0 to B3S5F18");
 		}
 		else if(g_numberOfLearnData == B3S8F1)
 		{
 			/* Store 1 unique fingers in 1 Section, prepare for LDATA_NOTIFY_CASE
 			 * Bank=3 Section=8 Frame=2 */
-			DBG_PRINT0("[TC_UNIQUE_PREPARE_01] Store 1 unique data in 1 Section at B3S8F1");
-			lcalc_LDLocation(g_numberOfLearnData, &g_bank_index, &g_section_index, &g_frame_index);
-			expected_ldPtr = lcreateLearnData(g_numberOfLearnData); // GREEN 1
-			ret = lcheck_SvLearnDataAt(g_bank_index,g_section_index,g_frame_index, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT8("Expectation: {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x, data=0x%0.2x}", g_bank_index, g_section_index, g_frame_index, expected_ldPtr->RegRnum, expected_ldPtr->RegYnum, expected_ldPtr->RegID, LDATA_REGISTERD_STS, expected_ldPtr->RegImg1[0]);
-			// DBG_PRINT1("[TC_UNIQUE_PREPARE_01] Result: %d", ret);
+			// DBG_PRINT0("[TC_UNIQUE_PREPARE_01] Store 1 unique data in 1 Section at B3S8F1");
 		}
 		//////////////////////////////////
 	}
@@ -1010,7 +1140,7 @@ static int TC_NOTIFY_FUNC(void)
 			DBG_PRINT1("[TC_UNIQUE_ADD_02] Check ctrl flag: %d", ret);
 			/* Check remove all data Bank3 Section2 */
 			ret = lcheck_RemoveAllData(3,2);
-			DBG_PRINT1("[TC_UNIQUE_ADD_02] Check clear section: %d", ret);
+			DBG_PRINT2("[TC_UNIQUE_ADD_02] Check clear section: %d (expected %d)", ret, TRUE);
 			/* Check data */
 			ret = lcheck_notify_data(2);
 			DBG_PRINT1("[TC_UNIQUE_ADD_02] Check notify data: %d", ret);
@@ -1024,7 +1154,7 @@ static int TC_NOTIFY_FUNC(void)
 			DBG_PRINT1("[TC_UNIQUE_ADD_19] Check ctrl flag: %d", ret);
 			/* Check remove all data Bank3 Section5 */
 			ret = lcheck_RemoveAllData(3,5);
-			DBG_PRINT1("[TC_UNIQUE_ADD_19] Check clear section: %d", ret);
+			DBG_PRINT2("[TC_UNIQUE_ADD_19] Check clear section: %d (expected %d)", ret, TRUE);
 			/* Check data */
 			ret = lcheck_notify_data(19);
 			DBG_PRINT1("[TC_UNIQUE_ADD_19] Check notify data: %d", ret);
@@ -1038,7 +1168,7 @@ static int TC_NOTIFY_FUNC(void)
 			DBG_PRINT1("[TC_UNIQUE_ADD_01] Check ctrl flag: %d", ret);
 			/* Check remove all data Bank3 Section7 */
 			ret = lcheck_RemoveAllData(3,7);
-			DBG_PRINT1("[TC_UNIQUE_ADD_01] Check clear section: %d", ret);
+			DBG_PRINT2("[TC_UNIQUE_ADD_01] Check clear section: %d (expected %d)", ret, TRUE);
 			/* Check data */
 			ret = lcheck_notify_data(1);
 			DBG_PRINT1("[TC_UNIQUE_ADD_01] Check notify data: %d", ret);
@@ -1058,55 +1188,94 @@ static int TC_MAPPING_FUNC(void)
     int index, ret;
 	UB expected_data;
 
-	UB BankNum, SectionNum, FrameNum, Num;
+	UW BankNum, SectionNum, FrameNum, Num;
 
-#ifdef TEST_API
-	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
-//    int i;
 	DBG_PRINT0("[TC_MAPPING_FUNC] InfoLearningBankTable");
-	learnDataPtr->RegRnum = 21;
-	learnDataPtr->RegYnum = 1;
+	DBG_PRINT0("X member (ID) [<rNum>][<yNum>]:{<Latest_registered_location(BxSxFx)>,<Amount(Num)>}");
+	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
+	learnDataPtr->RegRnum = BLUE_ROOM_1;
+	learnDataPtr->RegYnum = BLUE_1_YNUM;
 	result = AddSvLearnImg(learnDataPtr);
+	DBG_PRINT3("BLUE member (ID=%d) 1st registration at room %d, finger index %d", BLUE_1_ID, BLUE_ROOM_1, BLUE_1_YNUM);
+	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num);
 	g_numberOfLearnData++;
-	learnDataPtr->RegRnum = 22;
-	learnDataPtr->RegYnum = 2;
+	
+	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
+	learnDataPtr->RegRnum = BLUE_ROOM_1;
+	learnDataPtr->RegYnum = BLUE_1_YNUM;
 	result = AddSvLearnImg(learnDataPtr);
-	g_numberOfLearnData++;
-	learnDataPtr->RegRnum = 23;
-	learnDataPtr->RegYnum = 3;
-	result = AddSvLearnImg(learnDataPtr);
-	g_numberOfLearnData++;
-	learnDataPtr->RegRnum = 24;
-	learnDataPtr->RegYnum = 4;
-	result = AddSvLearnImg(learnDataPtr);
+	DBG_PRINT3("BLUE member (ID=%d) 2nd registration at same room %d and finger index %d", BLUE_1_ID, BLUE_ROOM_1, BLUE_1_YNUM);
+	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num);
 	g_numberOfLearnData++;
 
-	get_InfoLearnInBankM(21, 1, &BankNum, &SectionNum, &FrameNum, &Num);
-	DBG_PRINT6("[%d][%d] {%d, %d, %d, %d}", 21, 1, BankNum, SectionNum, FrameNum, Num);
-	get_InfoLearnInBankM(22, 2, &BankNum, &SectionNum, &FrameNum, &Num);
-	DBG_PRINT6("[%d][%d] {%d, %d, %d, %d}", 22, 1, BankNum, SectionNum, FrameNum, Num);
-	get_InfoLearnInBankM(23, 3, &BankNum, &SectionNum, &FrameNum, &Num);
-	DBG_PRINT6("[%d][%d] {%d, %d, %d, %d}", 23, 1, BankNum, SectionNum, FrameNum, Num);
-	get_InfoLearnInBankM(24, 4, &BankNum, &SectionNum, &FrameNum, &Num);
-	DBG_PRINT6("[%d][%d] {%d, %d, %d, %d}", 24, 1, BankNum, SectionNum, FrameNum, Num);
+	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
+	learnDataPtr->RegRnum = BLUE_ROOM_1;
+	learnDataPtr->RegYnum = BLUE_1_YNUM;
+	result = AddSvLearnImg(learnDataPtr);
+	DBG_PRINT3("BLUE member (ID=%d) 3rd registration at same room %d and finger index %d", BLUE_1_ID, BLUE_ROOM_1, BLUE_1_YNUM);
+	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num);
+	g_numberOfLearnData++;
 	
-	DBG_PRINT1("[TC_MAPPING_FUNC] Done, num=%d", g_numberOfLearnData);
-#else
-	DBG_PRINT1("[TC_MAPPING_FUNC] Do nothing, num=%d", g_numberOfLearnData);
-#endif
+	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
+	learnDataPtr->RegRnum = BLUE_ROOM_2;
+	learnDataPtr->RegYnum = BLUE_2_YNUM;
+	result = AddSvLearnImg(learnDataPtr);
+	DBG_PRINT3("BLUE member (ID=%d) 4th registration at different room %d and finger index %d", BLUE_1_ID, BLUE_ROOM_2, BLUE_2_YNUM);
+	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num);
+	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num);
+	DBG_PRINT6("[%d][%d]: {B%dS%dF%d, Num=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num);
+	g_numberOfLearnData++;
+
+	DBG_PRINT0("[TC_MAPPING_FUNC] Done");
 	return 0;
 	
 }
+
 static int TC_SEARCH_FUNC(void)
 {
-	int ret = 0;
-	ret = lcheck_SearchLearnImg(TC_SEARCH_01, 0, 0); //// search fingers of room 0 
-	DBG_PRINT2("[TC_SEARCH_01] Check search: %d (expected %d)", ret, 0);
-	ret = lcheck_SearchLearnImg(TC_SEARCH_02, LDATA_REG_NBR_MAX-1, 0); //// search fingers of room 479 
-	DBG_PRINT2("[TC_SEARCH_02] Check search: %d (expected %d)", ret, 0);
-	ret = lcheck_SearchLearnImg(TC_SEARCH_03, LDATA_REG_NBR_MAX, 1); //// search fingers of room 480
-	DBG_PRINT2("[TC_SEARCH_03] Check search: %d (expected %d)", ret, 1);
-	DBG_PRINT0("[TC_SEARCH_03] Done.");	
+	UW roomInfo[20][3];
+	int i = 0;
+	
+	DBG_PRINT0("[TC_SEARCH_FUNC] Search latest registered location (Bank-Section-Frame)");
+	memset(roomInfo, 0, sizeof(roomInfo));
+	
+	// RED room
+	SearchLearnImg(RED_ROOM, roomInfo);
+	DBG_PRINT5("Room %d, RED 1 finger %d: {B%dS%dF%d}", RED_ROOM, RED_1_YNUM, roomInfo[RED_1_YNUM][0], roomInfo[RED_1_YNUM][1], roomInfo[RED_1_YNUM][2]);
+	// SearchLearnImg(BLUE_ROOM_1, roomInfo);
+	DBG_PRINT5("Room %d, BLUE 1 finger %d: {B%dS%dF%d}", BLUE_ROOM_1, BLUE_1_YNUM, roomInfo[BLUE_1_YNUM][0], roomInfo[BLUE_1_YNUM][1], roomInfo[BLUE_1_YNUM][2]);
+	
+	// GREEN room
+	SearchLearnImg(GREEN_ROOM, roomInfo);
+	DBG_PRINT5("Room %d, GREEN 1 finger %d: {B%dS%dF%d}", GREEN_ROOM, GREEN_1_YNUM, roomInfo[GREEN_1_YNUM][0], roomInfo[GREEN_1_YNUM][1], roomInfo[GREEN_1_YNUM][2]);
+	// SearchLearnImg(BLUE_ROOM_2, roomInfo);
+	DBG_PRINT5("Room %d, BLUE 1 figner %d: {B%dS%dF%d}", BLUE_ROOM_2, BLUE_2_YNUM, roomInfo[BLUE_2_YNUM][0], roomInfo[BLUE_2_YNUM][1], roomInfo[BLUE_2_YNUM][2]);	
+
+	
+	// YELLOW room
+	SearchLearnImg(YELLOW_ROOM, roomInfo);
+	DBG_PRINT5("Room %d, YELLOW 1 finger %d: {B%dS%dF%d}", YELLOW_ROOM, YELLOW_1_YNUM, roomInfo[YELLOW_1_YNUM][0], roomInfo[YELLOW_1_YNUM][1], roomInfo[YELLOW_1_YNUM][2]);
+	SearchLearnImg(YELLOW_ROOM, roomInfo);
+	DBG_PRINT5("Room %d, YELLOW 2 finger %d: {B%dS%dF%d}", YELLOW_ROOM, YELLOW_2_YNUM, roomInfo[YELLOW_2_YNUM][0], roomInfo[YELLOW_2_YNUM][1], roomInfo[YELLOW_2_YNUM][2]);
+
+	// ORANGE room
+	for(i = 0; i<19; i++)
+	{
+		SearchLearnImg(ORANGE_1_YNUM+i, roomInfo);
+		DBG_PRINT6("Room %d, ORANGE %d finger %d: {B%dS%dF%d}",ORANGE_ROOM,  i+1, ORANGE_1_YNUM+i, roomInfo[ORANGE_1_YNUM+i][0], roomInfo[ORANGE_1_YNUM+i][1], roomInfo[ORANGE_1_YNUM+i][2]);
+	}
+		
+	DBG_PRINT0("[TC_SEARCH_FUNC] Done.");	
 	return 0; // Success
 }
 /******************************************************************************/
@@ -1125,6 +1294,7 @@ void TaskLearnDataInit(void)
 {
     UH index;
     UH i;
+	SvLearnData *learnDataPtr;
 	/* red : common data */
 	/* blue : common data */
     /* green : 1 only one data */ 
@@ -1139,9 +1309,42 @@ void TaskLearnDataInit(void)
         memset(&g_LearnDataArray[i].MiniImg[1][0], g_FingerDataImgArray[i], LDATA_MINI_IMAGE_SIZE);
     }
 
+	/* Create member ID*/
+	g_LearnDataArray[LDATA_FINGER_GREEN_1_INDEX].RegID = GREEN_1_ID;
+	g_LearnDataArray[LDATA_FINGER_YELLOW_1_INDEX].RegID = YELLOW_1_ID;
+	g_LearnDataArray[LDATA_FINGER_YELLOW_2_INDEX].RegID = YELLOW_2_ID;
+	for(i=0; i<19; i++)
+	{
+		g_LearnDataArray[LDATA_FINGER_ORANGE_1_INDEX+i].RegID = ORANGE_1_ID + i;
+	}
+	g_LearnDataArray[LDATA_FINGER_RED_1_INDEX].RegID = RED_1_ID;
+	g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX].RegID = BLUE_1_ID;
+	
+	/* Create room number*/
+	g_LearnDataArray[LDATA_FINGER_GREEN_1_INDEX].RegRnum = GREEN_ROOM;
+	g_LearnDataArray[LDATA_FINGER_YELLOW_1_INDEX].RegRnum = YELLOW_ROOM;
+	g_LearnDataArray[LDATA_FINGER_YELLOW_2_INDEX].RegRnum = YELLOW_ROOM;
+	for(i=0; i<19; i++)
+	{
+		g_LearnDataArray[LDATA_FINGER_ORANGE_1_INDEX+i].RegRnum = ORANGE_ROOM;
+	}
+	g_LearnDataArray[LDATA_FINGER_RED_1_INDEX].RegRnum = RED_ROOM;
+	g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX].RegRnum = BLUE_ROOM_1;	// BLUE has 2 rooms
+	
+	/* Create finger index*/
+	g_LearnDataArray[LDATA_FINGER_GREEN_1_INDEX].RegYnum = GREEN_1_YNUM;
+	g_LearnDataArray[LDATA_FINGER_YELLOW_1_INDEX].RegYnum = YELLOW_1_YNUM;
+	g_LearnDataArray[LDATA_FINGER_YELLOW_2_INDEX].RegYnum = YELLOW_2_YNUM;
+	for(i=0; i<19; i++)
+	{
+		g_LearnDataArray[LDATA_FINGER_ORANGE_1_INDEX+i].RegYnum = ORANGE_1_YNUM + i;
+	}
+	g_LearnDataArray[LDATA_FINGER_RED_1_INDEX].RegYnum = RED_1_YNUM;
+	g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX].RegYnum = BLUE_1_YNUM;
+	
 	// init_InitBankAreaResult();
 	// init_AddSvLearnImgResult();
-	init_SearchLearnImgResult();
+	// init_SearchLearnImgResult();
 	// init_NotifyDataResult();
 #ifdef DEBUG
 	dbg_init();
@@ -1241,6 +1444,8 @@ TASK TaskLearnData(void)
 			if(ret == 0)
 			{
 				testCase = LDATA_NOTIFY_CASE;
+				lcheck_PrepareUniqueData();
+				// printCurrentMappingInformation();
 				DBG_PRINT1("Switch to LDATA_NOTIFY_CASE, num=%d", g_numberOfLearnData);
 			}else goto END_TASK;    /* show test case fail */
 		break;
@@ -1249,6 +1454,7 @@ TASK TaskLearnData(void)
 			if(ret == 0)
 			{
 				testCase = LDATA_MAPPING_CASE;
+				// printCurrentMappingInformation();
 				DBG_PRINT1("Switch to LDATA_MAPPING_CASE, num=%d", g_numberOfLearnData);
 			}else goto END_TASK;    /* show test case fail */
 		break;
@@ -1257,6 +1463,7 @@ TASK TaskLearnData(void)
 			if(ret == 0)
 			{
 				testCase = LDATA_SEARCH_CASE;
+				// printCurrentMappingInformation();
 				DBG_PRINT1("Switch to LDATA_SEARCH_CASE, num=%d", g_numberOfLearnData);
 			}else goto END_TASK;    /* show test case fail  */
 		break;

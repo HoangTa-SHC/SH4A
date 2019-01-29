@@ -203,7 +203,7 @@ static volatile UB g_start_bank_index, g_end_bank_index;
 static UB g_bank_num_max;
 static volatile UB ldataActivedBank;
 static volatile UW g_FrameNumber;
-static volatile InfoLearnInBankM InfoLearningBankTable[LDATA_REG_NBR_MAX]; //// 480
+static volatile InfoLearnInBankM InfoLearningBankTable[LDATA_REG_NBR_MAX];
 
 static UW g_bankIndex=0, g_secIndex=0, g_frmIndex=0;
 static UW g_next_bankIndex=0, g_next_secIndex=0, g_next_frmIndex=1;
@@ -211,17 +211,10 @@ static UW g_oldest_bank_index=0, g_oldest_section_index=0;
 
 static SvLearnData g_learnData;
 static EmployeeList g_flash_data_info[CODE_RANGE];
-static UW g_total_empl=0; // 480*10
+static UW g_total_empl=0;
 static UB g_add_first_frame=0;
 static UB g_movedDataLocation[19];
 static UW g_sum_unique = 0;
-
-#ifdef TEST_API
-void get_InfoLearnInBankM(int rNum, int yNum, UB* BankNum, UB* SectionNum, UB* FrameNum, UB* Num)
-{
-	lmap_readMapInfoTable(rNum, yNum, (UW*)BankNum, (UW*)SectionNum, (UW*)FrameNum, (UW*)Num, 0);
-}
-#endif
 
 #ifdef FAST_TEST
 static struct fast_test_ST
@@ -431,28 +424,30 @@ END_FUNC:
 /*                return the one value.                                       */
 /* Remarks      : None                                                        */
 /******************************************************************************/
-int SearchLearnImg(UH SearchNum, UH* SearchResult[20][3])
+int SearchLearnImg(UH SearchNum, UW SearchResult[20][3])
 {
     volatile BOOL result;
-    volatile UW fingerIndex;
-    
-#if FWK_LD_SEMAPHORE_ENABLE
-    ldataosGetSemaphore();
-#endif
+    UW rNum, yNum, BankNum, SectionNum, FrameNum;
+// #if FWK_LD_SEMAPHORE_ENABLE
+    // ldataosGetSemaphore();
+// #endif
     
     result = (SearchNum < LDATA_REG_NBR_MAX);
     if(result)
     {
-        for(fingerIndex = 0; fingerIndex < LDATA_REG_FIGURE_NBR_MAX; fingerIndex++) {
-			*SearchResult[fingerIndex][0] = InfoLearningBankTable[SearchNum].BankNum[fingerIndex];
-			*SearchResult[fingerIndex][1] = InfoLearningBankTable[SearchNum].SectionNum[fingerIndex];
-			*SearchResult[fingerIndex][2] = InfoLearningBankTable[SearchNum].FrameNum[fingerIndex];
-        }
+		rNum = SearchNum;
+        // for(yNum = 0; yNum < LDATA_REG_FIGURE_NBR_MAX; yNum++) {
+			yNum = 0;
+			lmap_readMapInfoTable(rNum, yNum, &BankNum, &SectionNum, &FrameNum, 0, 0);
+			SearchResult[yNum][0] = BankNum;
+			SearchResult[yNum][1] = SectionNum;
+			SearchResult[yNum][2] = FrameNum;
+        // }
     }
     
-#if FWK_LD_SEMAPHORE_ENABLE
-    ldataosReleaseSemaphore();
-#endif
+// #if FWK_LD_SEMAPHORE_ENABLE
+    // ldataosReleaseSemaphore();
+// #endif
 
     return (result ? 0 : 1);
 }
@@ -469,6 +464,11 @@ void getCurrentCursor(UW *bankIndex, UW *secIndex, UW *frmIndex)
 	*bankIndex = g_bankIndex;
 	*secIndex = g_secIndex;
 	*frmIndex = g_frmIndex;
+}
+
+void get_InfoLearnInBankM(int rNum, int yNum, UW* BankNum, UW* SectionNum, UW* FrameNum, UW* Num)
+{
+	lmap_readMapInfoTable(rNum, yNum, BankNum, SectionNum, FrameNum, Num, 0);
 }
 /////////////////////////////////////////////////////////////
 /******************************************************************************/
@@ -1202,7 +1202,7 @@ static void lupdate_NotTheLatestFrame(SvLearnData* learnDataPtr)
 			ldat_wr_RegStatus(frmAddr, LDATA_NOT_LATEST_STS);
 		}
 		ldat_rd_RegStatus(frmAddr, &RegStatus);
-		// DBG_PRINT8("Change to old: Flash[0x%0.8x] {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x}", frmAddr, bankIndex, secIndex, frmIndex, rNum, yNum, id, RegStatus);
+		DBG_PRINT8("Change to old: Flash[0x%0.8x] {B%dS%dF%d, Rnum=%d, Ynum=%d, ID=%d, Status=0x%0.4x}", frmAddr, bankIndex, secIndex, frmIndex, rNum, yNum, id, RegStatus);
 	}
 }
 
