@@ -424,30 +424,31 @@ END_FUNC:
 /*                return the one value.                                       */
 /* Remarks      : None                                                        */
 /******************************************************************************/
-int SearchLearnImg(UH SearchNum, UW SearchResult[20][3])
+int SearchLearnImg(UH SearchNum, UW SearchResult[20][4])
 {
-    volatile BOOL result;
-    UW rNum, yNum, BankNum, SectionNum, FrameNum;
-// #if FWK_LD_SEMAPHORE_ENABLE
-    // ldataosGetSemaphore();
-// #endif
-    
-    result = (SearchNum < LDATA_REG_NBR_MAX);
-    if(result)
-    {
+	BOOL result;
+	UW rNum, yNum, BankNum, SectionNum, FrameNum;
+	UH id;
+#if FWK_LD_SEMAPHORE_ENABLE
+	ldataosGetSemaphore();
+#endif
+	
+	result = (SearchNum < LDATA_REG_NBR_MAX);
+	if(result)
+	{
 		rNum = SearchNum;
-        // for(yNum = 0; yNum < LDATA_REG_FIGURE_NBR_MAX; yNum++) {
-			yNum = 0;
-			lmap_readMapInfoTable(rNum, yNum, &BankNum, &SectionNum, &FrameNum, 0, 0);
+		for(yNum = 0; yNum < LDATA_REG_FIGURE_NBR_MAX; yNum++) {
+			lmap_readMapInfoTable(rNum, yNum, &BankNum, &SectionNum, &FrameNum, 0, &id);
 			SearchResult[yNum][0] = BankNum;
 			SearchResult[yNum][1] = SectionNum;
 			SearchResult[yNum][2] = FrameNum;
-        // }
-    }
-    
-// #if FWK_LD_SEMAPHORE_ENABLE
-    // ldataosReleaseSemaphore();
-// #endif
+			SearchResult[yNum][3] = (UW)id;
+		}
+	}
+
+#if FWK_LD_SEMAPHORE_ENABLE
+	ldataosReleaseSemaphore();
+#endif
 
     return (result ? 0 : 1);
 }
@@ -466,9 +467,9 @@ void getCurrentCursor(UW *bankIndex, UW *secIndex, UW *frmIndex)
 	*frmIndex = g_frmIndex;
 }
 
-void get_InfoLearnInBankM(int rNum, int yNum, UW* BankNum, UW* SectionNum, UW* FrameNum, UW* Num)
+void get_InfoLearnInBankM(int rNum, int yNum, UW* BankNum, UW* SectionNum, UW* FrameNum, UW* Num, UW* ID)
 {
-	lmap_readMapInfoTable(rNum, yNum, BankNum, SectionNum, FrameNum, Num, 0);
+	lmap_readMapInfoTable(rNum, yNum, BankNum, SectionNum, FrameNum, Num, ID);
 }
 /////////////////////////////////////////////////////////////
 /******************************************************************************/

@@ -185,7 +185,7 @@ typedef struct EmployeeListSt {
 int InitBankArea(UB BankSw);
 int InitLearnInfo(UB BankSw, UB Spec);
 int AddSvLearnImg(SvLearnData *Data);
-int SearchLearnImg(UH SearchNum, UW SearchResult[20][3]);
+int SearchLearnImg(UH SearchNum, UW SearchResult[20][4]);
 
 int InitEmployeeList(void);
 
@@ -200,7 +200,7 @@ void getOldestSection(UW *bankIndex, UW *secIndex, UW *ctrl_flg);
  */
 void getCurrentCursor(UW *bankIndex, UW *secIndex, UW *frmIndex);
 
-void get_InfoLearnInBankM(int rNum, int yNum, UW* BankNum, UW* SectionNum, UW* FrameNum, UW* Num);
+void get_InfoLearnInBankM(int rNum, int yNum, UW* BankNum, UW* SectionNum, UW* FrameNum, UW* Num, UW* ID);
 /////////////////////////////////////////////////////////////
 #endif /* FWK_CFG_LEARN_DATA_ENABLE */
 #endif /* LEARN_DATA_H */

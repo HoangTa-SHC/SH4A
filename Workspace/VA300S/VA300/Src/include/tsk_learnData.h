@@ -285,12 +285,6 @@ typedef struct SvLearnResult_ST
 	UB RegImg1; // first 1-byte
 }SvLearnResult;
 
-typedef struct SearchLearnDataResult_ST
-{
-	int result;
-	UH LearnInfo[LDATA_REG_FIGURE_NBR_MAX][3];
-}SearchLearnDataResult;
-
 typedef struct Location_ST
 {
 	UW bankIndex;
