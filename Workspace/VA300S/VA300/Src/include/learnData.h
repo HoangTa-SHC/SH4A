@@ -143,7 +143,7 @@ typedef enum {
     LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
     LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data (Newest)
     LDATA_NOT_LATEST_STS= 0x0008, //// Not latest data. Old register , (!) 0xFFF8 cause error
-	LDATA_CLEARED_STS   = 0x0B0B,  //// Cleared
+	LDATA_CLEARED_STS   = 0x0000,  //// Cleared
     
     LDATA_UNKNOW_STS
 } ldataRegStatusType;	//// Registraton status

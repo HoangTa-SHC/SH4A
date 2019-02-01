@@ -727,9 +727,23 @@ static UW lmem_wr_buf(UW uwFp, UH *puhBp, UW n)
 static BOOL lmem_rm_sec(UW secAddr)
 {
     ER errCode;
-	
+	int i;
+	UW size;
+	UH uhData;
+	UH *puhAddr;
+	UW frmAddr;
+	UH RegStatus;
 	errCode = FlErase(secAddr);	// reset to 0xFFFF
-    return (errCode == E_OK);
+	///////////////////
+	// for(i = 0, frmAddr=secAddr; i<19; i++)
+	// {
+		////ldat_rm_Frm(frmAddr);
+		// ldat_rd_RegStatus(frmAddr, &RegStatus);
+		// DBG_PRINT3("Read status Frame%d[0x%0.8x]: 0x%0.4x", i, frmAddr, RegStatus);
+		// frmAddr+=sizeof(SvLearnData);
+	// }
+	///////////////////
+	return (errCode == E_OK);
 }
 
 static BOOL lmem_rm_all(void)
@@ -1124,6 +1138,17 @@ static void lupdateLearnInfo(void)
 		{
 			for(frmIndex=0; frmIndex<LDATA_FRAME_NUM_IN_SECTOR; frmIndex++)
 			{
+				///////////////////
+				{
+				UW frmAddr;
+				UH RegStatus;
+				frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
+				// ldat_rm_Frm(frmAddr);
+				ldat_rd_RegStatus(frmAddr, &RegStatus);
+				DBG_PRINT3("Read status Frame%d[0x%0.8x]: 0x%0.4x", frmIndex, frmAddr, RegStatus);
+				frmAddr+=sizeof(SvLearnData);
+				}
+				///////////////////
 				// Update .BankNum, .SectionNum, .FrameNum, .ID with Frame has .RegStatus=0xFFFC
 				lmap_updateMapInfoTable_location(bankIndex, secIndex, frmIndex);
 				// Update .code, .cnt with Frame has .RegStatus=0xFFFC or 0xFFF8
