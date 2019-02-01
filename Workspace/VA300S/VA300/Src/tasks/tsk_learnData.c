@@ -718,7 +718,6 @@ static BOOL lcheck_ctrl_flg(UW bank_index_oldest, UW section_index_oldest, UW er
 
 static BOOL lcheck_notify_data(int notifyCase)
 {
-	UB expected_data;
 	SvLearnData *expected_ldPtr;
 	BOOL ret = FALSE;
 	Location loc;
@@ -875,7 +874,6 @@ static int TC_ADD_FUNC(void)
     SvLearnData *learnDataPtr;
 	SvLearnData *expected_ldPtr;
 	int ret;
-	UB expected_data;
 	Location loc;
 	
 	expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
@@ -900,7 +898,6 @@ static int TC_ADD_FUNC(void)
 			loc = lget_Location(FIRST_LOCATION);
 			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
 			expected_ldPtr->RegStatus = LDATA_REGISTERD_STS;
-			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
 			ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);
 		}else if(g_numberOfLearnData == B3S0F1)
 		{
@@ -911,7 +908,6 @@ static int TC_ADD_FUNC(void)
 			loc = lget_Location(SECOND_LOCATION);
 			expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
 			expected_ldPtr->RegStatus = LDATA_REGISTERD_STS;
-			expected_data = lFingerDataImg(g_numberOfLearnData);	// LDATA_FINGER_RED_1_INDEX
 			ret = lcheck_SvLearnDataAt(loc.bankIndex, loc.secIndex, loc.frmIndex, expected_ldPtr);	
 			
 			DBG_PRINT0("[TC_ADD_FUNC] Done");
@@ -925,16 +921,15 @@ static int TC_ADD_FUNC(void)
 
 static int TC_RING_FUNC(void)
 {
-    int result;
-    SvLearnData *learnDataPtr;
+	int result;
+	SvLearnData *learnDataPtr;
 	SvLearnData *expected_ldPtr;
 	int ret;
-	UB expected_data;
 	Location loc;
 
 	expected_ldPtr = lcreateLearnData(LDATA_FINGER_RED_1_POS);
-    while(TRUE)
-    {
+	while(TRUE)
+	{
 #ifdef FAST_TEST
 		fast_test(&g_numberOfLearnData);
 #endif
@@ -1055,13 +1050,12 @@ static int TC_RING_FUNC(void)
 
 static int TC_NOTIFY_FUNC(void)
 {
-    int result;
-    SvLearnData *learnDataPtr;
-    int index, ret;
-	UB expected_data;
-			
-    while(TRUE)
-    {
+	int result;
+	SvLearnData *learnDataPtr;
+	int index, ret;
+
+	while(TRUE)
+	{
 #ifdef FAST_TEST
 		fast_test(&g_numberOfLearnData);
 #endif
@@ -1125,7 +1119,6 @@ static int TC_MAPPING_FUNC(void)
     int result;
     SvLearnData *learnDataPtr;
     int index, ret;
-	UB expected_data;
 
 	UW BankNum, SectionNum, FrameNum, Num;
 	UH id;
@@ -1138,9 +1131,9 @@ static int TC_MAPPING_FUNC(void)
 	
 	DBG_PRINT2("BLUE member inserts finger at room %d, finger index %d", BLUE_ROOM_1, BLUE_1_YNUM);
 	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	g_numberOfLearnData++;
 	
 	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
@@ -1149,9 +1142,9 @@ static int TC_MAPPING_FUNC(void)
 	result = AddSvLearnImg(learnDataPtr);
 	DBG_PRINT2("BLUE member inserts finger at same room %d and finger index %d", BLUE_ROOM_1, BLUE_1_YNUM);
 	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	g_numberOfLearnData++;
 
 	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
@@ -1160,9 +1153,9 @@ static int TC_MAPPING_FUNC(void)
 	result = AddSvLearnImg(learnDataPtr);
 	DBG_PRINT2("BLUE member inserts finger at same room %d and finger index %d", BLUE_ROOM_1, BLUE_1_YNUM);
 	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	g_numberOfLearnData++;
 	
 	learnDataPtr = &g_LearnDataArray[LDATA_FINGER_BLUE_1_INDEX];
@@ -1171,9 +1164,9 @@ static int TC_MAPPING_FUNC(void)
 	result = AddSvLearnImg(learnDataPtr);
 	DBG_PRINT2("BLUE member inserts finger at different room %d and finger index %d", BLUE_ROOM_2, BLUE_2_YNUM);
 	get_InfoLearnInBankM(BLUE_ROOM_1, BLUE_1_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_1, BLUE_1_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	get_InfoLearnInBankM(BLUE_ROOM_2, BLUE_2_YNUM, &BankNum, &SectionNum, &FrameNum, &Num, &id);
-	DBG_PRINT7("BLUE_1 [%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
+	DBG_PRINT7("[%d][%d]: {B%dS%dF%d, Num=%d, ID=%d}", BLUE_ROOM_2, BLUE_2_YNUM, BankNum, SectionNum, FrameNum, Num, id);
 	g_numberOfLearnData++;
 
 	DBG_PRINT0("[TC_MAPPING_FUNC] Done");
