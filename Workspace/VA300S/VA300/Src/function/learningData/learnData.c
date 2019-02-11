@@ -586,11 +586,6 @@ static BOOL lcheck_FrmIndex(UW frmIndex)
 
 static BOOL lcheck_RegStatus(UH checked_val, UH expected_val)
 {
-    // LDATA_NOT_YET_STS   = 0xFFFF,  //// Not yet
-    // LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
-    // LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data
-    // LDATA_NOT_LATEST_STS= 0xFFF8, //// Not latest data. Old register
-    // LDATA_UNKNOW_STS
 	return checked_val == expected_val;
 }
 
@@ -727,17 +722,13 @@ static UW lmem_wr_buf(UW uwFp, UH *puhBp, UW n)
 static BOOL lmem_rm_sec(UW secAddr)
 {
     ER errCode;
-	int i;
-	UW size;
-	UH uhData;
-	UH *puhAddr;
-	UW frmAddr;
-	UH RegStatus;
+	// int i;
+	// UW frmAddr;
+	// UH RegStatus;
 	errCode = FlErase(secAddr);	// reset to 0xFFFF
 	///////////////////
 	// for(i = 0, frmAddr=secAddr; i<19; i++)
 	// {
-		////ldat_rm_Frm(frmAddr);
 		// ldat_rd_RegStatus(frmAddr, &RegStatus);
 		// DBG_PRINT3("Read status Frame%d[0x%0.8x]: 0x%0.4x", i, frmAddr, RegStatus);
 		// frmAddr+=sizeof(SvLearnData);
@@ -748,21 +739,26 @@ static BOOL lmem_rm_sec(UW secAddr)
 
 static BOOL lmem_rm_all(void)
 {
+	UW bankIndex, secIndex;
 	UW secAddr;
-	UW size;
 	BOOL ret;
 	
 	DBG_PRINT0("[lmem_rm_all] Erase all Banks.");
-	secAddr = lcalc_SectionAddr(g_start_bank_index, 0);
-	size = CALC_AREA_SIZE(g_start_bank_index, g_end_bank_index);
-	
-	while( secAddr < size ) {
-		ret = lmem_rm_sec(secAddr);
-		if(ret == FALSE)
-			break;
 		
-		secAddr += MI_SECTOR_SIZE;
+	// for(bankIndex=g_start_bank_index; bankIndex<=g_end_bank_index; bankIndex++)
+	for(bankIndex=3; bankIndex<=7; bankIndex++) // always remove from Bank3 to Bank7
+	{
+		for(secIndex=0; secIndex<MI_NUM_SEC_IN_BANK; secIndex++)
+		{
+			secAddr = lcalc_SectionAddr(bankIndex, secIndex);
+			ret = lmem_rm_sec(secAddr);
+			if(ret == FALSE)
+			{
+				DBG_PRINT3("Clear Section B%dS%d [0x%0.8x] failed", bankIndex, secIndex, secAddr);
+			}
+		}
 	}
+	
 	return ret;
 }
 
@@ -925,12 +921,11 @@ static BOOL ldat_rm_SecByIdx(UW bankIndex, UW secIndex)
 {
 	UW secAddr;
 	UW ret;
-	UH RegStatus;
 	
 	secAddr = lcalc_SectionAddr(bankIndex, secIndex);
 	ret = lmem_rm_sec(secAddr);
-	ldat_rd_RegStatus(secAddr, &RegStatus);
-	DBG_PRINT5("Clear section B%dS%d [0x%0.8x]: 0x%0.4x (expected 0x%0.4x)", bankIndex, secIndex, secAddr, RegStatus, 0xFFFF);
+	if(ret == FALSE)
+		DBG_PRINT3("Clear Section B%dS%d [0x%0.8x] failed", bankIndex, secIndex, secAddr);
 	return ret;
 }
 
@@ -1029,16 +1024,16 @@ static BOOL lmap_getCountFromIDList(UH code, UW *count)
 static BOOL lmap_updateMapInfoTable_location(UW bankIndex, UW secIndex, UW frmIndex)
 {
 	BOOL ret;
-	UH regStatus, rNum, yNum, id;
+	UH RegStatus, rNum, yNum, id;
 	UW frmAddr;
 	
 	ret = FALSE;
 	id = 0xFFFF;
-	regStatus = 0xFFFF;
+	RegStatus = 0xFFFF;
 	
 	frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
-	ldat_rd_RegStatus(frmAddr, &regStatus);
-	ret = lcheck_RegStatus(regStatus, LDATA_REGISTERD_STS); // 0xFFFC
+	ldat_rd_RegStatus(frmAddr, &RegStatus);
+	ret = lcheck_RegStatus(RegStatus, LDATA_REGISTERD_STS); // 0xFFFC
 	if(ret == TRUE)
 	{
 		// Save latest registration to Mapping info table
@@ -1074,21 +1069,21 @@ static BOOL lmap_updateMapInfoTable_num(UH rNum, UH yNum)
 static BOOL lmap_updateIDList(UW bankIndex, UW secIndex, UW frmIndex)
 {
 	BOOL ret;
-	UH regStatus, id;
+	UH RegStatus, id;
 	UH index;
 	UW frmAddr;
 	
 	ret = FALSE;
 	id = 0xFFFF;
-	regStatus = 0xFFFF;
+	RegStatus = 0xFFFF;
 	
 	frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
 	// Read status
-	ldat_rd_RegStatus(frmAddr, &regStatus);
+	ldat_rd_RegStatus(frmAddr, &RegStatus);
 
 	// Check status = 0xFFFC or 0xFFF8
-	ret = lcheck_RegStatus(regStatus, LDATA_REGISTERD_STS);
-	ret |= lcheck_RegStatus(regStatus, LDATA_NOT_LATEST_STS);
+	ret = lcheck_RegStatus(RegStatus, LDATA_REGISTERD_STS);
+	ret |= lcheck_RegStatus(RegStatus, LDATA_NOT_LATEST_STS);
 	if(ret == FALSE)
 	{
 		return FALSE;
@@ -1143,7 +1138,6 @@ static void lupdateLearnInfo(void)
 				UW frmAddr;
 				UH RegStatus;
 				frmAddr = lcalc_FrameAddr(bankIndex, secIndex, frmIndex);
-				// ldat_rm_Frm(frmAddr);
 				ldat_rd_RegStatus(frmAddr, &RegStatus);
 				DBG_PRINT3("Read status Frame%d[0x%0.8x]: 0x%0.4x", frmIndex, frmAddr, RegStatus);
 				frmAddr+=sizeof(SvLearnData);
