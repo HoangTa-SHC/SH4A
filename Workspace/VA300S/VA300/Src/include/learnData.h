@@ -31,32 +31,20 @@
 /*************************** Macro Definitions ********************************/
 /******************************************************************************/
 #define LDATA_TEST_ENABLE               FALSE    /* Set to TRUE for fast testing */
-// #define FAST_TEST
-#define TEST_API
+// #define FAST_TEST /* Uncomment for fast testing */
+#define TEST_API  /* Uncomment for fast testing (reduce Bank,Section,Frame size) */
 
 #define LDATA_BIT(n)                    (1 << n)
 #define LDATA_ERROR_RETRY_NBR           4
 
-// #if LDATA_TEST_ENABLE
-// #define MI_FLASH_BASIC_ADDR             (0x02000000 - MI_BANK_SIZE)
-// #define MI_SECTOR_SIZE                  (0x00020000)
-// #define MI_BANK_SIZE                    (256 * MI_SECTOR_SIZE)
-// #define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
-// #define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
-// #else
-// #define MI_FLASH_BASIC_ADDR             (0)
-// #define MI_SECTOR_SIZE                  (0x00020000)
-// #define MI_BANK_SIZE                    (256 * MI_SECTOR_SIZE)
-// #define MI_FLASH_START                  (MI_FLASH_BASIC_ADDR + MI_BANK_SIZE)
-// #define MI_FLASH_SIZE                   (7 * MI_BANK_SIZE)
-// #endif
 #define MI_FLASH_BASIC_ADDR             (0)
 #define MI_SECTOR_SIZE                  (0x00020000)  // 128kB
 #define MI_BANK_SIZE                    (0x02000000)  // 32MB, 256 Sectors
-#define MI_FLASH_START                  (0x06000000)  // Bank3
+#define MI_FLASH_START                  (0x06000000)  // Bank3 Start Address
 #define MI_FLASH_SIZE                   (0x10000000 - MI_FLASH_START) // 160MB, Bank3:7
 
 #define LDATA_FRAME_DATA_SIZE           (sizeof(SvLearnData))
+
 #ifdef TEST_API
 #define MI_NUM_SEC_IN_BANK              10	// fast test
 #define LDATA_FRAME_NUM_IN_SECTOR       19
@@ -99,7 +87,6 @@
 										
 #define CTRL_FLAG_SIZE					(sizeof(UH))
 #define CTRL_FLAG_OFFSET				(MI_SECTOR_SIZE - CTRL_FLAG_SIZE)
-// #define THE_OLDEST_SECTION				(0x0001)
 
 #define BANK_MAX_NUM                    8
 #define BANK0                           (UB)LDATA_BIT(0)	// 0x01
@@ -132,9 +119,15 @@
 #define COMPANY_TYPE                    1
 
 /* Mapping information */
+#ifdef TEST_API
 #define CODE_MIN	(0)
-#define CODE_MAX	0x9999 //(4800)
-#define CODE_RANGE	40//(CODE_MAX - CODE_MIN + 1)
+#define CODE_MAX	(0x9999)
+#define CODE_RANGE	40
+#else
+#define CODE_MIN	(0)
+#define CODE_MAX	(0x9999)
+#define CODE_RANGE	(LDATA_REG_NBR_MAX*10)
+#endif
 /******************************************************************************/
 /************************ Enumerations Definitions ****************************/
 /******************************************************************************/
@@ -142,7 +135,7 @@ typedef enum {
     LDATA_NOT_YET_STS   = 0xFFFF,  //// Not yet
     LDATA_DUR_REG_STS   = 0xFFFE,  //// During registration
     LDATA_REGISTERD_STS = 0xFFFC, //// Registered. It is the latest data (Newest)
-    LDATA_NOT_LATEST_STS= 0x0008, //// Not latest data. Old register , (!) 0xFFF8 cause error
+    LDATA_NOT_LATEST_STS= 0xFFF8, //// Not latest data. Old register
 	LDATA_CLEARED_STS   = 0x0000,  //// Cleared
     
     LDATA_UNKNOW_STS
